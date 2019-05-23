@@ -10,6 +10,9 @@ import java.util.ArrayList;
  */
 public class Settings {
 
+    public int attackOption;
+    public int attackNpc;
+
     private ArrayList<Strategy> strategies;
     private ScriptTimer scriptTimer;
     private boolean autoProgress;
@@ -19,7 +22,6 @@ public class Settings {
         return strategies;
     }
 
-    public int attackNpc;
 
     public void setStrategies(ArrayList<Strategy> strategies) {
         this.strategies = strategies;

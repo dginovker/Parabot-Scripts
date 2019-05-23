@@ -22,11 +22,15 @@ public class Fight implements org.parabot.environment.scripts.framework.Strategy
 
     @Override
     public void execute() {
-        if (!Players.getMyPlayer().isInCombat())
+        if (Players.getMyPlayer().getAnimation() == -1)
         {
-            Npcs.getClosest(o -> !o.isInCombat() && o.getDef().getId() == core.getSettings().attackNpc).interact(0);
+            Npc ya = Npcs.getClosest(o -> !o.isInCombat() && o.getDef().getId() == core.getSettings().attackNpc);
+            System.out.println(ya.getInteractingCharacter());
+            ya.interact(core.getSettings().attackOption);
+
+            //Npcs.getClosest(o -> o.getDef().getId() == core.getSettings().attackNpc).interact(0);
         }
 
-        Time.sleep(1200);
+        Time.sleep(2400);
     }
 }
