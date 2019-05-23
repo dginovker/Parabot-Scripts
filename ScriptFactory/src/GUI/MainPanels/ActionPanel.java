@@ -62,12 +62,7 @@ public class ActionPanel extends JPanel {
         removeButton.addActionListener(o -> {
             String path = JOptionPane.showInputDialog("Enter the Statement# you wish to delete:");
 
-            try{
-                removeAction.accept(new Integer(Integer.parseInt(path)));
-            } catch (Exception e)
-            {
-                //Do nothing
-            }
+            removeAction.accept(Integer.parseInt(path));
         });
     }
 }

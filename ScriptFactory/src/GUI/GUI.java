@@ -1,7 +1,7 @@
 package GUI;
 
 import Actions.Logic.If;
-import Actions.Logic.endIf;
+import Actions.Logic.Endif;
 import Actions.Action;
 import GUI.MainPanels.ActionPanel;
 import NewGuis.NewActionGUI;
@@ -10,7 +10,7 @@ import Strategies.RunLoop;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.File;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -33,17 +33,19 @@ public class GUI extends JFrame {
     {
         this.actions = actions;
 
+        //These are like little functions we pass around
         Consumer<Integer> updateTextfield = (Integer i) -> {
             updateActionList();
         };
         Consumer<Integer> removeAction = (Integer toRemove) -> {
+            System.out.println("Trying to remove " + toRemove);
             if (actions.size() > toRemove && toRemove > 0)
             {
                 actions.remove(toRemove);
             }
         };
         Consumer<Boolean> endIf = (Boolean remove) -> {
-            actions.add(new endIf());
+            actions.add(new Endif());
             updateTextfield.accept(1);
         };
 
@@ -62,7 +64,7 @@ public class GUI extends JFrame {
 
         addActionListeners();
 
-        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
         setVisible(true);
     }
 
@@ -89,9 +91,46 @@ public class GUI extends JFrame {
     }
 
     private void loadContents() {
+        actions.clear();
+        try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                switch (line.split("\\{")[0])
+                {
+                    case "Action":
+                        actions.add(new Action(line));
+                        break;
+                    case "If":
+                        actions.add(new If(line));
+                        break;
+                    case "Endif":
+                        actions.add(new Endif(line));
+                        break;
+                    default:
+                        System.out.println("Unrecognized action: " + line.split("\\{")[0]);
+                }
+            }
+            updateActionList();
+            System.out.println("File loaded successfully");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void saveContents() {
+        PrintWriter writer = null;
+        try {
+            writer = new PrintWriter(selectedFile);
+
+            for (Action a : actions)
+            {
+                writer.println(a.toString());
+            }
+            writer.close();
+            System.out.println("File saved successfully");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     private void updateActionList()
@@ -101,7 +140,7 @@ public class GUI extends JFrame {
         String toAppend;
         for (int i = 0; i < actions.size(); i++)
         {
-            if (actions.get(i) instanceof endIf)
+            if (actions.get(i) instanceof Endif)
             {
                 tabsInFront --;
             }

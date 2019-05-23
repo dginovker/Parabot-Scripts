@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 
 
-@ScriptManifest(author = "Before", name = "Script Factory 1.0", category = Category.OTHER, version = 1.0, description = "Create your own scripts.", servers = "Any")
+@ScriptManifest(author = "Before", name = "Script Factory 1.0", category = Category.OTHER, version = 1.1, description = "Create your own scripts.", servers = "Any")
 public class Core extends Script {
 
     private ArrayList<Action> actions = new ArrayList<>();

@@ -5,16 +5,16 @@ import Actions.Action;
 /**
  * Created by SRH on 1/15/2018.
  */
-public class endIf extends Action {
-    public endIf(String action, String param1, String param2, String param3) {
+public class Endif extends Action {
+    public Endif(String action, String param1, String param2, String param3) {
         super(action, param1, param2, param3);
     }
 
-    public endIf() {
+    public Endif() {
         super();
     }
 
-    public endIf(String fromString)
+    public Endif(String fromString)
     {
         super("endif", "", "", "");
     }

@@ -46,7 +46,7 @@ public class Action {
 
     public Action(String fromString)
     {
-        String pattern = "Action\\{action=([^,]*), param1=([^,]*), param2=([^,]*), param3=([^,]*)}";
+        String pattern = "Action.action='([^']*)', param1='([^']*)', param2='([^']*)', param3='([^']*)'.";
         Pattern r = Pattern.compile(pattern);
         Matcher m  = r.matcher(fromString);
 
