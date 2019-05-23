@@ -1,5 +1,5 @@
-import xobot.script.methods.tabs.Skills;
-import xobot.script.util.Timer;
+import org.parabot.environment.api.utils.Timer;
+import org.rev317.min.api.methods.Skill;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -34,9 +34,9 @@ public class Paint {
 
     public void handlePaint(Graphics arg0)
     {
-        int xp = Skills.getCurrentExp(Skills.RUNECRAFTING) - startxp;
-        int xph = (int) ((xp) * 3600000D / (t.getElapsed()));
-        int ph = (int) ((crafted) * 3600000D / (t.getElapsed()));
+        int xp = Skill.getCurrentExperience(0) - startxp;
+        int xph = (int) ((xp) * 3600000D / (t.getElapsedTime()));
+        int ph = (int) ((crafted) * 3600000D / (t.getElapsedTime()));
 
         Graphics2D g = (Graphics2D)arg0;
         g.setRenderingHints(antialiasing);
@@ -44,7 +44,7 @@ public class Paint {
         g.drawImage(img1, 0, 162, null);
         g.setFont(font1);
         g.setColor(color1);
-        g.drawString(t.toElapsedString(), 158, 248);
+        g.drawString(t.toString(), 158, 248);
         g.drawString(status, 325, 248);
         g.drawString(String.valueOf(xp), 158, 296);
         g.drawString(String.valueOf(xph), 325, 296);

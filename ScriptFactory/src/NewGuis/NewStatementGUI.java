@@ -1,4 +1,7 @@
-package GUI.NewGuis;
+package NewGuis;
+
+import Actions.Action;
+import Actions.Logic.If;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,14 +21,14 @@ public class NewStatementGUI extends JFrame {
     private String selectedAction;
 
     /**
-     * Creates whole GUI
+     * Creates whole src.GUI
      * @param title: Title for JFrame
      * @param actionList: Action list that gets appended to based on user input on this UI
-     * @param updateTextfield: Function to update the action list on the first (and main) GUI
+     * @param updateTextfield: Function to update the action list on the first (and main) src.GUI
      * @param actionTypes: List of possible actions the user can select
      * @param descs: Descriptions to display the user throughout the UI
      */
-    void initGui(String title, ArrayList<Actions.Action> actionList, Consumer<Integer> updateTextfield, String[] actionTypes, Descriptions[] descs) {
+    void initGui(String title, ArrayList<Action> actionList, Consumer<Integer> updateTextfield, String[] actionTypes, Descriptions[] descs) {
         setTitle(title);
         setLayout(new BorderLayout());
 
@@ -43,11 +46,11 @@ public class NewStatementGUI extends JFrame {
         add.addActionListener(o -> {
             if (this.getTitle().contains("action"))
             {
-                actionList.add(new Actions.Action(selectedAction, first.getText(), second.getText(), third.getText()));
+                actionList.add(new Action(selectedAction, first.getText(), second.getText(), third.getText()));
             }
             else
             {
-                actionList.add(new Actions.If(selectedAction, first.getText(), second.getText(), third.getText()));
+                actionList.add(new If(selectedAction, first.getText(), second.getText(), third.getText()));
             }
             updateTextfield.accept(5);
             this.setVisible(false);

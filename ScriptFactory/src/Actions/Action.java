@@ -4,10 +4,27 @@ package Actions;
  * Created by SRH on 1/9/2018.
  */
 public class Action {
-    final String action;
-    final String param1;
-    final String param2;
-    final String param3;
+
+    private final String action;
+    private final String param1;
+    private final String param2;
+    private final String param3;
+
+    public String getAction() {
+        return action;
+    }
+
+    public String getParam1() {
+        return param1;
+    }
+
+    public String getParam2() {
+        return param2;
+    }
+
+    public String getParam3() {
+        return param3;
+    }
 
     public Action(String action, String param1, String param2, String param3)
     {

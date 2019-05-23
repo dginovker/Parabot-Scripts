@@ -1,7 +1,7 @@
-package GUI.NewGuis;
+package NewGuis;
+
 
 import Actions.Action;
-
 import java.util.ArrayList;
 import java.util.function.Consumer;
 

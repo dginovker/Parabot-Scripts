@@ -1,11 +1,12 @@
 package GUI;
 
+import Actions.Logic.If;
+import Actions.Logic.endIf;
 import Actions.Action;
-import Actions.If;
-import Actions.endIf;
 import GUI.MainPanels.ActionPanel;
-import GUI.NewGuis.NewActionGUI;
-import GUI.NewGuis.NewConditionGUI;
+import NewGuis.NewActionGUI;
+import NewGuis.NewConditionGUI;
+import Strategies.RunLoop;
 
 import javax.swing.*;
 import java.awt.*;
@@ -68,6 +69,12 @@ public class GUI extends JFrame {
     private void addActionListeners() {
         startButton.addActionListener(o -> {
             this.setVisible(false);
+            System.out.println("Executing the following script:");
+            for (Action a : actions)
+            {
+                System.out.println(a.toString());
+            }
+            new RunLoop(actions);
         });
 
         saveButton.addActionListener(o -> {

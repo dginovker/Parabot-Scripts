@@ -1,4 +1,6 @@
-package Actions;
+package Actions.Logic;
+
+import Actions.Action;
 
 /**
  * Created by SRH on 1/15/2018.
