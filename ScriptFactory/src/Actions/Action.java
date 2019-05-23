@@ -1,5 +1,8 @@
 package Actions;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Created by SRH on 1/9/2018.
  */
@@ -41,6 +44,18 @@ public class Action {
         this.param3 = null;
     }
 
+    public Action(String fromString)
+    {
+        String pattern = "Action\\{action=([^,]*), param1=([^,]*), param2=([^,]*), param3=([^,]*)}";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m  = r.matcher(fromString);
+
+        this.action = m.group(0);
+        this.param1 = m.group(1);
+        this.param2 = m.group(2);
+        this.param3 = m.group(3);
+    }
+
     @Override
     public String toString() {
         return "Action{" +
@@ -50,4 +65,5 @@ public class Action {
                 ", param3='" + param3 + '\'' +
                 '}';
     }
+
 }

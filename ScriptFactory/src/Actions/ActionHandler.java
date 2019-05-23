@@ -52,4 +52,18 @@ public class ActionHandler {
     {
         Mouse.getInstance().click(Integer.parseInt(a.getParam1()), Integer.parseInt(a.getParam2()), a.getParam3().equals("0"));
     }
+
+    public String determineIf(Action a) {
+        switch (a.getAction())
+        {
+            case "If item is in Inventory":
+                return Inventory.getCount(Integer.parseInt(a.getParam1())) > 0 ? "True" : "False";
+            case "If Entity is around":
+                return Npcs.getClosest(Integer.parseInt(a.getParam1())) != null ||
+                        SceneObjects.getClosest(Integer.parseInt(a.getParam1())) != null ? "True" : "False";
+            default:
+                System.out.println("Error: Unimplemented conditional: " + a.getAction());
+        }
+        return "False";
+    }
 }

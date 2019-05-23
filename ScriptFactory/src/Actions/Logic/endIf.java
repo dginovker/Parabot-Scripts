@@ -14,6 +14,11 @@ public class endIf extends Action {
         super();
     }
 
+    public endIf(String fromString)
+    {
+        super("endif", "", "", "");
+    }
+
     @Override
     public String toString()
     {

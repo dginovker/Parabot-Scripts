@@ -10,13 +10,18 @@ public class If extends Action {
         super(action, param1, param2, param3);
     }
 
+    public If(String fromString)
+    {
+        super("If", "", "", "");
+    }
+
     @Override
     public String toString() {
         return "If{" +
-                "action='" + action + '\'' +
-                ", param1='" + param1 + '\'' +
-                ", param2='" + param2 + '\'' +
-                ", param3='" + param3 + '\'' +
+                "action='" + getAction() + '\'' +
+                ", param1='" + getParam1() + '\'' +
+                ", param2='" + getParam2() + '\'' +
+                ", param3='" + getParam3() + '\'' +
                 '}';
     }
 }
