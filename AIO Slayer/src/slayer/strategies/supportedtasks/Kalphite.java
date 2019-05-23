@@ -18,7 +18,7 @@ public class Kalphite extends Tasks {
         }
         else
         {
-            
+            //Get there LOL
         }
 
         Time.sleep(1500);
