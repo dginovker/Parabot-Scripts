@@ -6,7 +6,6 @@ import Actions.Action;
 import GUI.MainPanels.ActionPanel;
 import NewGuis.NewActionGUI;
 import NewGuis.NewConditionGUI;
-import Strategies.RunLoop;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,8 +17,9 @@ import java.util.function.Consumer;
  * Created by Cyn on 1/9/2018.
  */
 public class GUI extends JFrame {
+    public boolean scriptStarted = false;
     private JButton saveButton = new JButton("Save"), loadButton = new JButton("Load");
-    private JTextField file = new JTextField("");
+    private JTextField mostRecentLog = new JTextField("");
     private File selectedFile = null;
     private JButton startButton = new JButton("Start");
 
@@ -39,10 +39,9 @@ public class GUI extends JFrame {
         };
         Consumer<Integer> removeAction = (Integer toRemove) -> {
             System.out.println("Trying to remove " + toRemove);
-            if (actions.size() > toRemove && toRemove > 0)
-            {
-                actions.remove(toRemove);
-            }
+            int pint = toRemove;
+            actions.remove(pint);
+            updateActionList();
         };
         Consumer<Boolean> endIf = (Boolean remove) -> {
             actions.add(new Endif());
@@ -52,7 +51,7 @@ public class GUI extends JFrame {
         newAction = new NewActionGUI(actions, updateTextfield);
         newCondition = new NewConditionGUI(actions, updateTextfield);
 
-        setTitle("Script Creator");
+        setTitle("Parabot.org Script Factory");
         setLayout(new BorderLayout(12, 20));
 
         add(new ActionPanel(actionList, newAction, newCondition, removeAction, endIf), BorderLayout.WEST);
@@ -76,7 +75,7 @@ public class GUI extends JFrame {
             {
                 System.out.println(a.toString());
             }
-            new RunLoop(actions);
+            scriptStarted = true;
         });
 
         saveButton.addActionListener(o -> {
@@ -164,7 +163,7 @@ public class GUI extends JFrame {
         int option = saver.showOpenDialog(GUI.this);
 
         if (option == JFileChooser.APPROVE_OPTION) {
-            file.setText(saver.getSelectedFile().getName());
+            mostRecentLog.setText("File used: " + saver.getSelectedFile().getPath());
             selectedFile = saver.getSelectedFile();
         }
     }
@@ -191,12 +190,14 @@ public class GUI extends JFrame {
 
         JPanel chosen = new JPanel();
         chosen.setLayout(new FlowLayout(FlowLayout.LEFT));
-        chosen.add(new JLabel("File chosen: "));
-        file.setColumns(8);
-        chosen.add(file);
+        chosen.add(new JLabel("Info: "));
+        mostRecentLog.setColumns(16);
+        mostRecentLog.setEditable(false);
+        chosen.add(mostRecentLog);
 
         save.add(chosen);
 
         return save;
     }
+
 }

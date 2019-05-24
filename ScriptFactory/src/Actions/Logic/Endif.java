@@ -16,7 +16,7 @@ public class Endif extends Action {
 
     public Endif(String fromString)
     {
-        super("endif", "", "", "");
+        super(fromString);
     }
 
     @Override

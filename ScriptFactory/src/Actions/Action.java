@@ -46,14 +46,24 @@ public class Action {
 
     public Action(String fromString)
     {
-        String pattern = "Action.action='([^']*)', param1='([^']*)', param2='([^']*)', param3='([^']*)'.";
+        String pattern = ".*action='([^']*)'.*param1='([^']*)'.*param2='([^']*)'.*param3='([^']*)'.*";//param3='([^']*)'.*'";
+
+        System.out.println("Going to try and match this string:");
+        System.out.println(fromString);
+        System.out.println(pattern);
+
         Pattern r = Pattern.compile(pattern);
         Matcher m  = r.matcher(fromString);
 
-        this.action = m.group(0);
-        this.param1 = m.group(1);
-        this.param2 = m.group(2);
-        this.param3 = m.group(3);
+        System.out.println("Matches? " + m.matches());
+
+        System.out.println(m.group(1));
+        System.out.println(m.group(2));
+
+        this.action = m.group(1);
+        this.param1 = m.group(2);
+        this.param2 = m.group(3);
+        this.param3 = m.group(4);
     }
 
     @Override

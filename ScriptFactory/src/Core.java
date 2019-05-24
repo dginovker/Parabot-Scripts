@@ -1,6 +1,7 @@
 import Actions.Action;
 import GUI.GUI;
 import Strategies.RunLoop;
+import org.parabot.core.Context;
 import org.parabot.environment.scripts.Category;
 import org.parabot.environment.scripts.Script;
 import org.parabot.environment.scripts.ScriptManifest;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
  */
 
 
-@ScriptManifest(author = "Before", name = "Script Factory 1.0", category = Category.OTHER, version = 1.1, description = "Create your own scripts.", servers = "Any")
+@ScriptManifest(author = "Before", name = "Script Factory 1.1", category = Category.OTHER, version = 1.1, description = "Create your own scripts.", servers = "Any")
 public class Core extends Script {
 
     private ArrayList<Action> actions = new ArrayList<>();
@@ -38,6 +39,11 @@ public class Core extends Script {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+        }
+
+        if (!gui.scriptStarted)
+        {
+            Context.getInstance().getRunningScript().setState(STATE_STOPPED);
         }
 
         strategies.add(new RunLoop(actions));

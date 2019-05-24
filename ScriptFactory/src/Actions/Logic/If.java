@@ -12,7 +12,7 @@ public class If extends Action {
 
     public If(String fromString)
     {
-        super("If", "", "", "");
+        super(fromString);
     }
 
     @Override
