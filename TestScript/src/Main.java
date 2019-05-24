@@ -1,14 +1,10 @@
-import Strategies.Bank;
-import Strategies.Fish;
-import org.parabot.core.reflect.RefClass;
-import org.parabot.environment.api.interfaces.Paintable;
+import main.Strategies.Bank;
+import main.Strategies.Fish;
 import org.parabot.environment.scripts.Category;
 import org.parabot.environment.scripts.Script;
 import org.parabot.environment.scripts.ScriptManifest;
 import org.parabot.environment.scripts.framework.Strategy;
 
-import java.awt.*;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 @ScriptManifest(author = "Before", category = Category.OTHER, description = "Tutorial skeleton", name = "Tutorial", servers = { "IKOV" }, version = 1)

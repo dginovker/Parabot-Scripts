@@ -1,7 +1,7 @@
-package GUI.MainPanels;
+package main.GUI.MainPanels;
 
-import NewGuis.NewActionGUI;
-import NewGuis.NewConditionGUI;
+import main.NewGuis.NewActionGUI;
+import main.NewGuis.NewConditionGUI;
 
 import javax.swing.*;
 import java.awt.*;

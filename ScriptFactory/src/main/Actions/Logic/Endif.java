@@ -1,6 +1,6 @@
-package Actions.Logic;
+package main.Actions.Logic;
 
-import Actions.Action;
+import main.Actions.Action;
 
 /**
  * Created by SRH on 1/15/2018.

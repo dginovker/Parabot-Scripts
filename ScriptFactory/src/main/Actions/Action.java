@@ -1,4 +1,6 @@
-package Actions;
+package main.Actions;
+
+import main.VarsMethods;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -48,17 +50,8 @@ public class Action {
     {
         String pattern = ".*action='([^']*)'.*param1='([^']*)'.*param2='([^']*)'.*param3='([^']*)'.*";//param3='([^']*)'.*'";
 
-        System.out.println("Going to try and match this string:");
-        System.out.println(fromString);
-        System.out.println(pattern);
-
-        Pattern r = Pattern.compile(pattern);
-        Matcher m  = r.matcher(fromString);
-
-        System.out.println("Matches? " + m.matches());
-
-        System.out.println(m.group(1));
-        System.out.println(m.group(2));
+        Matcher m  = Pattern.compile(pattern).matcher(fromString);
+        m.matches();
 
         this.action = m.group(1);
         this.param1 = m.group(2);

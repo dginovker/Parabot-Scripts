@@ -1,7 +1,7 @@
-package NewGuis;
+package main.NewGuis;
 
-import Actions.Action;
-import Actions.Logic.If;
+import main.Actions.Action;
+import main.Actions.Logic.If;
 
 import javax.swing.*;
 import java.awt.*;
@@ -10,7 +10,7 @@ import java.util.function.Consumer;
 
 /**
  * Created by SRH on 1/10/2018.
- * Creates the GUI that is extended by actions and if statements
+ * Creates the main.GUI that is extended by actions and if statements
  * Allows user to generate new actions/if statements
  */
 public class NewStatementGUI extends JFrame {
@@ -21,10 +21,10 @@ public class NewStatementGUI extends JFrame {
     private String selectedAction;
 
     /**
-     * Creates whole src.GUI
+     * Creates whole src.main.GUI
      * @param title: Title for JFrame
      * @param actionList: Action list that gets appended to based on user input on this UI
-     * @param updateTextfield: Function to update the action list on the first (and main) src.GUI
+     * @param updateTextfield: Function to update the action list on the first (and main) src.main.GUI
      * @param actionTypes: List of possible actions the user can select
      * @param descs: Descriptions to display the user throughout the UI
      */

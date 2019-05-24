@@ -1,11 +1,12 @@
-package GUI;
+package main.GUI;
 
-import Actions.Logic.If;
-import Actions.Logic.Endif;
-import Actions.Action;
-import GUI.MainPanels.ActionPanel;
-import NewGuis.NewActionGUI;
-import NewGuis.NewConditionGUI;
+import main.Actions.Logic.If;
+import main.Actions.Logic.Endif;
+import main.Actions.Action;
+import main.GUI.MainPanels.ActionPanel;
+import main.NewGuis.NewActionGUI;
+import main.NewGuis.NewConditionGUI;
+import main.VarsMethods;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,7 +39,7 @@ public class GUI extends JFrame {
             updateActionList();
         };
         Consumer<Integer> removeAction = (Integer toRemove) -> {
-            System.out.println("Trying to remove " + toRemove);
+            VarsMethods.log("Trying to remove " + toRemove);
             int pint = toRemove;
             actions.remove(pint);
             updateActionList();
@@ -70,10 +71,10 @@ public class GUI extends JFrame {
     private void addActionListeners() {
         startButton.addActionListener(o -> {
             this.setVisible(false);
-            System.out.println("Executing the following script:");
+            VarsMethods.log("Executing the following script:");
             for (Action a : actions)
             {
-                System.out.println(a.toString());
+                VarsMethods.log(a.toString());
             }
             scriptStarted = true;
         });
@@ -106,11 +107,11 @@ public class GUI extends JFrame {
                         actions.add(new Endif(line));
                         break;
                     default:
-                        System.out.println("Unrecognized action: " + line.split("\\{")[0]);
+                        VarsMethods.log("Unrecognized action: " + line.split("\\{")[0]);
                 }
             }
             updateActionList();
-            System.out.println("File loaded successfully");
+            VarsMethods.log("File loaded successfully");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,7 +127,7 @@ public class GUI extends JFrame {
                 writer.println(a.toString());
             }
             writer.close();
-            System.out.println("File saved successfully");
+            VarsMethods.log("File saved successfully");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }

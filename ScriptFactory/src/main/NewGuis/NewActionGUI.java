@@ -1,8 +1,8 @@
-package NewGuis;
+package main.NewGuis;
 
 
 
-import Actions.Action;
+import main.Actions.Action;
 
 import java.util.ArrayList;
 import java.util.function.Consumer;

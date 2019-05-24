@@ -1,5 +1,7 @@
-package Actions;
+package main.Actions;
 
+import main.VarsMethods;
+import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.input.Keyboard;
 import org.parabot.environment.input.Mouse;
 import org.rev317.min.api.methods.Inventory;
@@ -53,6 +55,10 @@ public class ActionHandler {
         Mouse.getInstance().click(Integer.parseInt(a.getParam1()), Integer.parseInt(a.getParam2()), a.getParam3().equals("0"));
     }
 
+    public void sleep(Action a) {
+        Time.sleep(Integer.parseInt(a.getParam1()));
+    }
+
     public String determineIf(Action a) {
         switch (a.getAction())
         {
@@ -62,7 +68,7 @@ public class ActionHandler {
                 return Npcs.getClosest(Integer.parseInt(a.getParam1())) != null ||
                         SceneObjects.getClosest(Integer.parseInt(a.getParam1())) != null ? "True" : "False";
             default:
-                System.out.println("Error: Unimplemented conditional: " + a.getAction());
+                VarsMethods.log("Error: Unimplemented conditional: " + a.getAction());
         }
         return "False";
     }

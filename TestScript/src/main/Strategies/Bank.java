@@ -1,4 +1,4 @@
-package Strategies;
+package main.Strategies;
 
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.scripts.framework.Strategy;
