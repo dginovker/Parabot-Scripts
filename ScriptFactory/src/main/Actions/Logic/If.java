@@ -17,11 +17,7 @@ public class If extends Action {
 
     @Override
     public String toString() {
-        return "If{" +
-                "action='" + getAction() + '\'' +
-                ", param1='" + getParam1() + '\'' +
-                ", param2='" + getParam2() + '\'' +
-                ", param3='" + getParam3() + '\'' +
-                '}';
+        return "If" + getAction().replace(" ", "-") +
+                "(" + getParam0() + "," + getParam1() + "," + getParam2() + ")";
     }
 }

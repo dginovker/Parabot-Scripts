@@ -22,6 +22,6 @@ public class Endif extends Action {
     @Override
     public String toString()
     {
-        return "end if";
+        return "Endif";
     }
 }

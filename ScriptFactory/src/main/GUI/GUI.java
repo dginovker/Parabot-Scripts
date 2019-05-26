@@ -97,9 +97,6 @@ public class GUI extends JFrame {
             while ((line = br.readLine()) != null) {
                 switch (line.split("\\{")[0])
                 {
-                    case "Action":
-                        actions.add(new Action(line));
-                        break;
                     case "If":
                         actions.add(new If(line));
                         break;
@@ -107,7 +104,7 @@ public class GUI extends JFrame {
                         actions.add(new Endif(line));
                         break;
                     default:
-                        VarsMethods.log("Unrecognized action: " + line.split("\\{")[0]);
+                        actions.add(new Action(line));
                 }
             }
             updateActionList();
@@ -137,7 +134,7 @@ public class GUI extends JFrame {
     {
         actionList.setText("");
         int tabsInFront = 0;
-        String toAppend;
+        String prepend;
         for (int i = 0; i < actions.size(); i++)
         {
             if (actions.get(i) instanceof Endif)
@@ -145,12 +142,12 @@ public class GUI extends JFrame {
                 tabsInFront --;
             }
 
-            toAppend = i + ")";
+            prepend = i + ")";
             for (int j = 0; j < tabsInFront; j++)
             {
-                toAppend = toAppend + "    ";
+                prepend = prepend + "    ";
             }
-            actionList.append(toAppend + actions.get(i).toString() + "\n");
+            actionList.append(prepend + actions.get(i).toString() + "\n");
 
             if (actions.get(i) instanceof If)
             {

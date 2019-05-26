@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  * Creates the main.GUI that is extended by actions and if statements
  * Allows user to generate new actions/if statements
  */
-public class NewStatementGUI extends JFrame {
+class NewStatementGUI extends JFrame {
     private JTextArea first = new JTextArea(), second = new JTextArea(), third = new JTextArea();
     private JLabel firstDesc = new JLabel(), secondDesc = new JLabel(), thirdDesc = new JLabel();
 
@@ -60,10 +60,10 @@ public class NewStatementGUI extends JFrame {
     /**
      * @param actionTypes: Options for the dropdown
      * @param descs: Descriptions that appear depending on dropdown option selected
-     * @return
      */
-    JComboBox actionTypeCombo(String[] actionTypes, Descriptions[] descs) {
+    private JComboBox actionTypeCombo(String[] actionTypes, Descriptions[] descs) {
         JComboBox actionType = new JComboBox(actionTypes);
+        selectedAction = actionTypes[0]; //prevents null
         actionType.addActionListener(o -> {
             selectedAction = actionType.getSelectedItem().toString();
 
@@ -76,7 +76,7 @@ public class NewStatementGUI extends JFrame {
     /**
      * @return: Panel holding the 3 descriptions and fields for user input in the UI
      */
-    JPanel fillInfo() {
+    private JPanel fillInfo() {
         JPanel fillInfo = new JPanel();
         fillInfo.setLayout(new GridLayout(3, 1, 20, 20));
 
@@ -108,7 +108,7 @@ public class NewStatementGUI extends JFrame {
      * @param s1 ..second
      * @param s2 ..third
      */
-    void setDesc(String s, String s1, String s2)
+    private void setDesc(String s, String s1, String s2)
     {
         firstDesc.setText(s);
         secondDesc.setText(s1);
@@ -123,31 +123,31 @@ public class NewStatementGUI extends JFrame {
         private String s1 = null;
         private String s2 = null;
 
-        public Descriptions(String s, String s1, String s2)
+        Descriptions(String s, String s1, String s2)
         {
             this.s = s;
             this.s1 = s1;
             this.s2 = s2;
         }
-        public Descriptions(String s, String s1)
+        Descriptions(String s, String s1)
         {
             this.s = s;
             this.s1 = s1;
         }
 
-        public Descriptions(String s) {
+        Descriptions(String s) {
             this.s = s;
         }
 
-        public String getS2() {
+        String getS2() {
             return s2;
         }
 
-        public String getS1() {
+        String getS1() {
             return s1;
         }
 
-        public String getS() {
+        String getS() {
             return s;
         }
     }

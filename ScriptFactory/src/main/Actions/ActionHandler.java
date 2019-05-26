@@ -32,41 +32,41 @@ public class ActionHandler {
 
     public void handleInteractWith(Action a)
     {
-        interactWithEntity(a.getParam1(), a.getParam2());
+        interactWithEntity(a.getParam0(), a.getParam1());
     }
 
     public void useItemOn(Action a)
     {
-        int itemId = Integer.parseInt(a.getParam1());
+        int itemId = Integer.parseInt(a.getParam0());
 
         Item toUse = Inventory.getItem(itemId);
-        Menu.interact(toUse, a.getParam3());
+        Menu.interact(toUse, a.getParam2());
 
-        interactWithEntity(a.getParam2(), "1");
+        interactWithEntity(a.getParam1(), "1");
     }
 
     public void type(Action a)
     {
-        Keyboard.getInstance().sendKeys(a.getParam1(), a.getParam2().equals("1"));
+        Keyboard.getInstance().sendKeys(a.getParam0(), a.getParam1().equals("1"));
     }
 
     public void clickxy(Action a)
     {
-        Mouse.getInstance().click(Integer.parseInt(a.getParam1()), Integer.parseInt(a.getParam2()), a.getParam3().equals("0"));
+        Mouse.getInstance().click(Integer.parseInt(a.getParam0()), Integer.parseInt(a.getParam1()), a.getParam2().equals("0"));
     }
 
     public void sleep(Action a) {
-        Time.sleep(Integer.parseInt(a.getParam1()));
+        Time.sleep(Integer.parseInt(a.getParam0()));
     }
 
     public String determineIf(Action a) {
         switch (a.getAction())
         {
             case "If item is in Inventory":
-                return Inventory.getCount(Integer.parseInt(a.getParam1())) > 0 ? "True" : "False";
+                return Inventory.getCount(Integer.parseInt(a.getParam0())) > 0 ? "True" : "False";
             case "If Entity is around":
-                return Npcs.getClosest(Integer.parseInt(a.getParam1())) != null ||
-                        SceneObjects.getClosest(Integer.parseInt(a.getParam1())) != null ? "True" : "False";
+                return Npcs.getClosest(Integer.parseInt(a.getParam0())) != null ||
+                        SceneObjects.getClosest(Integer.parseInt(a.getParam0())) != null ? "True" : "False";
             default:
                 VarsMethods.log("Error: Unimplemented conditional: " + a.getAction());
         }
