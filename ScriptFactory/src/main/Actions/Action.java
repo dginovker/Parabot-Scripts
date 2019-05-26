@@ -54,8 +54,10 @@ public class Action {
 
     @Override
     public String toString() {
-        return action.replace(" ", "-") +
-                "(" + param0 + "," + param1 + "," + param2 + ")";
+        return action.replace(" ", "-") + "(" +
+                param0 +
+                (!param1.equals("") ? "," + param1 : "") +
+                (!param2.equals("") ? "," + param2 : "") + ")";
     }
 
     String readAction(String str)
@@ -71,19 +73,32 @@ public class Action {
         if (str.equals("Endif"))
             return "";
 
-        String pattern = ".*\\(";
+        switch (i)
+        {
+            case 0:
+                return getRegex("[^\\(]*\\(([^,)]*).*", str, 1);
+            case 1:
+                return getRegex("[^,]*,([^,)]*).*", str, 1);
+            case 2:
+                return getRegex("[^,]*,[^,]*,([^,)]*).*", str, 1);
+            default:
+                return "";
+
+        }
+        /*String pattern = ".*\\(";
         for (int j = 0; j < i; j++)
         {
             pattern += ".*,";
         }
-        pattern += "(.*?)[,)].*";
-        log("Tried to get parameter " + i + " of " + str + ", got " + getRegex(pattern, str, 1));
-        return getRegex(pattern, str, 1);
+        pattern += "([^,)]*)[,)].*";*/
+        /*log("Regex pattern: " + pattern);
+        log("String: " + str);
+        log("Tried to get parameter " + i + " of str, got " + getRegex(pattern, str, i + 2));
+        return getRegex(pattern, str, i + 2);*/
     }
 
     private String getRegex(String pattern, String str, int match) {
         Matcher m = Pattern.compile(pattern).matcher(str);
-        m.matches();
-        return m.group(match);
+        return m.matches() ? m.group(match) : "";
     }
 }

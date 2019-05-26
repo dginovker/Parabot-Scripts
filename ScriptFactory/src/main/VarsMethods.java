@@ -6,9 +6,10 @@ import main.Actions.Logic.If;
 import main.Actions.Logic.InverseIf;
 import org.parabot.core.ui.Logger;
 
+import javax.swing.*;
+import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 public class VarsMethods {
     public static int tickSpeed = 1200;
@@ -61,5 +62,14 @@ public class VarsMethods {
             log("File saved successfully");
         } catch (FileNotFoundException ignored) {
         }
+    }
+
+    public static JPanel centralizeComponent(Component component)
+    {
+        JPanel centralizer = new JPanel();
+        centralizer.setLayout(new FlowLayout(FlowLayout.CENTER));
+        centralizer.add(component);
+
+        return centralizer;
     }
 }

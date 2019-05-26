@@ -19,7 +19,6 @@ public class If extends Action {
 
     @Override
     public String toString() {
-        return "If " + getAction().replace(" ", "-") +
-                "(" + getParam0() + "," + getParam1() + "," + getParam2() + ")";
+        return "If " + super.toString();
     }
 }

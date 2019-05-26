@@ -4,6 +4,7 @@ import main.Actions.Action;
 import main.GUI.GUI;
 import main.Strategies.RunLoop;
 import org.parabot.core.Context;
+import org.parabot.core.ui.BotDialog;
 import org.parabot.environment.api.interfaces.Paintable;
 import org.parabot.environment.scripts.Category;
 import org.parabot.environment.scripts.Script;
@@ -14,13 +15,14 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
+import static main.VarsMethods.log;
+
 /**
  * Created by SRH on 1/9/2018.
  * Welcome to AIO AIO - ScriptFactory. Make your own scripts!
  */
 
-
-@ScriptManifest(author = "Before", name = "Script Factory 1.1", category = Category.OTHER, version = 1.1, description = "Create your own scripts!", servers = "Any")
+@ScriptManifest(author = "Before", name = "Script Factory 1.2", category = Category.OTHER, version = 1.1, description = "Create your own scripts!", servers = "Any")
 public class Core extends Script implements Paintable {
 
     private VarsMethods vars = new VarsMethods();
@@ -59,8 +61,10 @@ public class Core extends Script implements Paintable {
 
     @Override
     public void paint(Graphics g) {
-        g.setColor(Color.GREEN);
+        g.setColor(Color.BLUE);
+        g.fillRect(560, 310, 150, 80);
 
+        g.setColor(Color.YELLOW);
         g.setFont(new Font("Cordia New", Font.PLAIN, 16));
         g.drawString("Script Factory", 580, 330);
         g.setFont(new Font("Cordia New", Font.PLAIN, 12));

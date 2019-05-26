@@ -12,7 +12,7 @@ import java.util.function.Consumer;
  */
 public class NewActionGUI extends NewStatementGUI {
     public NewActionGUI(ArrayList<Action> actionList, Consumer<Integer> updateTextfield) {
-        String[] actionTypes = new String[]{"Interact with", "Use item on", "Type", "Click (x,y)", "Sleep"};
+        String[] actionTypes = new String[]{"Interact with", "Use item on", "Type", "Click xy", "Sleep"};
         NewStatementGUI.Descriptions[] setDescs = {
                 new Descriptions("Entity to interact with (eg. 4296 = banker)", "Option to select (eg. \"1\")"),
                 new Descriptions("Item in your inventory to use (eg. 999 = \"Bones\")", "Entity to use it on (eg. 999 = altar)<999 isn't actually altar>", "Item option to select (i.e. \"Use\") (cAsE sEnSiTiVe)"),

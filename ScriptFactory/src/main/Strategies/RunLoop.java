@@ -13,6 +13,8 @@ import org.parabot.environment.scripts.framework.Strategy;
 import java.util.ArrayList;
 import java.util.Stack;
 
+import static main.VarsMethods.log;
+
 /**
  * Created by SRH on 1/15/2018.
  */
@@ -50,7 +52,13 @@ public class RunLoop implements Strategy {
 
         if (ifStack.peek().equals("True"))
         {
-            executeLine(line);
+            try {
+                executeLine(line);
+            } catch (NumberFormatException notFilledIn)
+            {
+                log("Error on line " + line);
+                log("Make sure you fill in all numeric values properly! Numbers only!");
+            }
         }
 
         Time.sleep(VarsMethods.tickSpeed);
@@ -71,7 +79,7 @@ public class RunLoop implements Strategy {
         }
         else
         {
-            switch (action.getAction())
+            switch (action.getAction().replace("-", " "))
             {
                 case "Interact with":
                     actionHandler.handleInteractWith(action);
@@ -82,14 +90,14 @@ public class RunLoop implements Strategy {
                 case "Type":
                     actionHandler.type(action);
                     break;
-                case "Click (x,y)":
+                case "Click xy":
                     actionHandler.clickxy(action);
                     break;
                 case "Sleep":
                     actionHandler.sleep(action);
                     break;
                 default:
-                    VarsMethods.log("Error: Unimplemented action: " + action.getAction());
+                    log("Error: Unimplemented action: " + action.getAction());
             }
         }
     }
