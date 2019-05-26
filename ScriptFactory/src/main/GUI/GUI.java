@@ -3,6 +3,7 @@ package main.GUI;
 import main.Actions.Logic.If;
 import main.Actions.Logic.Endif;
 import main.Actions.Action;
+import main.Actions.Logic.InverseIf;
 import main.GUI.MainPanels.ActionPanel;
 import main.NewGuis.NewActionGUI;
 import main.NewGuis.NewConditionGUI;
@@ -15,6 +16,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import static main.VarsMethods.log;
+
 /**
  * Created by Cyn on 1/9/2018.
  */
@@ -26,7 +29,7 @@ public class GUI extends JFrame {
     private JButton startButton = new JButton("Start");
 
     private JTextPane actionList = new JTextPane();
-    //private JTextArea actionList = new JTextArea(18, 40);
+    private JTextField tickSpeedField = new JTextField(0);
 
     private NewConditionGUI newCondition;
     private NewActionGUI newAction;
@@ -41,7 +44,7 @@ public class GUI extends JFrame {
             updateActionList();
         };
         Consumer<Integer> removeAction = (Integer toRemove) -> {
-            VarsMethods.log("Trying to remove " + toRemove);
+            log("Trying to remove " + toRemove);
             int pint = toRemove;
             actions.remove(pint);
             updateActionList();
@@ -57,7 +60,7 @@ public class GUI extends JFrame {
         setTitle("Parabot.org Script Factory");
         setLayout(new BorderLayout(12, 20));
 
-        add(new ActionPanel(actionList, newAction, newCondition, removeAction, endIf), BorderLayout.WEST);
+        add(new ActionPanel(actionList, tickSpeedField, newAction, newCondition, removeAction, endIf), BorderLayout.WEST);
         add(savePanel(), BorderLayout.EAST);
         add(startPanel(), BorderLayout.PAGE_END);
 
@@ -73,11 +76,12 @@ public class GUI extends JFrame {
     private void addActionListeners() {
         startButton.addActionListener(o -> {
             this.setVisible(false);
-            VarsMethods.log("Executing the following script:");
+            log("Executing the following script:");
             for (Action a : actions)
             {
-                VarsMethods.log(a.toString());
+                log(a.toString());
             }
+            VarsMethods.tickSpeed = Integer.parseInt(tickSpeedField.getText());
             scriptStarted = true;
         });
 
@@ -97,10 +101,13 @@ public class GUI extends JFrame {
         try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
             String line;
             while ((line = br.readLine()) != null) {
-                switch (line.split("\\{")[0])
+                switch (line.split(" ")[0])
                 {
                     case "If":
                         actions.add(new If(line));
+                        break;
+                    case "InverseIf":
+                        actions.add(new InverseIf(line));
                         break;
                     case "Endif":
                         actions.add(new Endif(line));
@@ -110,7 +117,7 @@ public class GUI extends JFrame {
                 }
             }
             updateActionList();
-            VarsMethods.log("File loaded successfully");
+            log("File loaded successfully");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,7 +133,7 @@ public class GUI extends JFrame {
                 writer.println(a.toString());
             }
             writer.close();
-            VarsMethods.log("File saved successfully");
+            log("File saved successfully");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -157,7 +164,7 @@ public class GUI extends JFrame {
             }
             //actionList.append(prepend + actions.get(i).toString() + "\n");
 
-            if (actions.get(i) instanceof If)
+            if (actions.get(i) instanceof If || actions.get(i) instanceof InverseIf)
             {
                 tabsInFront ++;
             }

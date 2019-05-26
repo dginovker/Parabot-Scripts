@@ -15,15 +15,18 @@ import java.util.function.Consumer;
  */
 public class ActionPanel extends JPanel {
     private JButton actionButton = new JButton("Add Action"), startIfButton = new JButton("Begin If-Action"), endIfButton = new JButton("End If-Block"), removeButton = new JButton ("Remove Action");
+    private JPanel tickSpeedPanel = new JPanel();
+    private JTextField tickSpeed;
     private JTextPane actionList;
     private NewActionGUI newAction;
     private NewConditionGUI newCondition;
     private Consumer<Integer> removeAction;
     private Consumer<Boolean> endIf;
 
-    public ActionPanel(JTextPane actionList, NewActionGUI newAction, NewConditionGUI newCondition, Consumer<Integer> removeAction, Consumer <Boolean> endIf)
+    public ActionPanel(JTextPane actionList, JTextField tickSpeed, NewActionGUI newAction, NewConditionGUI newCondition, Consumer<Integer> removeAction, Consumer <Boolean> endIf)
     {
         this.actionList = actionList;
+        this.tickSpeed = tickSpeed;
         this.newAction = newAction;
         this.newCondition = newCondition;
         this.removeAction = removeAction;
@@ -41,12 +44,18 @@ public class ActionPanel extends JPanel {
         JScrollPane scroll = new JScrollPane(this.actionList);
         this.actionList.setBorder(BorderFactory.createEtchedBorder(Color.BLUE, Color.BLACK));
 
+        tickSpeedPanel.setLayout(new FlowLayout());
+        tickSpeedPanel.add(new JLabel("Tick speed (ms):"), FlowLayout.LEFT);
+        this.tickSpeed.setText("1200");
+        tickSpeedPanel.add(this.tickSpeed);
+
         JPanel actionListButtons = new JPanel();
         actionListButtons.setLayout(new GridLayout(5, 1, 0, 20));
         actionListButtons.add(actionButton);
         actionListButtons.add(startIfButton);
         actionListButtons.add(endIfButton);
         actionListButtons.add(removeButton);
+        actionListButtons.add(tickSpeedPanel);
 
         add(actionListButtons, BorderLayout.EAST);
         add(scroll, BorderLayout.WEST);

@@ -3,6 +3,8 @@ package main.Actions;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static main.VarsMethods.log;
+
 /**
  * Created by SRH on 1/9/2018.
  */
@@ -61,18 +63,21 @@ public class Action {
         if (str.equals("Endif"))
             return "Endif";
 
-        String pattern = "(If )?(.*)\\(.*";
-        return getRegex(pattern, str, 2);
+        String pattern = "((Inverse)?If )?(.*)\\(.*";
+        return getRegex(pattern, str, 3);
     }
 
-    String readParam(String fromString, int i) {
+    String readParam(String str, int i) {
+        if (str.equals("Endif"))
+            return "";
+
         String pattern = ".*\\(";
-        for (int j = 1; j < i; j++)
+        for (int j = 0; j < i; j++)
         {
             pattern += ".*,";
         }
-        pattern += "(.*),.*";
-        return getRegex(pattern, fromString, 1);
+        pattern += "(.*)[,)].*";
+        return getRegex(pattern, str, 1);
     }
 
     private String getRegex(String pattern, String str, int match) {

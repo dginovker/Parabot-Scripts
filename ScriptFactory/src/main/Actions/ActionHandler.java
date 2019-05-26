@@ -72,4 +72,8 @@ public class ActionHandler {
         }
         return "False";
     }
+
+    public String determineInverseIf(Action a) {
+        return determineIf(a).equals("True") ? "False" : "True";
+    }
 }

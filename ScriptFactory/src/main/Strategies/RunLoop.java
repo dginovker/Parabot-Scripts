@@ -5,6 +5,7 @@ import main.Actions.Action;
 import main.Actions.ActionHandler;
 import main.Actions.Logic.Endif;
 import main.Actions.Logic.If;
+import main.Actions.Logic.InverseIf;
 import main.VarsMethods;
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.scripts.framework.Strategy;
@@ -52,39 +53,43 @@ public class RunLoop implements Strategy {
             executeLine(line);
         }
 
-        Time.sleep(1200);
+        Time.sleep(VarsMethods.tickSpeed);
     }
 
-    private void executeLine(Action line) {
-        if (line instanceof Endif)
+    private void executeLine(Action action) {
+        if (action instanceof Endif)
         {
             ifStack.pop();
         }
-        else if (line instanceof If)
+        else if (action instanceof If)
         {
-            ifStack.push(actionHandler.determineIf(line));
+            ifStack.push(actionHandler.determineIf(action));
+        }
+        else if (action instanceof InverseIf)
+        {
+            ifStack.push(actionHandler.determineInverseIf(action));
         }
         else
         {
-            switch (line.getAction())
+            switch (action.getAction())
             {
                 case "Interact with":
-                    actionHandler.handleInteractWith(line);
+                    actionHandler.handleInteractWith(action);
                     break;
                 case "Use item on":
-                    actionHandler.useItemOn(line);
+                    actionHandler.useItemOn(action);
                     break;
                 case "Type":
-                    actionHandler.type(line);
+                    actionHandler.type(action);
                     break;
                 case "Click (x,y)":
-                    actionHandler.clickxy(line);
+                    actionHandler.clickxy(action);
                     break;
                 case "Sleep":
-                    actionHandler.sleep(line);
+                    actionHandler.sleep(action);
                     break;
                 default:
-                    VarsMethods.log("Error: Unimplemented action: " + line.getAction());
+                    VarsMethods.log("Error: Unimplemented action: " + action.getAction());
             }
         }
     }

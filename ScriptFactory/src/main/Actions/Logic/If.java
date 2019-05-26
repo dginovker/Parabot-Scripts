@@ -2,12 +2,14 @@ package main.Actions.Logic;
 
 import main.Actions.Action;
 
+import static main.VarsMethods.log;
+
 /**
  * Created by SRH on 1/9/2018.
  */
 public class If extends Action {
-    public If(String action, String param1, String param2, String param3) {
-        super(action, param1, param2, param3);
+    public If(String action, String param0, String param1, String param2) {
+        super(action, param0, param1, param2);
     }
 
     public If(String fromString)

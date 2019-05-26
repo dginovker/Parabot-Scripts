@@ -2,6 +2,7 @@ package main.NewGuis;
 
 import main.Actions.Action;
 import main.Actions.Logic.If;
+import main.Actions.Logic.InverseIf;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,10 +19,12 @@ class NewStatementGUI extends JFrame {
     private JLabel firstDesc = new JLabel(), secondDesc = new JLabel(), thirdDesc = new JLabel();
 
     private JButton add = new JButton("Add");
+    private JButton addInverse = new JButton("Add inverse");
+    private JPanel addPanel = new JPanel();
     private String selectedAction;
 
     /**
-     * Creates whole src.main.GUI
+     * Creates whole GUI
      * @param title: Title for JFrame
      * @param actionList: Action list that gets appended to based on user input on this UI
      * @param updateTextfield: Function to update the action list on the first (and main) src.main.GUI
@@ -39,7 +42,7 @@ class NewStatementGUI extends JFrame {
 
         add(fillInfo());
 
-        add(add, BorderLayout.PAGE_END);
+        add(generateAddPanel(title), BorderLayout.PAGE_END);
 
         setSize(650, 300);
 
@@ -52,6 +55,11 @@ class NewStatementGUI extends JFrame {
             {
                 actionList.add(new If(selectedAction, first.getText(), second.getText(), third.getText()));
             }
+            updateTextfield.accept(5);
+            this.setVisible(false);
+        });
+        addInverse.addActionListener(o -> {
+            actionList.add(new InverseIf(selectedAction, first.getText(), second.getText(), third.getText()));
             updateTextfield.accept(5);
             this.setVisible(false);
         });
@@ -71,6 +79,18 @@ class NewStatementGUI extends JFrame {
         });
 
         return actionType;
+    }
+
+    /**
+     * Figures out if "Add Inverse" is needed
+     */
+    private JPanel generateAddPanel(String title) {
+        addPanel.add(add);
+        if (title.equals("Add new condition"))
+        {
+            addPanel.add(addInverse);
+        }
+        return addPanel;
     }
 
     /**
