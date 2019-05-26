@@ -4,6 +4,9 @@ import main.NewGuis.NewActionGUI;
 import main.NewGuis.NewConditionGUI;
 
 import javax.swing.*;
+import javax.swing.text.Style;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.function.Consumer;
 
@@ -12,13 +15,13 @@ import java.util.function.Consumer;
  */
 public class ActionPanel extends JPanel {
     private JButton actionButton = new JButton("Add Action"), startIfButton = new JButton("Begin If-Action"), endIfButton = new JButton("End If-Block"), removeButton = new JButton ("Remove Action");
-    private JTextArea actionList;
+    private JTextPane actionList;
     private NewActionGUI newAction;
     private NewConditionGUI newCondition;
     private Consumer<Integer> removeAction;
     private Consumer<Boolean> endIf;
 
-    public ActionPanel(JTextArea actionList, NewActionGUI newAction, NewConditionGUI newCondition, Consumer<Integer> removeAction, Consumer <Boolean> endIf)
+    public ActionPanel(JTextPane actionList, NewActionGUI newAction, NewConditionGUI newCondition, Consumer<Integer> removeAction, Consumer <Boolean> endIf)
     {
         this.actionList = actionList;
         this.newAction = newAction;
@@ -29,10 +32,14 @@ public class ActionPanel extends JPanel {
         setLayout(new BorderLayout(20, 0));
 
         this.actionList.setEditable(false);
+        this.actionList.setText("                                                                                     ");
+        Style redStyle = this.actionList.addStyle("red", null);
+        StyleConstants.setForeground(redStyle, Color.red);
+        Style blackStyle = this.actionList.addStyle("black", null);
+        StyleConstants.setForeground(blackStyle, Color.black);
 
         JScrollPane scroll = new JScrollPane(this.actionList);
         this.actionList.setBorder(BorderFactory.createEtchedBorder(Color.BLUE, Color.BLACK));
-        add(scroll, BorderLayout.WEST);
 
         JPanel actionListButtons = new JPanel();
         actionListButtons.setLayout(new GridLayout(5, 1, 0, 20));
@@ -41,7 +48,8 @@ public class ActionPanel extends JPanel {
         actionListButtons.add(endIfButton);
         actionListButtons.add(removeButton);
 
-        add(actionListButtons);
+        add(actionListButtons, BorderLayout.EAST);
+        add(scroll, BorderLayout.WEST);
 
         initButtons();
     }

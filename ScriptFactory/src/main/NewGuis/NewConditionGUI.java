@@ -10,7 +10,7 @@ import java.util.function.Consumer;
  */
 public class NewConditionGUI extends NewStatementGUI {
     public NewConditionGUI(ArrayList<Action> actionList, Consumer<Integer> updateTextfield) {
-        String[] actionTypes = new String[]{"If item is in Inventory", "If Entity is around"};
+        String[] actionTypes = new String[]{"Item is in Inventory", "Entity is around"};
         Descriptions[] setDescs = {
                 new Descriptions("Item to detect (eg. 4296 = bones)"),
                 new Descriptions("Entity to detect (eg. 4296 = banker)"),

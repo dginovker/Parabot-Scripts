@@ -9,6 +9,7 @@ import main.NewGuis.NewConditionGUI;
 import main.VarsMethods;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.io.*;
 import java.util.ArrayList;
@@ -24,7 +25,8 @@ public class GUI extends JFrame {
     private File selectedFile = null;
     private JButton startButton = new JButton("Start");
 
-    private JTextArea actionList = new JTextArea(18, 40);
+    private JTextPane actionList = new JTextPane();
+    //private JTextArea actionList = new JTextArea(18, 40);
 
     private NewConditionGUI newCondition;
     private NewActionGUI newAction;
@@ -142,12 +144,18 @@ public class GUI extends JFrame {
                 tabsInFront --;
             }
 
-            prepend = i + ")";
+            prepend = i + ": " + (i < 10 ? " " : "");
             for (int j = 0; j < tabsInFront; j++)
             {
                 prepend = prepend + "    ";
             }
-            actionList.append(prepend + actions.get(i).toString() + "\n");
+            try {
+                actionList.getStyledDocument().insertString(actionList.getStyledDocument().getLength(), prepend, actionList.getStyle("red"));
+                actionList.getStyledDocument().insertString(actionList.getStyledDocument().getLength(), actions.get(i).toString() + "\n", actionList.getStyle("black"));
+            } catch (BadLocationException e) {
+                e.printStackTrace();
+            }
+            //actionList.append(prepend + actions.get(i).toString() + "\n");
 
             if (actions.get(i) instanceof If)
             {
