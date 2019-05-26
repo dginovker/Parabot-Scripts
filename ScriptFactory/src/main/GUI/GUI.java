@@ -5,6 +5,7 @@ import main.Actions.Logic.Endif;
 import main.Actions.Action;
 import main.Actions.Logic.InverseIf;
 import main.GUI.MainPanels.ActionPanel;
+import main.NewGuis.AdvancedOptionsGUI;
 import main.NewGuis.NewActionGUI;
 import main.NewGuis.NewConditionGUI;
 import main.VarsMethods;
@@ -33,6 +34,7 @@ public class GUI extends JFrame {
 
     private NewConditionGUI newCondition;
     private NewActionGUI newAction;
+    private AdvancedOptionsGUI advancedOptions;
     private ArrayList<Action> actions;
 
     public GUI(ArrayList<Action> actions)
@@ -56,11 +58,13 @@ public class GUI extends JFrame {
 
         newAction = new NewActionGUI(actions, updateTextfield);
         newCondition = new NewConditionGUI(actions, updateTextfield);
+        advancedOptions = new AdvancedOptionsGUI(actions, updateTextfield, tickSpeedField);
+
 
         setTitle("Parabot.org Script Factory");
         setLayout(new BorderLayout(12, 20));
 
-        add(new ActionPanel(actionList, tickSpeedField, newAction, newCondition, removeAction, endIf), BorderLayout.WEST);
+        add(new ActionPanel(actionList, newAction, newCondition, advancedOptions, removeAction, endIf), BorderLayout.WEST);
         add(savePanel(), BorderLayout.EAST);
         add(startPanel(), BorderLayout.PAGE_END);
 
@@ -82,6 +86,8 @@ public class GUI extends JFrame {
                 log(a.toString());
             }
             VarsMethods.tickSpeed = Integer.parseInt(tickSpeedField.getText());
+            selectedFile = new File(VarsMethods.CACHED_LOC);
+            saveContents();
             scriptStarted = true;
         });
 
@@ -97,46 +103,12 @@ public class GUI extends JFrame {
     }
 
     private void loadContents() {
-        actions.clear();
-        try (BufferedReader br = new BufferedReader(new FileReader(selectedFile))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                switch (line.split(" ")[0])
-                {
-                    case "If":
-                        actions.add(new If(line));
-                        break;
-                    case "InverseIf":
-                        actions.add(new InverseIf(line));
-                        break;
-                    case "Endif":
-                        actions.add(new Endif(line));
-                        break;
-                    default:
-                        actions.add(new Action(line));
-                }
-            }
-            updateActionList();
-            log("File loaded successfully");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        VarsMethods.loadscript(actions, selectedFile);
+        updateActionList();
     }
 
     private void saveContents() {
-        PrintWriter writer = null;
-        try {
-            writer = new PrintWriter(selectedFile);
-
-            for (Action a : actions)
-            {
-                writer.println(a.toString());
-            }
-            writer.close();
-            log("File saved successfully");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        VarsMethods.savescript(actions, selectedFile);
     }
 
     private void updateActionList()
@@ -172,12 +144,12 @@ public class GUI extends JFrame {
     }
 
     private void updateFile() {
-        JFileChooser saver = new JFileChooser();
-        int option = saver.showOpenDialog(GUI.this);
+        JFileChooser fileChooser = new JFileChooser();
+        int option = fileChooser.showOpenDialog(GUI.this);
 
         if (option == JFileChooser.APPROVE_OPTION) {
-            mostRecentLog.setText("File used: " + saver.getSelectedFile().getPath());
-            selectedFile = saver.getSelectedFile();
+            mostRecentLog.setText("File used: " + fileChooser.getSelectedFile().getPath());
+            selectedFile = fileChooser.getSelectedFile();
         }
     }
 
@@ -211,6 +183,14 @@ public class GUI extends JFrame {
         save.add(chosen);
 
         return save;
+    }
+
+    public void killAllGuis()
+    {
+        newAction.setVisible(false);
+        newCondition.setVisible(false);
+        advancedOptions.killAllGuis();
+        advancedOptions.setVisible(false);
     }
 
 }

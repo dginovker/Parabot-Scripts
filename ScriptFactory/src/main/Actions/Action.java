@@ -76,7 +76,8 @@ public class Action {
         {
             pattern += ".*,";
         }
-        pattern += "(.*)[,)].*";
+        pattern += "(.*?)[,)].*";
+        log("Tried to get parameter " + i + " of " + str + ", got " + getRegex(pattern, str, 1));
         return getRegex(pattern, str, 1);
     }
 

@@ -1,12 +1,12 @@
 package main.GUI.MainPanels;
 
+import main.NewGuis.AdvancedOptionsGUI;
 import main.NewGuis.NewActionGUI;
 import main.NewGuis.NewConditionGUI;
 
 import javax.swing.*;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 import java.awt.*;
 import java.util.function.Consumer;
 
@@ -14,23 +14,23 @@ import java.util.function.Consumer;
  * Created by SRH on 1/10/2018.
  */
 public class ActionPanel extends JPanel {
-    private JButton actionButton = new JButton("Add Action"), startIfButton = new JButton("Begin If-Action"), endIfButton = new JButton("End If-Block"), removeButton = new JButton ("Remove Action");
-    private JPanel tickSpeedPanel = new JPanel();
-    private JTextField tickSpeed;
+    private JButton actionButton = new JButton("Add Action"), startIfButton = new JButton("Begin If-Action"), endIfButton = new JButton("End If-Block"), removeButton = new JButton ("Remove Action"), advancedButton = new JButton("Advanced");
     private JTextPane actionList;
+
     private NewActionGUI newAction;
     private NewConditionGUI newCondition;
     private Consumer<Integer> removeAction;
     private Consumer<Boolean> endIf;
+    private AdvancedOptionsGUI advancedOptions;
 
-    public ActionPanel(JTextPane actionList, JTextField tickSpeed, NewActionGUI newAction, NewConditionGUI newCondition, Consumer<Integer> removeAction, Consumer <Boolean> endIf)
+    public ActionPanel(JTextPane actionList, NewActionGUI newAction, NewConditionGUI newCondition, AdvancedOptionsGUI advancedOptions, Consumer<Integer> removeAction, Consumer<Boolean> endIf)
     {
         this.actionList = actionList;
-        this.tickSpeed = tickSpeed;
         this.newAction = newAction;
         this.newCondition = newCondition;
         this.removeAction = removeAction;
         this.endIf = endIf;
+        this.advancedOptions = advancedOptions;
 
         setLayout(new BorderLayout(20, 0));
 
@@ -44,18 +44,13 @@ public class ActionPanel extends JPanel {
         JScrollPane scroll = new JScrollPane(this.actionList);
         this.actionList.setBorder(BorderFactory.createEtchedBorder(Color.BLUE, Color.BLACK));
 
-        tickSpeedPanel.setLayout(new FlowLayout());
-        tickSpeedPanel.add(new JLabel("Tick speed (ms):"), FlowLayout.LEFT);
-        this.tickSpeed.setText("1200");
-        tickSpeedPanel.add(this.tickSpeed);
-
         JPanel actionListButtons = new JPanel();
         actionListButtons.setLayout(new GridLayout(5, 1, 0, 20));
         actionListButtons.add(actionButton);
         actionListButtons.add(startIfButton);
         actionListButtons.add(endIfButton);
         actionListButtons.add(removeButton);
-        actionListButtons.add(tickSpeedPanel);
+        actionListButtons.add(advancedButton);
 
         add(actionListButtons, BorderLayout.EAST);
         add(scroll, BorderLayout.WEST);
@@ -80,6 +75,10 @@ public class ActionPanel extends JPanel {
             String path = JOptionPane.showInputDialog("Enter the Statement# you wish to delete:");
 
             removeAction.accept(Integer.parseInt(path));
+        });
+
+        advancedButton.addActionListener(o -> {
+            advancedOptions.setVisible(true);
         });
     }
 }

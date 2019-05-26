@@ -11,6 +11,7 @@ import org.parabot.environment.scripts.ScriptManifest;
 import org.parabot.environment.scripts.framework.Strategy;
 
 import java.awt.*;
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -24,7 +25,7 @@ public class Core extends Script implements Paintable {
 
     private VarsMethods vars = new VarsMethods();
     private ArrayList<Action> actions = new ArrayList<>();
-    ArrayList<Strategy> strategies = new ArrayList<>();
+    private ArrayList<Strategy> strategies = new ArrayList<>();
 
     private GUI gui;
 
@@ -45,6 +46,8 @@ public class Core extends Script implements Paintable {
 
         if (!gui.scriptStarted)
         {
+            gui.killAllGuis();
+            VarsMethods.savescript(actions, new File(VarsMethods.CACHED_LOC));
             Context.getInstance().getRunningScript().setState(STATE_STOPPED);
         }
 
