@@ -6,6 +6,7 @@ import main.Actions.ActionHandler;
 import main.Actions.Logic.Endif;
 import main.Actions.Logic.If;
 import main.Actions.Logic.InverseIf;
+import main.Actions.Logic.LogicHandler;
 import main.VarsMethods;
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.scripts.framework.Strategy;
@@ -22,6 +23,7 @@ public class RunLoop implements Strategy {
     private ArrayList<Action> actions;
     private VarsMethods vars;
     private ActionHandler actionHandler;
+    private LogicHandler logicHandler;
     private Stack ifStack;
 
     private int lineIndex;
@@ -32,6 +34,7 @@ public class RunLoop implements Strategy {
         this.vars = vars;
 
         actionHandler = new ActionHandler();
+        logicHandler = new LogicHandler();
         ifStack = new Stack();
         ifStack.push("True");
 
@@ -48,34 +51,37 @@ public class RunLoop implements Strategy {
         Action line = actions.get(lineIndex);
         lineIndex = ++lineIndex == actions.size() ? 0 : lineIndex;
 
-        vars.currentAction = line.getAction();
+        if (line instanceof Endif)
+        {
+            ifStack.pop();
+            return;
+        }
 
         if (ifStack.peek().equals("True"))
         {
+            vars.currentAction = line.getAction();
+
             try {
                 executeLine(line);
-            } catch (NumberFormatException notFilledIn)
-            {
+            } catch (NumberFormatException notFilledIn) {
                 log("Error on line " + line);
                 log("Make sure you fill in all numeric values properly! Numbers only!");
             }
+
+            Time.sleep(VarsMethods.tickSpeed);
         }
 
-        Time.sleep(VarsMethods.tickSpeed);
+        Time.sleep(50);
     }
 
     private void executeLine(Action action) {
-        if (action instanceof Endif)
+        if (action instanceof If)
         {
-            ifStack.pop();
-        }
-        else if (action instanceof If)
-        {
-            ifStack.push(actionHandler.determineIf(action));
+            ifStack.push(logicHandler.determineIf(action));
         }
         else if (action instanceof InverseIf)
         {
-            ifStack.push(actionHandler.determineInverseIf(action));
+            ifStack.push(logicHandler.determineInverseIf(action));
         }
         else
         {
@@ -83,6 +89,9 @@ public class RunLoop implements Strategy {
             {
                 case "Interact with":
                     actionHandler.handleInteractWith(action);
+                    break;
+                case "Inventory item interact":
+                    actionHandler.inventoryItemInteract(action);
                     break;
                 case "Use item on":
                     actionHandler.useItemOn(action);
@@ -95,6 +104,9 @@ public class RunLoop implements Strategy {
                     break;
                 case "Sleep":
                     actionHandler.sleep(action);
+                    break;
+                case "Send raw Action":
+                    actionHandler.sendRawAction(action);
                     break;
                 default:
                     log("Error: Unimplemented action: " + action.getAction());

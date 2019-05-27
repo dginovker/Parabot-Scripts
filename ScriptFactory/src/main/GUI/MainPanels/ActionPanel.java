@@ -3,6 +3,7 @@ package main.GUI.MainPanels;
 import main.NewGuis.AdvancedOptionsGUI;
 import main.NewGuis.NewActionGUI;
 import main.NewGuis.NewConditionGUI;
+import main.VarsMethods;
 
 import javax.swing.*;
 import javax.swing.text.Style;
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
  * Created by SRH on 1/10/2018.
  */
 public class ActionPanel extends JPanel {
-    private JButton actionButton = new JButton("Add Action"), startIfButton = new JButton("Begin If-Action"), endIfButton = new JButton("End If-Block"), removeButton = new JButton ("Remove Action"), advancedButton = new JButton("Advanced");
+    private JButton actionButton = new JButton("Add Action"), startIfButton = new JButton("Begin If-Action"), endIfButton = new JButton("End If-Block"), removeButton = new JButton ("Remove Line"), advancedButton = new JButton("Advanced");
     private JTextPane actionList;
 
     private NewActionGUI newAction;
@@ -74,7 +75,7 @@ public class ActionPanel extends JPanel {
         removeButton.addActionListener(o -> {
             String path = JOptionPane.showInputDialog("Enter the Statement# you wish to delete:");
 
-            removeAction.accept(Integer.parseInt(path));
+            removeAction.accept(VarsMethods.parsePint(path));
         });
 
         advancedButton.addActionListener(o -> {

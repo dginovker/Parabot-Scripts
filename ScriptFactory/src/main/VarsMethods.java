@@ -14,7 +14,8 @@ import java.util.ArrayList;
 public class VarsMethods {
     public static int tickSpeed = 1200;
     public String currentAction = "";
-    public final static String CACHED_LOC = "ScriptFactory cache.txt";
+    public final static String DEFAULT_DIR = System.getProperty("user.home") + System.getProperty("file.separator") + "Parabot" + System.getProperty("file.separator") + "Script Factory";
+    public final static String CACHED_LOC = DEFAULT_DIR + System.getProperty("file.separator") + "ScriptFactory cache.txt";
 
     public static void log(String str)
     {
@@ -71,5 +72,10 @@ public class VarsMethods {
         centralizer.add(component);
 
         return centralizer;
+    }
+
+    public static int parsePint(String toParse)
+    {
+        return Integer.parseInt(toParse.replaceAll("[^0-9]", ""));
     }
 }

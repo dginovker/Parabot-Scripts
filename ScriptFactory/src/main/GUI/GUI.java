@@ -85,7 +85,7 @@ public class GUI extends JFrame {
             {
                 log(a.toString());
             }
-            VarsMethods.tickSpeed = Integer.parseInt(tickSpeedField.getText());
+            VarsMethods.tickSpeed = VarsMethods.parsePint(tickSpeedField.getText());
             selectedFile = new File(VarsMethods.CACHED_LOC);
             saveContents();
             scriptStarted = true;
@@ -145,6 +145,8 @@ public class GUI extends JFrame {
 
     private void updateFile() {
         JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setCurrentDirectory(new File(VarsMethods.DEFAULT_DIR));
+
         int option = fileChooser.showOpenDialog(GUI.this);
 
         if (option == JFileChooser.APPROVE_OPTION) {

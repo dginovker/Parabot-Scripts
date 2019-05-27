@@ -72,6 +72,8 @@ class NewStatementGUI extends JFrame {
     private JComboBox actionTypeCombo(String[] actionTypes, Descriptions[] descs) {
         JComboBox actionType = new JComboBox(actionTypes);
         selectedAction = actionTypes[0]; //prevents null
+        setDesc(descs[0].getS(), descs[0].getS1(), descs[0].getS2());
+
         actionType.addActionListener(o -> {
             selectedAction = actionType.getSelectedItem().toString();
 

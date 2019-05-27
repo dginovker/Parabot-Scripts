@@ -33,6 +33,10 @@ public class Core extends Script implements Paintable {
 
     @Override
     public boolean onExecute() {
+        File directory = new File(VarsMethods.DEFAULT_DIR);
+        if (!directory.exists())
+            directory.mkdirs();
+
         gui = new GUI(actions);
 
         gui.setVisible(true);
@@ -62,7 +66,7 @@ public class Core extends Script implements Paintable {
     @Override
     public void paint(Graphics g) {
         g.setColor(Color.BLUE);
-        g.fillRect(560, 310, 150, 80);
+        g.fillRect(560, 310, 170, 70);
 
         g.setColor(Color.YELLOW);
         g.setFont(new Font("Cordia New", Font.PLAIN, 16));

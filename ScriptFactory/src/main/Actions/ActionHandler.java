@@ -1,32 +1,41 @@
 package main.Actions;
 
-import main.VarsMethods;
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.input.Keyboard;
 import org.parabot.environment.input.Mouse;
-import org.rev317.min.api.methods.Inventory;
-import org.rev317.min.api.methods.Menu;
-import org.rev317.min.api.methods.Npcs;
-import org.rev317.min.api.methods.SceneObjects;
+import org.rev317.min.api.methods.*;
 import org.rev317.min.api.wrappers.Item;
 import org.rev317.min.api.wrappers.Npc;
 import org.rev317.min.api.wrappers.SceneObject;
+
+import java.awt.event.KeyEvent;
+
+import static main.VarsMethods.log;
+import static main.VarsMethods.parsePint;
 
 public class ActionHandler {
 
     private void interactWithEntity(String id, String option)
     {
-        int entityId = Integer.parseInt(id);
-        int optionInt = Integer.parseInt(option);
+        int entityId = parsePint(id);
+        int optionInt = parsePint(option);
 
         SceneObject candidateObject = SceneObjects.getClosest(entityId);
         Npc candidateNpc = Npcs.getClosest(entityId);
+        Npcs.getClosest(3328);
 
         if (candidateObject != null)
         {
             candidateObject.interact(optionInt);
         } else {
-            candidateNpc.interact(optionInt);
+            if (candidateNpc != null)
+            {
+                candidateNpc.interact(optionInt);
+            }
+            else
+            {
+                log("Can't find the entity to interact with!");
+            }
         }
     }
 
@@ -35,11 +44,14 @@ public class ActionHandler {
         interactWithEntity(a.getParam0(), a.getParam1());
     }
 
+    public void inventoryItemInteract(Action a)
+    {
+        Inventory.getItem(parsePint(a.getParam0())).interact(a.getParam1());
+    }
+
     public void useItemOn(Action a)
     {
-        int itemId = Integer.parseInt(a.getParam0());
-
-        Item toUse = Inventory.getItem(itemId);
+        Item toUse = Inventory.getItem(parsePint(a.getParam0()));
         Menu.interact(toUse, a.getParam2());
 
         interactWithEntity(a.getParam1(), "1");
@@ -47,33 +59,28 @@ public class ActionHandler {
 
     public void type(Action a)
     {
-        Keyboard.getInstance().sendKeys(a.getParam0(), a.getParam1().equals("1"));
+        if (a.getParam0().toLowerCase().equals("{esc}"))
+        {
+            Keyboard.getInstance().clickKey(KeyEvent.VK_ESCAPE);
+        }
+        else
+        {
+            Keyboard.getInstance().sendKeys(a.getParam0(), a.getParam1().equals("1"));
+        }
     }
 
     public void clickxy(Action a)
     {
-        Mouse.getInstance().click(Integer.parseInt(a.getParam0()), Integer.parseInt(a.getParam1()), a.getParam2().equals("0"));
+        Mouse.getInstance().click(parsePint(a.getParam0()), parsePint(a.getParam1()), a.getParam2().equals("0"));
     }
 
     public void sleep(Action a) {
-        Time.sleep(Integer.parseInt(a.getParam0()));
+        Time.sleep(parsePint(a.getParam0()));
     }
 
-    public String determineIf(Action a) {
-        switch (a.getAction())
-        {
-            case "If item is in Inventory":
-                return Inventory.getCount(Integer.parseInt(a.getParam0())) > 0 ? "True" : "False";
-            case "If Entity is around":
-                return Npcs.getClosest(Integer.parseInt(a.getParam0())) != null ||
-                        SceneObjects.getClosest(Integer.parseInt(a.getParam0())) != null ? "True" : "False";
-            default:
-                VarsMethods.log("Error: Unimplemented conditional: " + a.getAction());
-        }
-        return "False";
-    }
-
-    public String determineInverseIf(Action a) {
-        return determineIf(a).equals("True") ? "False" : "True";
+    public void sendRawAction(Action a)
+    {
+        String[] actionIds = a.getParam1().replaceAll("[^0-9;]", "").split(";");
+        Menu.sendAction(parsePint(a.getParam0()), parsePint(actionIds[0]), parsePint(actionIds[1]), parsePint(actionIds[2]), parsePint(actionIds[3]), 0);
     }
 }

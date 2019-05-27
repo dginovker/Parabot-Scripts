@@ -75,8 +75,8 @@ public class AdvancedOptionsGUI extends JFrame {
 
         submitMove.addActionListener(b ->
         {
-            int lineToMoveAsPint = Integer.parseInt(lineToMove.getText());
-            int lineToPlaceAboveAsPint = Integer.parseInt(lineToInsertAbove.getText());
+            int lineToMoveAsPint = VarsMethods.parsePint(lineToMove.getText());
+            int lineToPlaceAboveAsPint = VarsMethods.parsePint(lineToInsertAbove.getText());
 
             Action removed = actions.remove(lineToMoveAsPint);
             actions.add(lineToPlaceAboveAsPint, removed);
@@ -99,6 +99,7 @@ public class AdvancedOptionsGUI extends JFrame {
         {
             VarsMethods.loadscript(actions, new File(VarsMethods.CACHED_LOC));
             updateTextfield.accept(5);
+            this.setVisible(false);
         });
     }
 
@@ -124,6 +125,7 @@ class TipsAndTricksGUI extends JFrame
                 "Don't know what to do? Read this guide! https://parabot.slack.com",
                 "Click File > Logger for feedback on your actions",
                 "Open the files you save with a program like Notepad if you wish to edit them manually",
+                "Leave the text for a Type function as {ESC} if you want it to hit the \"Escape\" key",
         };
 
         textAreaTips.setEditable(false);
