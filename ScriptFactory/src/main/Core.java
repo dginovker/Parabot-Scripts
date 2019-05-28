@@ -39,8 +39,6 @@ public class Core extends Script implements Paintable {
 
         gui = new GUI(actions);
 
-        gui.setVisible(true);
-
         while (gui.isShowing())
         {
             try {
