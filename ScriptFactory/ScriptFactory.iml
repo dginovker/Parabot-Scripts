@@ -21,7 +21,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../Parabot-317-API-Minified_old.jar!/" />
+          <root url="jar://$MODULE_DIR$/../Parabot-317-API-Minified.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

@@ -1,5 +1,6 @@
 package main.Actions;
 
+import main.VarsMethods;
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.input.Keyboard;
 import org.parabot.environment.input.Mouse;
@@ -26,11 +27,11 @@ public class ActionHandler {
 
         if (candidateObject != null)
         {
-            candidateObject.interact(optionInt);
+            candidateObject.interact(VarsMethods.getSceneOption(option));
         } else {
             if (candidateNpc != null)
             {
-                candidateNpc.interact(optionInt);
+                candidateNpc.interact(VarsMethods.getNpcOption(option));
             }
             else
             {
@@ -46,13 +47,13 @@ public class ActionHandler {
 
     public void inventoryItemInteract(Action a)
     {
-        Inventory.getItem(parsePint(a.getParam0())).interact(a.getParam1());
+        Inventory.getItem(parsePint(a.getParam0())).interact(VarsMethods.getItemOption(a.getParam1()));
     }
 
     public void useItemOn(Action a)
     {
         Item toUse = Inventory.getItem(parsePint(a.getParam0()));
-        Menu.interact(toUse, a.getParam2());
+        Menu.interact(toUse, VarsMethods.getItemOption(a.getParam1()));
 
         interactWithEntity(a.getParam1(), "1");
     }

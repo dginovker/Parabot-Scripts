@@ -5,6 +5,9 @@ import main.Actions.Logic.Endif;
 import main.Actions.Logic.If;
 import main.Actions.Logic.InverseIf;
 import org.parabot.core.ui.Logger;
+import org.rev317.min.api.methods.Items;
+import org.rev317.min.api.methods.Npcs;
+import org.rev317.min.api.methods.SceneObjects;
 
 import javax.swing.*;
 import java.awt.*;
@@ -77,5 +80,20 @@ public class VarsMethods {
     public static int parsePint(String toParse)
     {
         return Integer.parseInt(toParse.replaceAll("[^0-9]", ""));
+    }
+
+    public static SceneObjects.Option getSceneOption(String option) {
+        //Todo
+        return SceneObjects.Option.FIRST;
+    }
+
+    public static Npcs.Option getNpcOption(String option) {
+        //Todo
+        return Npcs.Option.SECOND;
+    }
+
+    public static Items.Option getItemOption(String param1) {
+        //Todo
+        return Items.Option.SECOND;
     }
 }
