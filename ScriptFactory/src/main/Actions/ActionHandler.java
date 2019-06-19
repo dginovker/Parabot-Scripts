@@ -8,6 +8,7 @@ import org.rev317.min.api.methods.*;
 import org.rev317.min.api.wrappers.Item;
 import org.rev317.min.api.wrappers.Npc;
 import org.rev317.min.api.wrappers.SceneObject;
+import org.rev317.min.api.wrappers.Tile;
 
 import java.awt.event.KeyEvent;
 
@@ -19,11 +20,9 @@ public class ActionHandler {
     private void interactWithEntity(String id, String option)
     {
         int entityId = parsePint(id);
-        int optionInt = parsePint(option);
 
         SceneObject candidateObject = SceneObjects.getClosest(entityId);
         Npc candidateNpc = Npcs.getClosest(entityId);
-        Npcs.getClosest(3328);
 
         if (candidateObject != null)
         {
@@ -83,5 +82,9 @@ public class ActionHandler {
     {
         String[] actionIds = a.getParam1().replaceAll("[^0-9;]", "").split(";");
         Menu.sendAction(parsePint(a.getParam0()), parsePint(actionIds[0]), parsePint(actionIds[1]), parsePint(actionIds[2]), parsePint(actionIds[3]), 0);
+    }
+
+    public void walkTo(Action a) {
+        Walking.walkTo(new Tile(Integer.valueOf(a.getParam0()), Integer.valueOf(a.getParam1())));
     }
 }

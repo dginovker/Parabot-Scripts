@@ -15,14 +15,12 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
-import static main.VarsMethods.log;
-
 /**
  * Created by SRH on 1/9/2018.
  * Welcome to AIO AIO - ScriptFactory. Make your own scripts!
  */
 
-@ScriptManifest(author = "Before", name = "Script Factory 1.2", category = Category.OTHER, version = 1.1, description = "Create your own scripts!", servers = "Any")
+@ScriptManifest(author = "Before", name = "Script Factory 1.3", category = Category.OTHER, version = 1.1, description = "Create your own scripts!", servers = "All")
 public class Core extends Script implements Paintable {
 
     private VarsMethods vars = new VarsMethods();

@@ -20,6 +20,8 @@ public class LogicHandler {
                         SceneObjects.getClosest(VarsMethods.parsePint(a.getParam0())) != null ? "True" : "False";
             case "Hitpoints is below":
                 return Players.getMyPlayer().getHealth() < VarsMethods.parsePint(a.getParam0()) ? "True" : "False";
+            case "In Combat":
+                return Players.getMyPlayer().isInCombat() ? "True" : "False";
             default:
                 log("Error: Unimplemented conditional: " + a.getAction());
         }

@@ -10,11 +10,12 @@ import java.util.function.Consumer;
  */
 public class NewConditionGUI extends NewStatementGUI {
     public NewConditionGUI(ArrayList<Action> actionList, Consumer<Integer> updateTextfield) {
-        String[] actionTypes = new String[]{"Item is in Inventory", "Entity is around", "Hitpoints is below"};
+        String[] actionTypes = new String[]{"Item is in Inventory", "Entity is around", "Hitpoints is below", "In Combat"};
         Descriptions[] setDescs = {
                 new Descriptions("Item to detect (eg. 4296 = bones)", "Number of them to detect (blank = 1)"),
                 new Descriptions("Entity to detect (eg. 4296 = banker)"),
-                new Descriptions("Below health # (eg. 10)")
+                new Descriptions("Below health # (eg. 10)"),
+                new Descriptions(""),
         };
 
         initGui("Add new condition", actionList, updateTextfield, actionTypes, setDescs);

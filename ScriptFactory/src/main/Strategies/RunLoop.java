@@ -66,6 +66,10 @@ public class RunLoop implements Strategy {
             } catch (NumberFormatException notFilledIn) {
                 log("Error on line " + line);
                 log("Make sure you fill in all numeric values properly! Numbers only!");
+                if (line.toString().contains("\t"))
+                {
+                    log("Potential resolution: Tab character detected on the line");
+                }
             }
 
             Time.sleep(VarsMethods.tickSpeed);
@@ -107,6 +111,9 @@ public class RunLoop implements Strategy {
                     break;
                 case "Send raw Action":
                     actionHandler.sendRawAction(action);
+                    break;
+                case "Walk to":
+                    actionHandler.walkTo(action);
                     break;
                 default:
                     log("Error: Unimplemented action: " + action.getAction());

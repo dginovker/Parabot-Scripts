@@ -6,6 +6,8 @@ import main.Actions.Logic.InverseIf;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
@@ -106,7 +108,30 @@ class NewStatementGUI extends JFrame {
         fillInfo.add(detailGrabber(second, secondDesc));
         fillInfo.add(detailGrabber(third, thirdDesc));
 
+        setTabNavigation(first);
+
         return fillInfo;
+    }
+
+    /**
+     * Makes the textareas switch when pressing the Tab key
+     * @param textArea current TextArea to operate on
+     */
+    private void setTabNavigation(JTextArea textArea) {
+        textArea.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+                if (keyEvent.getKeyCode() == KeyEvent.VK_TAB)
+                {
+                    if (keyEvent.getModifiers() > 0)
+                        first.transferFocusBackward();
+                    else
+                        first.transferFocus();
+
+                    keyEvent.consume();
+                }
+            }
+        });
     }
 
     /**

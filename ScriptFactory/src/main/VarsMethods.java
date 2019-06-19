@@ -83,17 +83,59 @@ public class VarsMethods {
     }
 
     public static SceneObjects.Option getSceneOption(String option) {
-        //Todo
-        return SceneObjects.Option.FIRST;
+        switch (option)
+        {
+            case "1":
+                return SceneObjects.Option.FIRST;
+            case "2":
+                return SceneObjects.Option.SECOND;
+            case "3":
+                return SceneObjects.Option.THIRD;
+            case "4":
+                return SceneObjects.Option.FOURTH;
+            case "5":
+                return SceneObjects.Option.FIFTH;
+            default:
+                VarsMethods.log("Invalid Object option: " + option);
+                return SceneObjects.Option.valueOf(option);
+        }
     }
 
     public static Npcs.Option getNpcOption(String option) {
-        //Todo
-        return Npcs.Option.SECOND;
+        switch (option)
+        {
+            case "1":
+                return Npcs.Option.FIRST;
+            case "2":
+                return Npcs.Option.SECOND;
+            case "3":
+                return Npcs.Option.THIRD;
+            case "4":
+                return Npcs.Option.FOURTH;
+            case "5":
+                return Npcs.Option.FIFTH;
+            default:
+                VarsMethods.log("Invalid Object option: " + option);
+                return Npcs.Option.valueOf(option);
+        }
     }
 
-    public static Items.Option getItemOption(String param1) {
-        //Todo
-        return Items.Option.SECOND;
+    public static Items.Option getItemOption(String option) {
+        switch (option)
+        {
+            case "1":
+                return Items.Option.FIRST;
+            case "2":
+                return Items.Option.SECOND;
+            case "3":
+                return Items.Option.THIRD;
+            case "4":
+                return Items.Option.FOURTH;
+            case "5":
+                return Items.Option.FIFTH;
+            default:
+                VarsMethods.log("Invalid Object option: " + option);
+                return Items.Option.valueOf(option);
+        }
     }
 }
