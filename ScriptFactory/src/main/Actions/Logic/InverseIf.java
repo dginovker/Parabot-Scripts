@@ -3,10 +3,11 @@ package main.Actions.Logic;
 import main.Actions.Action;
 
 import javax.swing.*;
+import java.util.ArrayList;
 
 public class InverseIf extends Action {
 
-    public InverseIf(String action, JTextArea[] inputs) {
+    public InverseIf(String action, ArrayList<JTextArea> inputs) {
         super(action, inputs);
     }
 
@@ -17,7 +18,6 @@ public class InverseIf extends Action {
 
     @Override
     public String toString() {
-        return "InverseIf " + getAction().replace(" ", "-") +
-                "(" + getParamAsString(0) + "," + getParamAsString(1) + "," + getParamAsString(2) + ")";
+        return "InverseIf " + super.toString();
     }
 }

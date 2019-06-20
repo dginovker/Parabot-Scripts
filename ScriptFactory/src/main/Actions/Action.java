@@ -26,7 +26,7 @@ public class Action {
         return Integer.parseInt(params.get(paramIndex));
     }
 
-    public Action(String action, JTextArea[] inputs) {
+    public Action(String action, ArrayList<JTextArea> inputs) {
         this.action = action;
         for (JTextArea input : inputs) {
             params.add(input.getText());

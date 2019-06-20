@@ -4,13 +4,13 @@ import main.Actions.Action;
 
 import javax.swing.*;
 
-import static main.VarsMethods.log;
+import java.util.ArrayList;
 
 /**
  * Created by SRH on 1/9/2018.
  */
 public class If extends Action {
-    public If(String action, JTextArea inputs[]) {
+    public If(String action, ArrayList<JTextArea> inputs) {
         super(action, inputs);
     }
 

@@ -11,14 +11,16 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 
+import static main.VarsMethods.MAX_PARAMS;
+
 /**
  * Created by SRH on 1/10/2018.
  * Creates the main.GUI that is extended by actions and if statements
  * Allows user to generate new actions/if statements
  */
 class NewStatementGUI extends JFrame {
-    private JTextArea[] inputs = new JTextArea[3];
-    private JLabel[] descLabels = new JLabel[3];
+    private ArrayList<JTextArea> inputs = new ArrayList<>();
+    private ArrayList<JLabel> descLabels = new ArrayList<>();
 
     private JButton add = new JButton("Add");
     private JButton addInverse = new JButton("Add inverse");
@@ -37,9 +39,9 @@ class NewStatementGUI extends JFrame {
         setTitle(title);
         setLayout(new BorderLayout());
 
-        for (int i = 0; i < 3; i++) {
-            inputs[i] = new JTextArea();
-            descLabels[i] = new JLabel();
+        for (int i = 0; i < MAX_PARAMS; i++) {
+            inputs.add(new JTextArea());
+            descLabels.add(new JLabel());
         }
 
         JPanel dropDownAndDesc = new JPanel(new GridLayout(2, 1));
@@ -127,8 +129,8 @@ class NewStatementGUI extends JFrame {
         fillInfo.setLayout(new GridLayout(3, 1, 20, 20));
 
         for (int i = 0; i < 3; i++) {
-            fillInfo.add(detailGrabber(inputs[i], descLabels[i]));
-            setHKNavigation(inputs[i]);
+            fillInfo.add(detailGrabber(inputs.get(i), descLabels.get(i)));
+            setHKNavigation(inputs.get(i));
         }
 
         return fillInfo;
@@ -175,7 +177,7 @@ class NewStatementGUI extends JFrame {
     private void setDesc(Descriptions desc)
     {
         for (int i = 0; i < 3; i++) {
-            setUIElements(desc.getS(i), inputs[i], descLabels[i]);
+            setUIElements(desc.getS(i), inputs.get(i), descLabels.get(i));
         }
     }
 
