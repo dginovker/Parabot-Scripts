@@ -3,8 +3,9 @@ package main;
 import main.Actions.Action;
 import main.Actions.Logic.Endif;
 import main.Actions.Logic.If;
-import main.Actions.Logic.InverseIf;
+import main.Actions.Logic.IfNot;
 import org.parabot.core.ui.Logger;
+import org.rev317.min.api.methods.GroundItems;
 import org.rev317.min.api.methods.Items;
 import org.rev317.min.api.methods.Npcs;
 import org.rev317.min.api.methods.SceneObjects;
@@ -37,8 +38,8 @@ public class VarsMethods {
                     case "If":
                         actions.add(new If(line));
                         break;
-                    case "InverseIf":
-                        actions.add(new InverseIf(line));
+                    case "IfNot":
+                        actions.add(new IfNot(line));
                         break;
                     case "Endif":
                         actions.add(new Endif(line));
@@ -145,6 +146,25 @@ public class VarsMethods {
             default:
                 VarsMethods.log("Invalid Object option: " + option);
                 return Items.Option.valueOf(option);
+        }
+    }
+
+    public static GroundItems.Option getGroundItemOption(String option) {
+        switch (option)
+        {
+            case "1":
+                return GroundItems.Option.FIRST;
+            case "2":
+                return GroundItems.Option.SECOND;
+            case "3":
+                return GroundItems.Option.THIRD;
+            case "4":
+                return GroundItems.Option.FOURTH;
+            case "5":
+                return GroundItems.Option.FIFTH;
+            default:
+                VarsMethods.log("Invalid Object option: " + option);
+                return GroundItems.Option.valueOf(option);
         }
     }
 }

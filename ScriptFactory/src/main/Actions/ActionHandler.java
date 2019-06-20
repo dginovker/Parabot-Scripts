@@ -5,10 +5,7 @@ import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.input.Keyboard;
 import org.parabot.environment.input.Mouse;
 import org.rev317.min.api.methods.*;
-import org.rev317.min.api.wrappers.Item;
-import org.rev317.min.api.wrappers.Npc;
-import org.rev317.min.api.wrappers.SceneObject;
-import org.rev317.min.api.wrappers.Tile;
+import org.rev317.min.api.wrappers.*;
 
 import java.awt.event.KeyEvent;
 
@@ -19,7 +16,6 @@ public class ActionHandler {
 
     private boolean interactWithEntity(int id, String option)
     {
-        log("interact with entity: id: " + id + "opt: " + option);
         SceneObject candidateObject = SceneObjects.getClosest(id);
         Npc candidateNpc = Npcs.getClosest(id);
 
@@ -42,7 +38,7 @@ public class ActionHandler {
     public void handleInteractWith(Action a)
     {
         for (int i = 0; i < a.getParamCount() - 1; i++) {
-            if (interactWithEntity(a.getParam(i), a.getParamAsString(a.getParamCount()-1)))
+            if (interactWithEntity(a.getParam(i), a.getParamAsString(a.getParamCount() - 1)))
                 return;
         }
         log("Couldn't find an entity in: " + a);
@@ -50,7 +46,17 @@ public class ActionHandler {
 
     public void inventoryItemInteract(Action a)
     {
-        Inventory.getItem(a.getParam(0)).interact(VarsMethods.getItemOption(a.getParamAsString(1)));
+        try {
+            Item tea = Inventory.getItem(a.getParam(0));
+            tea.interact(VarsMethods.getItemOption(a.getParamAsString(1)));
+        } catch (NullPointerException e) {
+            log("Warning: Couldn't find inventory item with id " + a.getParam(0));
+            if (Inventory.getCount(a.getParam(0) + 1) > 0)
+            {
+                log("But, you seem to have " + Inventory.getCount(a.getParam(0) + 1) + " items with id " + (a.getParam(0) + 1));
+                log("Try the new ID out. It might work for what you want.");
+            }
+        }
     }
 
     public void useItemOn(Action a)
@@ -85,10 +91,31 @@ public class ActionHandler {
     public void sendRawAction(Action a)
     {
         String[] actionIds = a.getParamAsString(1).replaceAll("[^0-9;]", "").split(";");
-        Menu.sendAction(a.getParam(0), parsePint(actionIds[0]), parsePint(actionIds[1]), parsePint(actionIds[2]), parsePint(actionIds[3]), 0);
+        if (actionIds.length == 4)
+        {
+            Menu.sendAction(a.getParam(0), parsePint(actionIds[0]), parsePint(actionIds[1]), parsePint(actionIds[2]), parsePint(actionIds[3]), 0);
+        } else {
+            Menu.sendAction(a.getParam(0), parsePint(actionIds[0]), parsePint(actionIds[1]), parsePint(actionIds[2]), 0);
+        }
     }
 
     public void walkTo(Action a) {
         Walking.walkTo(new Tile(Integer.valueOf(a.getParamAsString(0)), Integer.valueOf(a.getParamAsString(1))));
+    }
+
+    public void handleGroundItemInteract(Action a) {
+        try {
+            GroundItem item = GroundItems.getNearest(o -> o.getId() == a.getParam(0))[0];
+            if (item == null)
+            {
+                log("Could not find item with id" + a.getParam(0));
+            } else {
+                item.take();
+            }
+        } catch (ArrayIndexOutOfBoundsException e)
+        {
+            log("Warning: Grounditem not found in the following action:");
+            log(a.toString());
+        }
     }
 }

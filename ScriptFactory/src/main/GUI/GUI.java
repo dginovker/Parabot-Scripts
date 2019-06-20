@@ -3,7 +3,7 @@ package main.GUI;
 import main.Actions.Logic.If;
 import main.Actions.Logic.Endif;
 import main.Actions.Action;
-import main.Actions.Logic.InverseIf;
+import main.Actions.Logic.IfNot;
 import main.GUI.MainPanels.ActionPanel;
 import main.NewGuis.AdvancedOptionsGUI;
 import main.NewGuis.ActionGuiInfo;
@@ -136,7 +136,7 @@ public class GUI extends JFrame {
             }
             //actionList.append(prepend + actions.get(i).toString() + "\n");
 
-            if (actions.get(i) instanceof If || actions.get(i) instanceof InverseIf)
+            if (actions.get(i) instanceof If || actions.get(i) instanceof IfNot)
             {
                 tabsInFront ++;
             }

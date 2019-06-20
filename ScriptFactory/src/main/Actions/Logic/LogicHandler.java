@@ -1,24 +1,25 @@
 package main.Actions.Logic;
 
 import main.Actions.Action;
-import main.VarsMethods;
-import org.rev317.min.api.methods.Inventory;
-import org.rev317.min.api.methods.Npcs;
-import org.rev317.min.api.methods.Players;
-import org.rev317.min.api.methods.SceneObjects;
+import org.rev317.min.api.methods.*;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import static main.VarsMethods.log;
 import static main.VarsMethods.toPintArray;
 
+/**
+ * Todo:
+ * Change this to a boolean ffs and make another function handle True : False lol
+ */
 public class LogicHandler {
     public String determineIf(Action a) {
-        switch (a.getAction().replaceAll("-", " "))
+        switch (a.getMethod().replaceAll("-", " "))
         {
             case "Item is in Inventory":
                 return Inventory.getCount(a.getParam(0)) >= (a.getParamAsString(1).equals("") ? 0 : a.getParam(1)) ? "True" : "False";
+            case "Item is on Ground":
+                return GroundItems.getGroundItems(o-> o.getId() == a.getParam(0)).length > 0 ? "True" : "False";
             case "Entity is around":
                 ArrayList<Integer> ids = new ArrayList<>();
                 for (int i = 0; i < a.getParamCount() - 1; i++)
@@ -35,7 +36,7 @@ public class LogicHandler {
         return "False";
     }
 
-    public String determineInverseIf(Action a) {
+    public String determineIfNot(Action a) {
         return determineIf(a).equals("True") ? "False" : "True";
     }
 }

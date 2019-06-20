@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static main.VarsMethods.log;
+
 
 /**
  * Created by SRH on 1/9/2018.
@@ -17,12 +19,28 @@ public class Action {
     private final String action;
     private final ArrayList<String> params = new ArrayList<>();
 
+    /**
+     * Gets the full action, i.e. type and method name
+     */
     public String getAction() {
         return action;
     }
 
+    /**
+     * Gets only the method name
+     */
+    public String getMethod() {
+        return action;
+    }
+
     public String getParamAsString(int paramIndex) {
-        return params.get(paramIndex);
+        try {
+            return params.get(paramIndex);
+        } catch (IndexOutOfBoundsException e) {
+            log("Error parsing parameter in the following action - did you fill them all out properly?");
+            log("Action: " + this.toString());
+            return "1";
+        }
     }
 
     public int getParamCount()
@@ -31,7 +49,13 @@ public class Action {
     }
 
     public int getParam(int paramIndex) {
-        return Integer.parseInt(params.get(paramIndex));
+        try {
+            return Integer.parseInt(params.get(paramIndex));
+        } catch (IndexOutOfBoundsException e) {
+            log("Error parsing parameter in the following action - did you fill them all out properly?");
+            log("Action: " + this.toString());
+            return 1;
+        }
     }
 
     public Action(String action, ArrayList<JTextArea> inputs) {
@@ -87,7 +111,7 @@ public class Action {
         if (str.equals("Endif"))
             return "Endif";
 
-        String pattern = "((Inverse)?If )?(.*)\\(.*";
+        String pattern = "(If(Not)? )?(.*)\\(.*";
         return getRegex(pattern, str, 3);
     }
 

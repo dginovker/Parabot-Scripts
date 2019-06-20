@@ -2,8 +2,7 @@ package main.NewGuis;
 
 import main.Actions.Action;
 import main.Actions.Logic.If;
-import main.Actions.Logic.InverseIf;
-import main.VarsMethods;
+import main.Actions.Logic.IfNot;
 
 import javax.swing.*;
 import java.awt.*;
@@ -63,11 +62,13 @@ class NewStatementGUI extends JFrame {
                 actionList.add(new If(selectedAction, inputs));
             updateTextfield.accept(5);
             this.setVisible(false);
+            clearInputs();
         });
         addInverse.addActionListener(o -> {
-            actionList.add(new InverseIf(selectedAction, inputs));
+            actionList.add(new IfNot(selectedAction, inputs));
             updateTextfield.accept(5);
             this.setVisible(false);
+            clearInputs();
         });
     }
 
@@ -185,6 +186,11 @@ class NewStatementGUI extends JFrame {
 
             descLabels.get(i).setText(desc.getLabelText(i));
         }
+    }
+
+    private void clearInputs() {
+        for (int i = 0; i < MAX_PARAMS; i++)
+            inputs.get(i).setText("");
     }
 
     /**

@@ -5,7 +5,7 @@ import main.Actions.Action;
 import main.Actions.ActionHandler;
 import main.Actions.Logic.Endif;
 import main.Actions.Logic.If;
-import main.Actions.Logic.InverseIf;
+import main.Actions.Logic.IfNot;
 import main.Actions.Logic.LogicHandler;
 import main.VarsMethods;
 import org.parabot.environment.api.utils.Time;
@@ -79,16 +79,19 @@ public class RunLoop implements Strategy {
         {
             ifStack.push(logicHandler.determineIf(action));
         }
-        else if (action instanceof InverseIf)
+        else if (action instanceof IfNot)
         {
-            ifStack.push(logicHandler.determineInverseIf(action));
+            ifStack.push(logicHandler.determineIfNot(action));
         }
         else
         {
-            switch (action.getAction().replace("-", " "))
+            switch (action.getMethod().replace("-", " "))
             {
-                case "Interact with":
+                case "Interact with entity":
                     actionHandler.handleInteractWith(action);
+                    break;
+                case "Take Ground item":
+                    actionHandler.handleGroundItemInteract(action);
                     break;
                 case "Inventory item interact":
                     actionHandler.inventoryItemInteract(action);
