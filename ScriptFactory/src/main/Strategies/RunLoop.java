@@ -66,10 +66,6 @@ public class RunLoop implements Strategy {
             } catch (NumberFormatException notFilledIn) {
                 log("Error on line " + line);
                 log("Make sure you fill in all numeric values properly! Numbers only!");
-                if (line.toString().contains("\t"))
-                {
-                    log("Potential resolution: Tab character detected on the line");
-                }
             }
 
             Time.sleep(VarsMethods.tickSpeed);

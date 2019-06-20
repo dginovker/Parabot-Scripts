@@ -124,8 +124,8 @@ class TipsAndTricksGUI extends JFrame
         tipsAndTipsStrings = new String[]{
                 "Don't know what to do? Read this guide! https://parabot.slack.com",
                 "Click File > Logger for feedback on your actions",
-                "Open the files you save with a program like Notepad if you wish to edit them manually",
-                "Leave the text for a Type function as {ESC} if you want it to hit the \"Escape\" key",
+                "You can edit the scripts you save manually in Notepad",
+                "The Type function can accept {ESC} if you want it to hit the \"Escape\" key",
         };
 
         textAreaTips.setEditable(false);

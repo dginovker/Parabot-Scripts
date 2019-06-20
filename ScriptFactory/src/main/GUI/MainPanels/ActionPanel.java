@@ -1,8 +1,8 @@
 package main.GUI.MainPanels;
 
 import main.NewGuis.AdvancedOptionsGUI;
-import main.NewGuis.NewActionGUI;
-import main.NewGuis.NewConditionGUI;
+import main.NewGuis.ActionGuiInfo;
+import main.NewGuis.ConditionGuiInfo;
 import main.VarsMethods;
 
 import javax.swing.*;
@@ -18,13 +18,13 @@ public class ActionPanel extends JPanel {
     private JButton actionButton = new JButton("Add Action"), startIfButton = new JButton("Begin If-Action"), endIfButton = new JButton("End If-Block"), removeButton = new JButton ("Remove Line"), advancedButton = new JButton("Advanced");
     private JTextPane actionList;
 
-    private NewActionGUI newAction;
-    private NewConditionGUI newCondition;
+    private ActionGuiInfo newAction;
+    private ConditionGuiInfo newCondition;
     private Consumer<Integer> removeAction;
     private Consumer<Boolean> endIf;
     private AdvancedOptionsGUI advancedOptions;
 
-    public ActionPanel(JTextPane actionList, NewActionGUI newAction, NewConditionGUI newCondition, AdvancedOptionsGUI advancedOptions, Consumer<Integer> removeAction, Consumer<Boolean> endIf)
+    public ActionPanel(JTextPane actionList, ActionGuiInfo newAction, ConditionGuiInfo newCondition, AdvancedOptionsGUI advancedOptions, Consumer<Integer> removeAction, Consumer<Boolean> endIf)
     {
         this.actionList = actionList;
         this.newAction = newAction;

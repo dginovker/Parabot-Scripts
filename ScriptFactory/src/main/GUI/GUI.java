@@ -6,8 +6,8 @@ import main.Actions.Action;
 import main.Actions.Logic.InverseIf;
 import main.GUI.MainPanels.ActionPanel;
 import main.NewGuis.AdvancedOptionsGUI;
-import main.NewGuis.NewActionGUI;
-import main.NewGuis.NewConditionGUI;
+import main.NewGuis.ActionGuiInfo;
+import main.NewGuis.ConditionGuiInfo;
 import main.VarsMethods;
 
 import javax.swing.*;
@@ -32,8 +32,8 @@ public class GUI extends JFrame {
     private JTextPane actionList = new JTextPane();
     private JTextField tickSpeedField = new JTextField(0);
 
-    private NewConditionGUI newCondition;
-    private NewActionGUI newAction;
+    private ConditionGuiInfo newCondition;
+    private ActionGuiInfo newAction;
     private AdvancedOptionsGUI advancedOptions;
     private ArrayList<Action> actions;
 
@@ -56,8 +56,8 @@ public class GUI extends JFrame {
             updateTextfield.accept(1);
         };
 
-        newAction = new NewActionGUI(actions, updateTextfield);
-        newCondition = new NewConditionGUI(actions, updateTextfield);
+        newAction = new ActionGuiInfo(actions, updateTextfield);
+        newCondition = new ConditionGuiInfo(actions, updateTextfield);
         advancedOptions = new AdvancedOptionsGUI(actions, updateTextfield, tickSpeedField);
 
 

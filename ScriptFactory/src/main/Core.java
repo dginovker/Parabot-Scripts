@@ -4,7 +4,6 @@ import main.Actions.Action;
 import main.GUI.GUI;
 import main.Strategies.RunLoop;
 import org.parabot.core.Context;
-import org.parabot.core.ui.BotDialog;
 import org.parabot.environment.api.interfaces.Paintable;
 import org.parabot.environment.scripts.Category;
 import org.parabot.environment.scripts.Script;
@@ -20,7 +19,7 @@ import java.util.ArrayList;
  * Welcome to AIO AIO - ScriptFactory. Make your own scripts!
  */
 
-@ScriptManifest(author = "Before", name = "Script Factory 1.3", category = Category.OTHER, version = 1.1, description = "Create your own scripts!", servers = "All")
+@ScriptManifest(author = "Before", name = "Script Factory 1.3", category = Category.OTHER, version = 1.3, description = "Create your own scripts!", servers = "All")
 public class Core extends Script implements Paintable {
 
     private VarsMethods vars = new VarsMethods();

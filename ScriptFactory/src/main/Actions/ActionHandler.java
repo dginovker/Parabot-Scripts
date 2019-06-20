@@ -17,12 +17,10 @@ import static main.VarsMethods.parsePint;
 
 public class ActionHandler {
 
-    private void interactWithEntity(String id, String option)
+    private void interactWithEntity(int id, String option)
     {
-        int entityId = parsePint(id);
-
-        SceneObject candidateObject = SceneObjects.getClosest(entityId);
-        Npc candidateNpc = Npcs.getClosest(entityId);
+        SceneObject candidateObject = SceneObjects.getClosest(id);
+        Npc candidateNpc = Npcs.getClosest(id);
 
         if (candidateObject != null)
         {
@@ -41,50 +39,50 @@ public class ActionHandler {
 
     public void handleInteractWith(Action a)
     {
-        interactWithEntity(a.getParam0(), a.getParam1());
+        interactWithEntity(a.getParam(0), a.getParamAsString(1));
     }
 
     public void inventoryItemInteract(Action a)
     {
-        Inventory.getItem(parsePint(a.getParam0())).interact(VarsMethods.getItemOption(a.getParam1()));
+        Inventory.getItem(a.getParam(0)).interact(VarsMethods.getItemOption(a.getParamAsString(1)));
     }
 
     public void useItemOn(Action a)
     {
-        Item toUse = Inventory.getItem(parsePint(a.getParam0()));
-        Menu.interact(toUse, VarsMethods.getItemOption(a.getParam1()));
+        Item toUse = Inventory.getItem(parsePint(a.getParamAsString(0)));
+        Menu.interact(toUse, VarsMethods.getItemOption(a.getParamAsString(1)));
 
-        interactWithEntity(a.getParam1(), "1");
+        interactWithEntity(a.getParam(1), "1");
     }
 
     public void type(Action a)
     {
-        if (a.getParam0().toLowerCase().equals("{esc}"))
+        if (a.getParamAsString(0).toLowerCase().equals("{esc}"))
         {
             Keyboard.getInstance().clickKey(KeyEvent.VK_ESCAPE);
         }
         else
         {
-            Keyboard.getInstance().sendKeys(a.getParam0(), a.getParam1().equals("1"));
+            Keyboard.getInstance().sendKeys(a.getParamAsString(0), a.getParamAsString(1).equals("1"));
         }
     }
 
     public void clickxy(Action a)
     {
-        Mouse.getInstance().click(parsePint(a.getParam0()), parsePint(a.getParam1()), a.getParam2().equals("0"));
+        Mouse.getInstance().click(a.getParam(0), a.getParam(1), a.getParamAsString(2).equals("0"));
     }
 
     public void sleep(Action a) {
-        Time.sleep(parsePint(a.getParam0()));
+        Time.sleep(a.getParam(0));
     }
 
     public void sendRawAction(Action a)
     {
-        String[] actionIds = a.getParam1().replaceAll("[^0-9;]", "").split(";");
-        Menu.sendAction(parsePint(a.getParam0()), parsePint(actionIds[0]), parsePint(actionIds[1]), parsePint(actionIds[2]), parsePint(actionIds[3]), 0);
+        String[] actionIds = a.getParamAsString(1).replaceAll("[^0-9;]", "").split(";");
+        Menu.sendAction(a.getParam(0), parsePint(actionIds[0]), parsePint(actionIds[1]), parsePint(actionIds[2]), parsePint(actionIds[3]), 0);
     }
 
     public void walkTo(Action a) {
-        Walking.walkTo(new Tile(Integer.valueOf(a.getParam0()), Integer.valueOf(a.getParam1())));
+        Walking.walkTo(new Tile(Integer.valueOf(a.getParamAsString(0)), Integer.valueOf(a.getParamAsString(1))));
     }
 }

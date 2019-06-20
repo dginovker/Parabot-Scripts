@@ -1,7 +1,6 @@
 package main.Actions.Logic;
 
 import main.Actions.Action;
-import main.VarsMethods;
 import org.rev317.min.api.methods.Inventory;
 import org.rev317.min.api.methods.Npcs;
 import org.rev317.min.api.methods.Players;
@@ -14,12 +13,12 @@ public class LogicHandler {
         switch (a.getAction().replaceAll("-", " "))
         {
             case "Item is in Inventory":
-                return Inventory.getCount(VarsMethods.parsePint(a.getParam0())) >= (a.getParam1().equals("") ? 0 : VarsMethods.parsePint(a.getParam1())) ? "True" : "False";
+                return Inventory.getCount(a.getParam(0)) >= (a.getParamAsString(1).equals("") ? 0 : a.getParam(1)) ? "True" : "False";
             case "Entity is around":
-                return Npcs.getClosest(VarsMethods.parsePint(a.getParam0())) != null ||
-                        SceneObjects.getClosest(VarsMethods.parsePint(a.getParam0())) != null ? "True" : "False";
+                return Npcs.getClosest(a.getParam(0)) != null ||
+                        SceneObjects.getClosest(a.getParam(0)) != null ? "True" : "False";
             case "Hitpoints is below":
-                return Players.getMyPlayer().getHealth() < VarsMethods.parsePint(a.getParam0()) ? "True" : "False";
+                return Players.getMyPlayer().getHealth() < a.getParam(0) ? "True" : "False";
             case "In Combat":
                 return Players.getMyPlayer().isInCombat() ? "True" : "False";
             default:

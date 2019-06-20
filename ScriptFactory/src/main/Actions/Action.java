@@ -1,9 +1,10 @@
 package main.Actions;
 
+import javax.swing.*;
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static main.VarsMethods.log;
 
 /**
  * Created by SRH on 1/9/2018.
@@ -11,56 +12,52 @@ import static main.VarsMethods.log;
 public class Action {
 
     private final String action;
-    private final String param0;
-    private final String param1;
-    private final String param2;
+    private final ArrayList<String> params = new ArrayList<>();
 
     public String getAction() {
         return action;
     }
 
-    public String getParam0() {
-        return param0;
+    public String getParamAsString(int paramIndex) {
+        return params.get(paramIndex);
     }
 
-    public String getParam1() {
-        return param1;
+    public int getParam(int paramIndex) {
+        return Integer.parseInt(params.get(paramIndex));
     }
 
-    public String getParam2() {
-        return param2;
-    }
-
-    public Action(String action, String param0, String param1, String param2) {
+    public Action(String action, JTextArea[] inputs) {
         this.action = action;
-        this.param0 = param0;
-        this.param1 = param1;
-        this.param2 = param2;
+        for (JTextArea input : inputs) {
+            params.add(input.getText());
+        }
     }
 
     public Action() {
         this.action = "";
-        this.param0 = "";
-        this.param1 = "";
-        this.param2 = "";
     }
 
     public Action(String fromString) {
         this.action = readAction(fromString);
-        this.param0 = readParam(fromString, 0);
-        this.param1 = readParam(fromString, 1);
-        this.param2 = readParam(fromString, 2);
+        for (int i = 0; i < 3; i++) {
+            this.params.add(readParam(fromString, i));
+        }
     }
 
     @Override
     public String toString() {
-        return action.replace(" ", "-") + "(" +
-                param0 +
-                (!param1.equals("") ? "," + param1 : "") +
-                (!param2.equals("") ? "," + param2 : "") + ")";
+        return action.replace(" ", "-") + "(" + getCommaSeperatedParameters() + ")";
     }
 
-    String readAction(String str)
+    private String getCommaSeperatedParameters() {
+        StringBuilder paramsString = new StringBuilder();
+        for (String p : params)
+            paramsString.append(p);
+
+        return paramsString.toString();
+    }
+
+    private String readAction(String str)
     {
         if (str.equals("Endif"))
             return "Endif";
@@ -69,7 +66,7 @@ public class Action {
         return getRegex(pattern, str, 3);
     }
 
-    String readParam(String str, int i) {
+    private String readParam(String str, int i) {
         if (str.equals("Endif"))
             return "";
 
@@ -85,16 +82,6 @@ public class Action {
                 return "";
 
         }
-        /*String pattern = ".*\\(";
-        for (int j = 0; j < i; j++)
-        {
-            pattern += ".*,";
-        }
-        pattern += "([^,)]*)[,)].*";*/
-        /*log("Regex pattern: " + pattern);
-        log("String: " + str);
-        log("Tried to get parameter " + i + " of str, got " + getRegex(pattern, str, i + 2));
-        return getRegex(pattern, str, i + 2);*/
     }
 
     private String getRegex(String pattern, String str, int match) {

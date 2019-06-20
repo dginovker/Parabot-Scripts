@@ -2,12 +2,12 @@ package main.Actions.Logic;
 
 import main.Actions.Action;
 
-import static main.VarsMethods.log;
+import javax.swing.*;
 
 public class InverseIf extends Action {
 
-    public InverseIf(String action, String param1, String param2, String param3) {
-        super(action, param1, param2, param3);
+    public InverseIf(String action, JTextArea[] inputs) {
+        super(action, inputs);
     }
 
     public InverseIf(String fromString)
@@ -18,6 +18,6 @@ public class InverseIf extends Action {
     @Override
     public String toString() {
         return "InverseIf " + getAction().replace(" ", "-") +
-                "(" + getParam0() + "," + getParam1() + "," + getParam2() + ")";
+                "(" + getParamAsString(0) + "," + getParamAsString(1) + "," + getParamAsString(2) + ")";
     }
 }

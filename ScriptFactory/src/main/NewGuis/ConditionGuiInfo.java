@@ -8,8 +8,8 @@ import java.util.function.Consumer;
 /**
  * Created by SRH on 1/9/2018.
  */
-public class NewConditionGUI extends NewStatementGUI {
-    public NewConditionGUI(ArrayList<Action> actionList, Consumer<Integer> updateTextfield) {
+public class ConditionGuiInfo extends NewStatementGUI {
+    public ConditionGuiInfo(ArrayList<Action> actionList, Consumer<Integer> updateTextfield) {
         String[] actionTypes = new String[]{"Item is in Inventory", "Entity is around", "Hitpoints is below", "In Combat"};
         Descriptions[] setDescs = {
                 new Descriptions("Item to detect (eg. 4296 = bones)", "Number of them to detect (blank = 1)"),

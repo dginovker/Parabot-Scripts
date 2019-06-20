@@ -2,14 +2,16 @@ package main.Actions.Logic;
 
 import main.Actions.Action;
 
+import javax.swing.*;
+
 import static main.VarsMethods.log;
 
 /**
  * Created by SRH on 1/9/2018.
  */
 public class If extends Action {
-    public If(String action, String param0, String param1, String param2) {
-        super(action, param0, param1, param2);
+    public If(String action, JTextArea inputs[]) {
+        super(action, inputs);
     }
 
     public If(String fromString)
