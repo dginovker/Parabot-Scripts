@@ -83,6 +83,14 @@ public class VarsMethods {
         return Integer.parseInt(toParse.replaceAll("[^0-9]", ""));
     }
 
+    public static int[] toPintArray(ArrayList<Integer> ids) {
+        int[] array = new int[ids.size()];
+        for (int i = 0; i < ids.size(); i++) {
+            array[i] = ids.get(i);
+        }
+        return array;
+    }
+
     public static SceneObjects.Option getSceneOption(String option) {
         switch (option)
         {

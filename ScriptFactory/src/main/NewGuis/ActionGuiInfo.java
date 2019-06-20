@@ -14,7 +14,7 @@ public class ActionGuiInfo extends NewStatementGUI {
     public ActionGuiInfo(ArrayList<Action> actionList, Consumer<Integer> updateTextfield) {
         String[] actionTypes = new String[]{"Interact with", "Inventory item interact", "Use item on", "Type", "Click xy", "Sleep", "Send raw Action", "Walk to"};
         NewStatementGUI.Descriptions[] setDescs = {
-                new Descriptions("Entity to interact with (eg. 4296 = banker)", "Option to select (eg. \"1\")"),
+                new Descriptions("Entity to interact with (eg. \"1767,1768\" selects cows)", "Option to select (eg. \"1\")"),
                 new Descriptions("Item in your inventory to use (eg. 951 = \"Silk\")", "Option to select (eg. \"Sell 10\") (cAsE sEnSiTiVe)"),
                 new Descriptions("Item in your inventory to use (eg. 999 = \"Bones\")", "Entity to use it on (eg. 999 = altar)<999 isn't actually altar>", "Item option to select (i.e. \"Use\") (cAsE sEnSiTiVe)"),
                 new Descriptions("Text to type in (eg. 28)", "Hit enter? (0 for no, 1 for yes)"),

@@ -17,8 +17,9 @@ import static main.VarsMethods.parsePint;
 
 public class ActionHandler {
 
-    private void interactWithEntity(int id, String option)
+    private boolean interactWithEntity(int id, String option)
     {
+        log("interact with entity: id: " + id + "opt: " + option);
         SceneObject candidateObject = SceneObjects.getClosest(id);
         Npc candidateNpc = Npcs.getClosest(id);
 
@@ -32,14 +33,19 @@ public class ActionHandler {
             }
             else
             {
-                log("Can't find the entity to interact with!");
+                return false;
             }
         }
+        return true;
     }
 
     public void handleInteractWith(Action a)
     {
-        interactWithEntity(a.getParam(0), a.getParamAsString(1));
+        for (int i = 0; i < a.getParamCount() - 1; i++) {
+            if (interactWithEntity(a.getParam(i), a.getParamAsString(a.getParamCount()-1)))
+                return;
+        }
+        log("Couldn't find an entity in: " + a);
     }
 
     public void inventoryItemInteract(Action a)

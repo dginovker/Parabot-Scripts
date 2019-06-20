@@ -1,7 +1,10 @@
 package main.Actions;
 
+import main.VarsMethods;
+
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +25,11 @@ public class Action {
         return params.get(paramIndex);
     }
 
+    public int getParamCount()
+    {
+        return params.size();
+    }
+
     public int getParam(int paramIndex) {
         return Integer.parseInt(params.get(paramIndex));
     }
@@ -29,7 +37,13 @@ public class Action {
     public Action(String action, ArrayList<JTextArea> inputs) {
         this.action = action;
         for (JTextArea input : inputs) {
-            params.add(input.getText());
+            for (String p : input.getText().split(","))
+            {
+                if (!p.equals(""))
+                {
+                    params.add(p);
+                }
+            }
         }
     }
 
@@ -39,8 +53,10 @@ public class Action {
 
     public Action(String fromString) {
         this.action = readAction(fromString);
-        for (int i = 0; i < 3; i++) {
-            this.params.add(readParam(fromString, i));
+        int index = 0;
+        while (!readParam(fromString, index).equals(""))
+        {
+            this.params.add(readParam(fromString, index++));
         }
     }
 
@@ -51,8 +67,17 @@ public class Action {
 
     private String getCommaSeperatedParameters() {
         StringBuilder paramsString = new StringBuilder();
+        boolean first = true;
         for (String p : params)
+        {
+            if (!first)
+            {
+                paramsString.append(",");
+            } else {
+                first = false;
+            }
             paramsString.append(p);
+        }
 
         return paramsString.toString();
     }
@@ -70,18 +95,17 @@ public class Action {
         if (str.equals("Endif"))
             return "";
 
-        switch (i)
+        if (i == 0)
         {
-            case 0:
-                return getRegex("[^\\(]*\\(([^,)]*).*", str, 1);
-            case 1:
-                return getRegex("[^,]*,([^,)]*).*", str, 1);
-            case 2:
-                return getRegex("[^,]*,[^,]*,([^,)]*).*", str, 1);
-            default:
-                return "";
-
+            return getRegex("[^\\(]*\\(([^,)]*).*", str, 1);
         }
+        String pattern = "";
+        String basePattern = "[^,]*,";
+        for (int j = 0; j < i; j++) {
+            pattern += basePattern;
+        }
+        pattern += "([^,)]*).*";
+        return getRegex(pattern, str, 1);
     }
 
     private String getRegex(String pattern, String str, int match) {

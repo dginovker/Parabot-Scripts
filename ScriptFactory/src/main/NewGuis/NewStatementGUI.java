@@ -3,6 +3,7 @@ package main.NewGuis;
 import main.Actions.Action;
 import main.Actions.Logic.If;
 import main.Actions.Logic.InverseIf;
+import main.VarsMethods;
 
 import javax.swing.*;
 import java.awt.*;
@@ -51,7 +52,7 @@ class NewStatementGUI extends JFrame {
 
         add(fillInfo());
 
-        add(generateAddPanel(title), BorderLayout.PAGE_END);
+        add(generateAddButton(title), BorderLayout.PAGE_END);
 
         setSize(650, 300);
 
@@ -68,7 +69,6 @@ class NewStatementGUI extends JFrame {
             updateTextfield.accept(5);
             this.setVisible(false);
         });
-
     }
 
     /**
@@ -80,12 +80,12 @@ class NewStatementGUI extends JFrame {
     private JComboBox actionTypeCombo(String[] actionTypes, Descriptions[] descs) {
         JComboBox actionType = new JComboBox(actionTypes);
         selectedAction = actionTypes[0]; //prevents null
-        setDesc(descs[0]);
+        setupInputFields(descs[0]);
 
         actionType.addActionListener(o -> {
             selectedAction = actionType.getSelectedItem().toString();
 
-            setDesc(descs[actionType.getSelectedIndex()]);
+            setupInputFields(descs[actionType.getSelectedIndex()]);
         });
 
         return actionType;
@@ -96,7 +96,7 @@ class NewStatementGUI extends JFrame {
      * Figures out if "Add Inverse" is needed
      * Adds their hotkeys
      */
-    private JPanel generateAddPanel(String title) {
+    private JPanel generateAddButton(String title) {
         addPanel.add(add);
 
         if (title.equals("Add new condition"))
@@ -173,48 +173,35 @@ class NewStatementGUI extends JFrame {
     }
 
     /**
+     *
      */
-    private void setDesc(Descriptions desc)
+    private void setupInputFields(Descriptions desc)
     {
-        for (int i = 0; i < 3; i++) {
-            setUIElements(desc.getS(i), inputs.get(i), descLabels.get(i));
-        }
-    }
+        for (int i = 0; i < MAX_PARAMS; i++) {
+            if (desc.getLabelText(i) == null)
+                inputs.get(i).setVisible(false);
+            else
+                inputs.get(i).setVisible(true);
 
-    private void setUIElements(String s, JTextArea input, JLabel desc) {
-        if (s == null || s.equals(""))
-        {
-            input.setVisible(false);
-        } else {
-            input.setVisible(true);
+            descLabels.get(i).setText(desc.getLabelText(i));
         }
-        desc.setText(s);
     }
 
     /**
      * Simple class holding three strings that will be the descriptions on the UI
      */
     class Descriptions {
-        private String[] descStrings = new String[3];
+        private String[] labelText;
 
-        Descriptions(String s, String s1, String s2)
+        Descriptions(String... descriptions)
         {
-            this.descStrings[0] = s;
-            this.descStrings[1] = s1;
-            this.descStrings[2] = s2;
-        }
-        Descriptions(String s, String s1)
-        {
-            this.descStrings[0] = s;
-            this.descStrings[1] = s1;
+            this.labelText = descriptions;
         }
 
-        Descriptions(String s) {
-            this.descStrings[0] = s;
-        }
-
-        String getS(int index) {
-            return descStrings[index];
+        String getLabelText(int index) {
+            if (index < labelText.length)
+                return labelText[index];
+            return null;
         }
     }
 }
