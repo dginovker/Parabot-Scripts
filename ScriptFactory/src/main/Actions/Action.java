@@ -59,6 +59,12 @@ public class Action {
     }
 
     public Action(String action, ArrayList<JTextArea> inputs) {
+        if (action.equals("Comment"))
+        {
+            this.action = "//";
+            params.add(inputs.get(0).getText());
+            return;
+        }
         this.action = action;
         for (JTextArea input : inputs) {
             for (String p : input.getText().split(","))
@@ -76,6 +82,12 @@ public class Action {
     }
 
     public Action(String fromString) {
+        if (fromString.startsWith("//"))
+        {
+            this.action = "Comment";
+            params.add(fromString.replaceFirst("//", ""));
+            return;
+        }
         this.action = readAction(fromString);
         int index = 0;
         while (!readParam(fromString, index).equals(""))
@@ -86,6 +98,8 @@ public class Action {
 
     @Override
     public String toString() {
+        if (action.equals("//"))
+            return "//" + params.get(0);
         return action.replace(" ", "-") + "(" + getCommaSeperatedParameters() + ")";
     }
 

@@ -20,17 +20,25 @@ public class AdvancedOptionsGUI extends JFrame {
     private EnterJButton tipsAndTricksButton = new EnterJButton("Tips and tricks");
     private EnterJButton moveLineButton = new EnterJButton("Move line");
     private EnterJButton recoverPreviousScript = new EnterJButton("Recover previous script");
-
-    private JFrame moveLineFrame = new JFrame();
+    private EnterJButton uncommonActionButton = new EnterJButton("Add uncommon actions");
+    private EnterJButton premadeScriptsButton = new EnterJButton("Premade scripts");
 
     private ArrayList<Action> actions;
     private Consumer<Integer> updateTextfield;
+
+    private JFrame moveLineFrame = new JFrame();
+    private UncommonActionGuiInfo uncommonActionGui;
 
     public AdvancedOptionsGUI(ArrayList<Action> actions, Consumer<Integer> updateTextfield, JTextField tickSpeedField) {
         this.actions = actions;
         this.updateTextfield = updateTextfield;
 
-        setLayout(new GridLayout(2, 3, 15, 15));
+        if (actions == null)
+        {
+            log("IT'S NULL HERE TOO!A;");
+        }
+
+        setLayout(new GridLayout(2, 4, 15, 15));
         setTitle("Parabot.org Script Factory - Advanced Options");
         initButtons();
 
@@ -43,6 +51,11 @@ public class AdvancedOptionsGUI extends JFrame {
         add(moveLineButton);
 
         add(recoverPreviousScript);
+
+        uncommonActionGui = new UncommonActionGuiInfo(actions, updateTextfield);
+        add(uncommonActionButton);
+
+        add(premadeScriptsButton);
 
         addEscapeHotkey(this);
         addEscapeHotkey(moveLineFrame);
@@ -94,9 +107,11 @@ public class AdvancedOptionsGUI extends JFrame {
     {
         tipsAndTricksButton.addActionListener(o -> {
             tipsFrame.setVisible(true);
+            this.setVisible(false);
         });
         moveLineButton.addActionListener(o -> {
             moveLineFrame.setVisible(true);
+            this.setVisible(false);
         });
         recoverPreviousScript.addActionListener(o ->
         {
@@ -104,11 +119,20 @@ public class AdvancedOptionsGUI extends JFrame {
             updateTextfield.accept(5);
             this.setVisible(false);
         });
+        uncommonActionButton.addActionListener(o -> {
+            uncommonActionGui.setVisible(true);
+            this.setVisible(false);
+        });
+        premadeScriptsButton.addActionListener(o -> {
+            log("Coming soon!");
+            this.setVisible(false);
+        });
     }
 
     public void killAllGuis() {
         moveLineFrame.setVisible(false);
         tipsFrame.setVisible(false);
+        uncommonActionGui.setVisible(false);
     }
 }
 

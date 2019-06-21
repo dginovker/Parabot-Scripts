@@ -92,13 +92,13 @@ public class GUI extends JFrame {
         });
 
         saveButton.addActionListener(o -> {
-            updateFile();
-            saveContents();
+            if (updateFile())
+                saveContents();
         });
 
         loadButton.addActionListener(o -> {
-            updateFile();
-            loadContents();
+            if (updateFile())
+                loadContents();
         });
     }
 
@@ -143,7 +143,7 @@ public class GUI extends JFrame {
         }
     }
 
-    private void updateFile() {
+    private boolean updateFile() {
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setCurrentDirectory(new File(VarsMethods.DEFAULT_DIR));
 
@@ -152,7 +152,9 @@ public class GUI extends JFrame {
         if (option == JFileChooser.APPROVE_OPTION) {
             mostRecentLog.setText("File used: " + fileChooser.getSelectedFile().getPath());
             selectedFile = fileChooser.getSelectedFile();
+            return true;
         }
+        return false;
     }
 
     private JPanel startPanel() {

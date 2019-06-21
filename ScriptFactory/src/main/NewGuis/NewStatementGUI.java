@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import static main.VarsMethods.MAX_PARAMS;
+import static main.VarsMethods.log;
 
 /**
  * Created by SRH on 1/10/2018.
@@ -49,7 +50,7 @@ class NewStatementGUI extends JFrame {
 
         JPanel dropDownAndDesc = new JPanel(new GridLayout(2, 1));
         dropDownAndDesc.add(actionTypeCombo(actionTypes, descStrings));
-        dropDownAndDesc.add(new JLabel("To find the IDs of entities/etc, click the \"Debug\" dropdown on the top right corner of the client."));
+        dropDownAndDesc.add(new JLabel("To IDs, click the \"Debug\" dropdown on the top right corner of the client."));
         add(dropDownAndDesc, BorderLayout.PAGE_START);
 
         add(fillInfo());

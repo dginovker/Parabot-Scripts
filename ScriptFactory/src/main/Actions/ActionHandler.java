@@ -1,6 +1,7 @@
 package main.Actions;
 
 import main.VarsMethods;
+import org.parabot.core.Context;
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.input.Keyboard;
 import org.parabot.environment.input.Mouse;
@@ -12,6 +13,7 @@ import java.util.Arrays;
 
 import static main.VarsMethods.log;
 import static main.VarsMethods.parsePint;
+import static org.parabot.environment.scripts.Script.STATE_STOPPED;
 
 public class ActionHandler {
 
@@ -66,8 +68,9 @@ public class ActionHandler {
 
     public void sleep(Action a) {
         int totalSleep = 0;
-        for (int i = 0; i < a.getParam(0)/10; i++)
+        for (int i = 0; i < 10; i++)
         {
+            log("Script state: " + Context.getInstance().getRunningScript().getState());
             VarsMethods.currentAction = "Sleep " + totalSleep + "/" + a.getParam(0);
             totalSleep += a.getParam(0)/10;
             Time.sleep(a.getParam(0)/10);
@@ -86,7 +89,7 @@ public class ActionHandler {
     }
 
     public void walkTo(Action a) {
-        Walking.walkTo(new Tile(Integer.valueOf(a.getParamAsString(0)), Integer.valueOf(a.getParamAsString(1))));
+        Walking.walkTo(new Tile(a.getParam(0), a.getParam(1)));
     }
 
     public void handleGroundItemInteract(Action a) {

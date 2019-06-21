@@ -11,7 +11,7 @@ import java.util.function.Consumer;
  * Created by SRH on 1/9/2018.
  */
 public class ActionGuiInfo extends NewStatementGUI {
-    public ActionGuiInfo(ArrayList<Action> actionList, Consumer<Integer> updateTextfield) {
+    public ActionGuiInfo(ArrayList<Action> actionList, Consumer<Integer> updateTextField) {
         String[] actionTypes = new String[]{"Interact with entity", "Take Ground item", "Inventory item interact", "Use item on", "Type", "Click xy", "Sleep", "Send raw Action", "Walk to"};
         NewStatementGUI.Descriptions[] setDescs = {
                 new Descriptions("Entity to interact with (eg. \"1767,1768\" selects cows)", "Option to select (eg. \"1\") (Must be filled)"),
@@ -25,6 +25,6 @@ public class ActionGuiInfo extends NewStatementGUI {
                 new Descriptions("X-tile coordinate", "Y-tile coordinate"),
         };
 
-        initGui("Add new action", actionList, updateTextfield, actionTypes, setDescs);
+        initGui("Add new action", actionList, updateTextField, actionTypes, setDescs);
     }
 }

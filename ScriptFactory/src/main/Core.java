@@ -49,7 +49,7 @@ public class Core extends Script implements Paintable {
         {
             gui.killAllGuis();
             VarsMethods.savescript(actions, new File(VarsMethods.CACHED_LOC));
-            Context.getInstance().getRunningScript().setState(STATE_STOPPED);
+            return false;
         }
 
         strategies.add(new RunLoop(actions, vars));
@@ -68,6 +68,6 @@ public class Core extends Script implements Paintable {
         g.drawString("Script Factory", 580, 330);
         g.setFont(new Font("Cordia New", Font.PLAIN, 12));
         g.drawString("Currently executing: ", 580, 347);
-        g.drawString(vars.currentAction, 580, 360);
+        g.drawString(VarsMethods.currentAction, 580, 360);
     }
 }
