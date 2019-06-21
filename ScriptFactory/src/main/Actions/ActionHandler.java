@@ -8,40 +8,20 @@ import org.rev317.min.api.methods.*;
 import org.rev317.min.api.wrappers.*;
 
 import java.awt.event.KeyEvent;
+import java.util.Arrays;
 
 import static main.VarsMethods.log;
 import static main.VarsMethods.parsePint;
 
 public class ActionHandler {
 
-    private boolean interactWithEntity(int id, String option)
-    {
-        SceneObject candidateObject = SceneObjects.getClosest(id);
-        Npc candidateNpc = Npcs.getClosest(id);
-
-        if (candidateObject != null)
-        {
-            candidateObject.interact(VarsMethods.getSceneOption(option));
-        } else {
-            if (candidateNpc != null)
-            {
-                candidateNpc.interact(VarsMethods.getNpcOption(option));
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return true;
-    }
-
     public void handleInteractWith(Action a)
     {
+        int[] ids = new int[a.getParamCount() -1];
         for (int i = 0; i < a.getParamCount() - 1; i++) {
-            if (interactWithEntity(a.getParam(i), a.getParamAsString(a.getParamCount() - 1)))
-                return;
+            ids[i] = a.getParam(i);
         }
-        log("Couldn't find an entity in: " + a);
+        interactWithEntity(ids, a.getParamAsString(a.getParamCount() - 1));
     }
 
     public void inventoryItemInteract(Action a)
@@ -64,7 +44,7 @@ public class ActionHandler {
         Item toUse = Inventory.getItem(parsePint(a.getParamAsString(0)));
         Menu.interact(toUse, VarsMethods.getItemOption(a.getParamAsString(1)));
 
-        interactWithEntity(a.getParam(1), "1");
+        interactWithEntity(new int[]{a.getParam(1)}, "1");
     }
 
     public void type(Action a)
@@ -85,7 +65,13 @@ public class ActionHandler {
     }
 
     public void sleep(Action a) {
-        Time.sleep(a.getParam(0));
+        int totalSleep = 0;
+        for (int i = 0; i < a.getParam(0)/10; i++)
+        {
+            VarsMethods.currentAction = "Sleep " + totalSleep + "/" + a.getParam(0);
+            totalSleep += a.getParam(0)/10;
+            Time.sleep(a.getParam(0)/10);
+        }
     }
 
     public void sendRawAction(Action a)
@@ -116,6 +102,24 @@ public class ActionHandler {
         {
             log("Warning: Grounditem not found in the following action:");
             log(a.toString());
+        }
+    }
+
+    private void interactWithEntity(int[] id, String option)
+    {
+        SceneObject candidateObject = SceneObjects.getClosest(id);
+        Npc candidateNpc = Npcs.getClosest(id);
+
+        if (candidateObject != null)
+        {
+            candidateObject.interact(VarsMethods.getSceneOption(option));
+        } else {
+            if (candidateNpc != null)
+            {
+                candidateNpc.interact(VarsMethods.getNpcOption(option));
+            } else {
+                log("Couldn't find entity with any of the following ids: " + Arrays.toString(id));
+            }
         }
     }
 }

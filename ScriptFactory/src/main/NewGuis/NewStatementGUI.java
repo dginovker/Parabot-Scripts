@@ -3,9 +3,12 @@ package main.NewGuis;
 import main.Actions.Action;
 import main.Actions.Logic.If;
 import main.Actions.Logic.IfNot;
+import main.GUI.EnterJButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -22,8 +25,8 @@ class NewStatementGUI extends JFrame {
     private ArrayList<JTextArea> inputs = new ArrayList<>();
     private ArrayList<JLabel> descLabels = new ArrayList<>();
 
-    private JButton add = new JButton("Add");
-    private JButton addInverse = new JButton("Add inverse");
+    private EnterJButton add = new EnterJButton("Add");
+    private EnterJButton addInverse = new EnterJButton("Add inverse");
     private JPanel addPanel = new JPanel();
     private String selectedAction;
 
@@ -54,6 +57,8 @@ class NewStatementGUI extends JFrame {
         add(generateAddButton(title), BorderLayout.PAGE_END);
 
         setSize(650, 300);
+
+        addEscapeHotkey(this);
 
         add.addActionListener(o -> {
             if (this.getTitle().contains("action"))
@@ -104,20 +109,6 @@ class NewStatementGUI extends JFrame {
         {
             addPanel.add(addInverse);
         }
-        add.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent keyEvent) {
-                if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER)
-                    add.doClick();
-            }
-        });
-        addInverse.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyPressed(KeyEvent keyEvent) {
-                if (keyEvent.getKeyCode() == KeyEvent.VK_ENTER)
-                    addInverse.doClick();
-            }
-        });
 
         return addPanel;
     }
@@ -134,6 +125,8 @@ class NewStatementGUI extends JFrame {
             setHKNavigation(inputs.get(i));
         }
 
+        fillInfo.updateUI();
+        fillInfo.repaint();
         return fillInfo;
     }
 
@@ -155,6 +148,14 @@ class NewStatementGUI extends JFrame {
                 }
             }
         });
+    }
+
+    public static void addEscapeHotkey(JFrame temp) {
+        ActionListener escListener = e -> temp.setVisible(false);
+        temp.getRootPane().registerKeyboardAction(escListener,
+                KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
+                JComponent.WHEN_IN_FOCUSED_WINDOW);
+
     }
 
     /**

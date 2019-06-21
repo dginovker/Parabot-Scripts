@@ -4,6 +4,7 @@ import main.Actions.Action;
 import org.rev317.min.api.methods.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import static main.VarsMethods.log;
 import static main.VarsMethods.toPintArray;
@@ -22,7 +23,7 @@ public class LogicHandler {
                 return GroundItems.getGroundItems(o-> o.getId() == a.getParam(0)).length > 0 ? "True" : "False";
             case "Entity is around":
                 ArrayList<Integer> ids = new ArrayList<>();
-                for (int i = 0; i < a.getParamCount() - 1; i++)
+                for (int i = 0; i < a.getParamCount(); i++)
                     ids.add(a.getParam(i));
                 return Npcs.getClosest(toPintArray(ids)) != null ||
                         SceneObjects.getClosest(toPintArray(ids)) != null ? "True" : "False";

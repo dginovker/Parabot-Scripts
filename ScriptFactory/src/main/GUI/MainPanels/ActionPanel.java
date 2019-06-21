@@ -1,5 +1,6 @@
 package main.GUI.MainPanels;
 
+import main.GUI.EnterJButton;
 import main.NewGuis.AdvancedOptionsGUI;
 import main.NewGuis.ActionGuiInfo;
 import main.NewGuis.ConditionGuiInfo;
@@ -15,7 +16,7 @@ import java.util.function.Consumer;
  * Created by SRH on 1/10/2018.
  */
 public class ActionPanel extends JPanel {
-    private JButton actionButton = new JButton("Add Action"), startIfButton = new JButton("Begin If-Action"), endIfButton = new JButton("End If-Block"), removeButton = new JButton ("Remove Line"), advancedButton = new JButton("Advanced");
+    private EnterJButton actionButton = new EnterJButton("Add Action"), startIfButton = new EnterJButton("Begin If-Action"), endIfButton = new EnterJButton("End If-Block"), removeButton = new EnterJButton ("Remove Line"), advancedButton = new EnterJButton("Advanced");
     private JTextPane actionList;
 
     private ActionGuiInfo newAction;

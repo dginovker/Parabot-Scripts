@@ -24,10 +24,10 @@ import static main.VarsMethods.log;
  */
 public class GUI extends JFrame {
     public boolean scriptStarted = false;
-    private JButton saveButton = new JButton("Save"), loadButton = new JButton("Load");
+    private EnterJButton saveButton = new EnterJButton("Save"), loadButton = new EnterJButton("Load");
     private JTextField mostRecentLog = new JTextField("");
     private File selectedFile = null;
-    private JButton startButton = new JButton("Start");
+    private EnterJButton startButton = new EnterJButton("Start");
 
     private JTextPane actionList = new JTextPane();
     private JTextField tickSpeedField = new JTextField(0);
