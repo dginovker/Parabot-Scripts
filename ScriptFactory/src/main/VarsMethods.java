@@ -18,6 +18,8 @@ import java.util.ArrayList;
 public class VarsMethods {
     public static int tickSpeed = 1200;
     public static String currentAction = "";
+    public static String currentSubscript = "";
+
     public final static String DEFAULT_DIR = System.getProperty("user.home") + System.getProperty("file.separator") + "Parabot" + System.getProperty("file.separator") + "Script Factory";
     public final static String CACHED_LOC = DEFAULT_DIR + System.getProperty("file.separator") + "ScriptFactory cache.txt";
     public final static int MAX_PARAMS = 3;
@@ -49,7 +51,8 @@ public class VarsMethods {
                 }
             }
             log("File loaded successfully");
-        } catch (FileNotFoundException ignored) {
+        } catch (FileNotFoundException e) {
+            log("Warning: Could not find file " + selectedFile);
         } catch (IOException e) {
             e.printStackTrace();
         }

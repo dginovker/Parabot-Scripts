@@ -19,7 +19,7 @@ import java.util.ArrayList;
  * Welcome to AIO AIO - ScriptFactory. Make your own scripts!
  */
 
-@ScriptManifest(author = "Before", name = "Script Factory 1.3", category = Category.OTHER, version = 1.3, description = "Create your own scripts!", servers = "All")
+@ScriptManifest(author = "Before", name = "Script Factory 1.4", category = Category.OTHER, version = 1.4, description = "Create your own scripts!", servers = "All")
 public class Core extends Script implements Paintable {
 
     private VarsMethods vars = new VarsMethods();
@@ -52,7 +52,7 @@ public class Core extends Script implements Paintable {
             return false;
         }
 
-        strategies.add(new RunLoop(actions, vars));
+        strategies.add(new RunLoop(actions));
         provide(strategies);
 
         return true;
@@ -69,5 +69,6 @@ public class Core extends Script implements Paintable {
         g.setFont(new Font("Cordia New", Font.PLAIN, 12));
         g.drawString("Currently executing: ", 580, 347);
         g.drawString(VarsMethods.currentAction, 580, 360);
+        g.drawString(VarsMethods.currentSubscript.equals("") ? "" : "Subscript " + VarsMethods.currentSubscript, 580, 373);
     }
 }

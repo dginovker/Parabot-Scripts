@@ -1,10 +1,7 @@
 package main.Actions;
 
-import main.VarsMethods;
-
 import javax.swing.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,13 +46,7 @@ public class Action {
     }
 
     public int getParam(int paramIndex) {
-        try {
-            return Integer.parseInt(params.get(paramIndex));
-        } catch (IndexOutOfBoundsException e) {
-            log("Error parsing parameter in the following action - did you fill them all out properly?");
-            log("Action: " + this.toString());
-            return 1;
-        }
+        return Integer.parseInt(getParamAsString(paramIndex));
     }
 
     public Action(String action, ArrayList<JTextArea> inputs) {
