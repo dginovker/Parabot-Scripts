@@ -18,6 +18,8 @@ import static main.VarsMethods.parsePint;
 
 public class ActionHandler {
 
+    private static String debugString = "";
+
     public void handleInteractWith(Action a)
     {
         int[] ids = new int[a.getParamCount() -1];
@@ -126,6 +128,7 @@ public class ActionHandler {
     {
         SceneObject candidateObject = SceneObjects.getClosest(id);
         Npc candidateNpc = Npcs.getClosest(id);
+        debugString  = "id: " + Arrays.toString(id);
         tryToInteract(candidateObject, candidateNpc, option);
     }
 
@@ -139,6 +142,7 @@ public class ActionHandler {
         if (npca.length > 0)
             candidateNpc = npca[0];
 
+        debugString = "tile: " + tile;
         tryToInteract(candidateObject, candidateNpc, option);
     }
 
@@ -152,7 +156,7 @@ public class ActionHandler {
             {
                 candidateNpc.interact(VarsMethods.getNpcOption(option));
             } else {
-                log("Couldn't find entity on action " + VarsMethods.currentAction);
+                log("Couldn't find entity on action " + VarsMethods.currentAction + ", " + debugString);
             }
         }
     }

@@ -1,7 +1,9 @@
-package main.NewGuis;
+package main.AdvancedGui;
 
 import main.Actions.Action;
+import main.AdvancedGui.ScriptFactorySDN.ScriptFactorySDNGui;
 import main.GUI.EnterJButton;
+import main.NewGuis.UncommonActionGuiInfo;
 import main.VarsMethods;
 
 import javax.swing.*;
@@ -11,7 +13,6 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import static main.NewGuis.NewStatementGUI.addEscapeHotkey;
-import static main.VarsMethods.centralizeComponent;
 import static main.VarsMethods.log;
 
 public class AdvancedOptionsGUI extends JFrame {
@@ -28,15 +29,11 @@ public class AdvancedOptionsGUI extends JFrame {
 
     private JFrame moveLineFrame = new JFrame();
     private UncommonActionGuiInfo uncommonActionGui;
+    private ScriptFactorySDNGui sdnGui;
 
     public AdvancedOptionsGUI(ArrayList<Action> actions, Consumer<Integer> updateTextfield, JTextField tickSpeedField) {
         this.actions = actions;
         this.updateTextfield = updateTextfield;
-
-        if (actions == null)
-        {
-            log("IT'S NULL HERE TOO!A;");
-        }
 
         setLayout(new GridLayout(2, 4, 15, 15));
         setTitle("Parabot.org Script Factory - Advanced Options");
@@ -55,6 +52,7 @@ public class AdvancedOptionsGUI extends JFrame {
         uncommonActionGui = new UncommonActionGuiInfo(actions, updateTextfield);
         add(uncommonActionButton);
 
+        sdnGui = new ScriptFactorySDNGui();
         add(premadeScriptsButton);
 
         addEscapeHotkey(this);
@@ -130,7 +128,7 @@ public class AdvancedOptionsGUI extends JFrame {
             this.setVisible(false);
         });
         premadeScriptsButton.addActionListener(o -> {
-            log("Coming soon!");
+            sdnGui.setVisible(true);
             this.setVisible(false);
         });
     }
@@ -139,48 +137,7 @@ public class AdvancedOptionsGUI extends JFrame {
         moveLineFrame.setVisible(false);
         tipsFrame.setVisible(false);
         uncommonActionGui.setVisible(false);
+        sdnGui.setVisible(false);
     }
 }
 
-class TipsAndTricksGUI extends JFrame
-{
-    private JLabel tipsAndTricksLabel = new JLabel("Welcome to the Tips and Tricks!");
-    private JTextArea textAreaTips = new JTextArea(12, 30);
-    private String[] tipsAndTipsStrings;
-
-    public TipsAndTricksGUI()
-    {
-        setLayout(new GridLayout(1, 2));
-        setTitle("Parabot.org Script Factory - Tips!");
-        setMaximumSize(new Dimension(300, 120));
-
-        tipsAndTipsStrings = new String[]{
-                "Don't know what to do? Read this guide! https://parabot.slack.com",
-                "Click File > Logger for debugging help",
-                "You can edit the scripts you save manually in Notepad",
-                "The Type function can accept {ESC} if you want it to hit the \"Escape\" key",
-                "GUI navigation has hotkeys;",
-                "\tTab brings you to the next input field",
-                "\tShift Tab brings you to the previous field",
-                "\tYou can hit Enter when highlighting over a button to click it",
-                "\tYou can hit Escape to close sub-interfaces quickly",
-                "Share your scripts! It helps everyone learn faster :)"
-        };
-
-        textAreaTips.setEditable(false);
-
-        for (String i : tipsAndTipsStrings)
-        {
-            textAreaTips.append("- " + i + "\n");
-        }
-
-        JScrollPane textAreaScroll = new JScrollPane(textAreaTips);
-        textAreaScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-        textAreaScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-
-        add(centralizeComponent(tipsAndTricksLabel));
-        add(textAreaScroll);
-        addEscapeHotkey(this);
-        pack();
-    }
-}

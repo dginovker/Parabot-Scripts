@@ -1,7 +1,7 @@
 package main.GUI.MainPanels;
 
 import main.GUI.EnterJButton;
-import main.NewGuis.AdvancedOptionsGUI;
+import main.AdvancedGui.AdvancedOptionsGUI;
 import main.NewGuis.ActionGuiInfo;
 import main.NewGuis.ConditionGuiInfo;
 import main.VarsMethods;
@@ -46,6 +46,7 @@ public class ActionPanel extends JPanel {
 
         JPanel noWrapPanel = new JPanel(new GridLayout(1, 1, 0, 0));
         noWrapPanel.add(this.actionList);
+        actionList.setMinimumSize(new Dimension(350, 200));
         JScrollPane scroll = new JScrollPane(noWrapPanel);
         scroll.getVerticalScrollBar().setUnitIncrement(5);
 

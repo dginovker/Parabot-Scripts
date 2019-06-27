@@ -1,5 +1,6 @@
 package main.Strategies;
 
+import jdk.nashorn.internal.runtime.Context;
 import main.Actions.Action;
 import main.Actions.ActionHandler;
 import main.Actions.Logic.Endif;
@@ -9,10 +10,13 @@ import main.Actions.Logic.LogicHandler;
 import main.Actions.SubscriptHandler;
 import main.VarsMethods;
 import org.parabot.environment.api.utils.Time;
+import org.parabot.environment.scripts.Script;
+import org.rev317.min.accessors.Client;
 
 import java.util.ArrayList;
 import java.util.Stack;
 
+import static main.VarsMethods.currentAction;
 import static main.VarsMethods.log;
 
 public class ActionExecutor {

@@ -9,20 +9,22 @@ import org.parabot.environment.scripts.Category;
 import org.parabot.environment.scripts.Script;
 import org.parabot.environment.scripts.ScriptManifest;
 import org.parabot.environment.scripts.framework.Strategy;
+import org.rev317.min.accessors.Client;
 
 import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
+
+import static main.VarsMethods.log;
 
 /**
  * Created by SRH on 1/9/2018.
  * Welcome to AIO AIO - ScriptFactory. Make your own scripts!
  */
 
-@ScriptManifest(author = "Before", name = "Script Factory 1.4", category = Category.OTHER, version = 1.4, description = "Create your own scripts!", servers = "All")
+@ScriptManifest(author = "Before", name = "Script Factory 1.5", category = Category.OTHER, version = 1.5, description = "Create your own scripts!", servers = "All")
 public class Core extends Script implements Paintable {
 
-    private VarsMethods vars = new VarsMethods();
     private ArrayList<Action> actions = new ArrayList<>();
     private ArrayList<Strategy> strategies = new ArrayList<>();
 

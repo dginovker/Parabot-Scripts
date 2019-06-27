@@ -5,6 +5,7 @@ import main.Actions.Logic.Endif;
 import main.Actions.Logic.If;
 import main.Actions.Logic.IfNot;
 import org.parabot.core.ui.Logger;
+import org.parabot.environment.scripts.Script;
 import org.rev317.min.api.methods.GroundItems;
 import org.rev317.min.api.methods.Items;
 import org.rev317.min.api.methods.Npcs;
@@ -68,7 +69,6 @@ public class VarsMethods {
                 writer.println(a.toString());
             }
             writer.close();
-            log("File saved successfully");
         } catch (FileNotFoundException ignored) {
         }
     }

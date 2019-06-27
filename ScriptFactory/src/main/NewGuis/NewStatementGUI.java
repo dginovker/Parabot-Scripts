@@ -20,7 +20,7 @@ import static main.VarsMethods.MAX_PARAMS;
  * Creates the main.GUI that is extended by actions and if statements
  * Allows user to generate new actions/if statements
  */
-class NewStatementGUI extends JFrame {
+public class NewStatementGUI extends JFrame {
     private ArrayList<JTextArea> inputs = new ArrayList<>();
     private ArrayList<JLabel> descLabels = new ArrayList<>();
 

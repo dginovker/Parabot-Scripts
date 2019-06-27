@@ -2,6 +2,8 @@ package main.Strategies;
 
 
 import main.Actions.Action;
+import main.VarsMethods;
+import org.parabot.environment.scripts.Script;
 import org.parabot.environment.scripts.framework.Strategy;
 
 import java.util.ArrayList;

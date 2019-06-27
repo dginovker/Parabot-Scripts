@@ -1,12 +1,11 @@
 package main.GUI;
 
-import com.sun.javafx.font.FontFactory;
 import main.Actions.Logic.If;
 import main.Actions.Logic.Endif;
 import main.Actions.Action;
 import main.Actions.Logic.IfNot;
 import main.GUI.MainPanels.ActionPanel;
-import main.NewGuis.AdvancedOptionsGUI;
+import main.AdvancedGui.AdvancedOptionsGUI;
 import main.NewGuis.ActionGuiInfo;
 import main.NewGuis.ConditionGuiInfo;
 import main.VarsMethods;
