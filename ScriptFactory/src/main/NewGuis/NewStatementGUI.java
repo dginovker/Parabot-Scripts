@@ -7,7 +7,6 @@ import main.GUI.EnterJButton;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -15,7 +14,6 @@ import java.util.ArrayList;
 import java.util.function.Consumer;
 
 import static main.VarsMethods.MAX_PARAMS;
-import static main.VarsMethods.log;
 
 /**
  * Created by SRH on 1/10/2018.
@@ -129,6 +127,17 @@ class NewStatementGUI extends JFrame {
         fillInfo.updateUI();
         fillInfo.repaint();
         return fillInfo;
+    }
+
+    @Override
+    public void setVisible(boolean visible)
+    {
+        super.setVisible(visible);
+        for (int i = 0; i < inputs.size(); i++) {
+            inputs.get(i).setText("");
+            inputs.get(i).repaint();
+            //i.updateUI() ?
+        }
     }
 
     /**

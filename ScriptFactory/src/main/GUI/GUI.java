@@ -11,6 +11,8 @@ import main.NewGuis.ConditionGuiInfo;
 import main.VarsMethods;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
 import java.io.*;
@@ -25,11 +27,19 @@ import static main.VarsMethods.log;
 public class GUI extends JFrame {
     public boolean scriptStarted = false;
     private EnterJButton saveButton = new EnterJButton("Save"), loadButton = new EnterJButton("Load");
-    private JTextField mostRecentLog = new JTextField("");
+    private EnterJButton addSleepButton = new EnterJButton("Add sleep");
+    private JTextArea sleepAmountField = new JTextArea();
+    private JTextField mostRecentLog = new JTextField("", 15);
     private File selectedFile = null;
     private EnterJButton startButton = new EnterJButton("Start");
 
-    private JTextPane actionList = new JTextPane();
+    private JTextPane actionList = new JTextPane()
+    {
+        public boolean getScrollableTracksViewportWidth() //prevents lines from wrapping
+        {
+            return getUI().getPreferredSize(this).width <= getParent().getSize().width;
+        }
+    };
     private JTextField tickSpeedField = new JTextField(0);
 
     private ConditionGuiInfo newCondition;
@@ -65,7 +75,7 @@ public class GUI extends JFrame {
         setLayout(new BorderLayout(12, 20));
 
         add(new ActionPanel(actionList, newAction, newCondition, advancedOptions, removeAction, endIf), BorderLayout.WEST);
-        add(savePanel(), BorderLayout.EAST);
+        add(rightPanel(), BorderLayout.EAST);
         add(startPanel(), BorderLayout.PAGE_END);
 
         this.revalidate();
@@ -99,6 +109,13 @@ public class GUI extends JFrame {
         loadButton.addActionListener(o -> {
             if (updateFile())
                 loadContents();
+        });
+
+        addSleepButton.addActionListener(o -> {
+            ArrayList<JTextArea> sleepAmountFieldAsAL = new ArrayList<>();
+            sleepAmountFieldAsAL.add(sleepAmountField);
+            actions.add(new Action("Sleep", sleepAmountFieldAsAL));
+            updateActionList();
         });
     }
 
@@ -165,10 +182,11 @@ public class GUI extends JFrame {
         return start;
     }
 
-    private JPanel savePanel() {
+    private JPanel rightPanel() {
         JPanel save = new JPanel();
-        save.setLayout(new GridLayout(2, 1, 20, 5));
+        save.setLayout(new GridLayout(3, 1, 20, 5));
 
+        //Adds the save and load buttons
         JPanel buttons = new JPanel();
         buttons.setLayout(new GridLayout(2, 1, 20, 5));
         buttons.add(saveButton);
@@ -177,14 +195,27 @@ public class GUI extends JFrame {
 
         save.add(buttons);
 
+        //Adds the info about last saved file
         JPanel chosen = new JPanel();
         chosen.setLayout(new FlowLayout(FlowLayout.LEFT));
         chosen.add(new JLabel("Info: "));
-        mostRecentLog.setColumns(16);
         mostRecentLog.setEditable(false);
         chosen.add(mostRecentLog);
 
         save.add(chosen);
+
+        //Adds the Sleep button
+        JPanel addSleepPanel = new JPanel();
+        addSleepPanel.setLayout(new GridLayout(2, 1));
+        addSleepPanel.add(addSleepButton);
+        JPanel sleepTextAndLabel = new JPanel();
+        sleepTextAndLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        sleepTextAndLabel.add(new JLabel("Sleep time (ms): "));
+        sleepAmountField.setColumns(8);
+        sleepAmountField.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
+        sleepTextAndLabel.add(sleepAmountField);
+        addSleepPanel.add(sleepTextAndLabel);
+        save.add(addSleepPanel);
 
         return save;
     }

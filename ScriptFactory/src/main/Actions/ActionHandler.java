@@ -2,6 +2,7 @@ package main.Actions;
 
 import main.VarsMethods;
 import org.parabot.core.Context;
+import org.parabot.environment.api.utils.Filter;
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.input.Keyboard;
 import org.parabot.environment.input.Mouse;
@@ -10,10 +11,10 @@ import org.rev317.min.api.wrappers.*;
 
 import java.awt.event.KeyEvent;
 import java.util.Arrays;
+import java.util.Comparator;
 
 import static main.VarsMethods.log;
 import static main.VarsMethods.parsePint;
-import static org.parabot.environment.scripts.Script.STATE_STOPPED;
 
 public class ActionHandler {
 
@@ -24,6 +25,10 @@ public class ActionHandler {
             ids[i] = a.getParam(i);
         }
         interactWithEntity(ids, a.getParamAsString(a.getParamCount() - 1));
+    }
+
+    public void handleInteractWithByLoc(Action a) {
+        interactWithEntityByTile(new Tile(a.getParam(0), a.getParam(1)), a.getParamAsString(2));
     }
 
     public void inventoryItemInteract(Action a)
@@ -70,11 +75,11 @@ public class ActionHandler {
         int totalSleep = 0;
         for (int i = 0; i < 10; i++)
         {
-            log("Script state: " + Context.getInstance().getRunningScript().getState());
             VarsMethods.currentAction = "Sleep " + totalSleep + "/" + a.getParam(0);
             totalSleep += a.getParam(0)/10;
             Time.sleep(a.getParam(0)/10);
         }
+        VarsMethods.currentAction = "Sleep " + totalSleep + "/" + a.getParam(0);
     }
 
     public void sendRawAction(Action a)
@@ -90,6 +95,7 @@ public class ActionHandler {
 
     public void walkTo(Action a) {
         Walking.walkTo(new Tile(a.getParam(0), a.getParam(1)));
+        Time.sleep(a.getParam(2));
     }
 
     public void handleGroundItemInteract(Action a) {
@@ -108,11 +114,36 @@ public class ActionHandler {
         }
     }
 
+    public void bankAllExcept(Action a) {
+        if (!Bank.isOpen())
+        {
+            log("Warning: Bank isn't open!");
+        }
+        Bank.depositAllExcept(a.getParamArray());
+    }
+
     private void interactWithEntity(int[] id, String option)
     {
         SceneObject candidateObject = SceneObjects.getClosest(id);
         Npc candidateNpc = Npcs.getClosest(id);
+        tryToInteract(candidateObject, candidateNpc, option);
+    }
 
+    private void interactWithEntityByTile(Tile tile, String option) {
+        SceneObject[] sos = SceneObjects.getNearest(o -> o.getLocation().equals(tile));
+        SceneObject candidateObject = null;
+        if (sos.length > 0)
+            candidateObject = sos[0];
+        Npc[] npca = Npcs.getNearest(o -> o.getLocation().equals(tile));
+        Npc candidateNpc = null;
+        if (npca.length > 0)
+            candidateNpc = npca[0];
+
+        tryToInteract(candidateObject, candidateNpc, option);
+    }
+
+    private void tryToInteract(SceneObject candidateObject, Npc candidateNpc, String option)
+    {
         if (candidateObject != null)
         {
             candidateObject.interact(VarsMethods.getSceneOption(option));
@@ -121,7 +152,7 @@ public class ActionHandler {
             {
                 candidateNpc.interact(VarsMethods.getNpcOption(option));
             } else {
-                log("Couldn't find entity with any of the following ids: " + Arrays.toString(id));
+                log("Couldn't find entity on action " + VarsMethods.currentAction);
             }
         }
     }

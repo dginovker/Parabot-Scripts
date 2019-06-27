@@ -37,7 +37,6 @@ public class ActionExecutor {
     public void execute()
     {
         Action line = actions.get(lineIndex);
-        log("Looking at line " + line);
         lineIndex = ++lineIndex == actions.size() ? 0 : lineIndex;
 
         if (line instanceof Endif)
@@ -64,7 +63,6 @@ public class ActionExecutor {
     }
 
     private void executeLine(Action action) {
-        log("Executing line");
         if (action instanceof If)
         {
             ifStack.push(logicHandler.determineIf(action));
@@ -77,8 +75,11 @@ public class ActionExecutor {
         {
             switch (action.getMethod().replace("-", " "))
             {
-                case "Interact with entity":
+                case "Interact with entity by ID":
                     actionHandler.handleInteractWith(action);
+                    break;
+                case "Interact with entity by location":
+                    actionHandler.handleInteractWithByLoc(action);
                     break;
                 case "Take Ground item":
                     actionHandler.handleGroundItemInteract(action);
@@ -105,8 +106,10 @@ public class ActionExecutor {
                     actionHandler.walkTo(action);
                     break;
                 case "Run subscript":
-                    log("Case Run subscript");
                     SubscriptHandler.runSubscript(action.getParamAsString(0));
+                    break;
+                case "Bank all except IDs":
+                    actionHandler.bankAllExcept(action);
                     break;
                 default:
                     log("Error: Unimplemented action: " + action.getAction());

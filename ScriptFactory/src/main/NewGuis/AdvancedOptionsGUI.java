@@ -95,7 +95,13 @@ public class AdvancedOptionsGUI extends JFrame {
             int lineToPlaceAboveAsPint = VarsMethods.parsePint(lineToInsertAbove.getText());
 
             Action removed = actions.remove(lineToMoveAsPint);
-            actions.add(lineToPlaceAboveAsPint, removed);
+            if (lineToPlaceAboveAsPint <= lineToMoveAsPint)
+                actions.add(lineToPlaceAboveAsPint, removed);
+            else
+                if (lineToPlaceAboveAsPint > actions.size())
+                    actions.add(removed);
+                else
+                    actions.add(lineToPlaceAboveAsPint - 1, removed);
             updateTextfield.accept(5);
             moveLineFrame.setVisible(false);
             log("Successfully moved line " + lineToMove.getText() + ".");

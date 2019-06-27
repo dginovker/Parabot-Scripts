@@ -2,6 +2,7 @@ package main.Actions;
 
 import javax.swing.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,6 +48,11 @@ public class Action {
 
     public int getParam(int paramIndex) {
         return Integer.parseInt(getParamAsString(paramIndex));
+    }
+
+    public int[] getParamArray()
+    {
+        return params.stream().mapToInt(Integer::parseInt).toArray();
     }
 
     public Action(String action, ArrayList<JTextArea> inputs) {
