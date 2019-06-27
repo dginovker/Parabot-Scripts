@@ -43,6 +43,9 @@ public class ActionExecutor {
         {
             ifStack.pop();
             return;
+        } else if (line instanceof If && ifStack.peek().equals("False")) {
+            ifStack.push("False");
+            return;
         }
 
         if (ifStack.peek().equals("True"))
@@ -65,11 +68,11 @@ public class ActionExecutor {
     private void executeLine(Action action) {
         if (action instanceof If)
         {
-            ifStack.push(logicHandler.determineIf(action));
+            ifStack.push(logicHandler.determineIfAsBoolString(action));
         }
         else if (action instanceof IfNot)
         {
-            ifStack.push(logicHandler.determineIfNot(action));
+            ifStack.push(logicHandler.determineIfNotAsBoolString(action));
         }
         else
         {

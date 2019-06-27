@@ -1,5 +1,6 @@
 package main.GUI;
 
+import com.sun.javafx.font.FontFactory;
 import main.Actions.Logic.If;
 import main.Actions.Logic.Endif;
 import main.Actions.Action;
@@ -11,7 +12,6 @@ import main.NewGuis.ConditionGuiInfo;
 import main.VarsMethods;
 
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
@@ -33,13 +33,8 @@ public class GUI extends JFrame {
     private File selectedFile = null;
     private EnterJButton startButton = new EnterJButton("Start");
 
-    private JTextPane actionList = new JTextPane()
-    {
-        public boolean getScrollableTracksViewportWidth() //prevents lines from wrapping
-        {
-            return getUI().getPreferredSize(this).width <= getParent().getSize().width;
-        }
-    };
+    private JTextPane actionList = new JTextPane();
+
     private JTextField tickSpeedField = new JTextField(0);
 
     private ConditionGuiInfo newCondition;
@@ -140,7 +135,7 @@ public class GUI extends JFrame {
                 tabsInFront --;
             }
 
-            prepend = i + ": " + (i < 10 ? " " : "");
+            prepend = i + ": " + (i < 10 ? "  " : "");
             for (int j = 0; j < tabsInFront; j++)
             {
                 prepend = prepend + "    ";

@@ -42,9 +42,12 @@ public class ActionPanel extends JPanel {
         StyleConstants.setForeground(redStyle, Color.red);
         Style blackStyle = this.actionList.addStyle("black", null);
         StyleConstants.setForeground(blackStyle, Color.black);
-
-        JScrollPane scroll = new JScrollPane(this.actionList);
         this.actionList.setBorder(BorderFactory.createEtchedBorder(Color.BLUE, Color.BLACK));
+
+        JPanel noWrapPanel = new JPanel(new GridLayout(1, 1, 0, 0));
+        noWrapPanel.add(this.actionList);
+        JScrollPane scroll = new JScrollPane(noWrapPanel);
+        scroll.getVerticalScrollBar().setUnitIncrement(5);
 
         JPanel actionListButtons = new JPanel();
         actionListButtons.setLayout(new GridLayout(5, 1, 0, 20));
