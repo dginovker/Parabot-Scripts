@@ -15,6 +15,7 @@ import java.awt.*;
 import java.io.File;
 import java.util.ArrayList;
 
+import static main.VarsMethods.FSEP;
 import static main.VarsMethods.log;
 
 /**
@@ -32,7 +33,7 @@ public class Core extends Script implements Paintable {
 
     @Override
     public boolean onExecute() {
-        File directory = new File(VarsMethods.DEFAULT_DIR);
+        File directory = new File(VarsMethods.DEFAULT_DIR + FSEP + "dependencies");
         if (!directory.exists())
             directory.mkdirs();
 
@@ -62,7 +63,7 @@ public class Core extends Script implements Paintable {
 
     @Override
     public void paint(Graphics g) {
-        g.setColor(Color.BLUE);
+        try { g.setColor(Color.BLUE);
         g.fillRect(560, 310, 170, 70);
 
         g.setColor(Color.YELLOW);
@@ -71,6 +72,10 @@ public class Core extends Script implements Paintable {
         g.setFont(new Font("Cordia New", Font.PLAIN, 12));
         g.drawString("Currently executing: ", 580, 347);
         g.drawString(VarsMethods.currentAction, 580, 360);
-        g.drawString(VarsMethods.currentSubscript.equals("") ? "" : "Subscript " + VarsMethods.currentSubscript, 580, 373);
+        g.drawString(VarsMethods.currentSubscript.equals("") ? "" : "Subscript " + VarsMethods.currentSubscript, 580, 373);}
+        catch (Exception e)
+        {
+            log("Found it");
+        }
     }
 }

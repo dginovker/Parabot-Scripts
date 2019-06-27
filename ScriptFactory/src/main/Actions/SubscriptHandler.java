@@ -6,13 +6,17 @@ import main.VarsMethods;
 import java.io.File;
 import java.util.ArrayList;
 
-import static main.VarsMethods.log;
+import static main.VarsMethods.*;
 
 public class SubscriptHandler {
     public static void runSubscript(String path)
     {
         ArrayList<Action> actions = new ArrayList<>();
-        VarsMethods.loadscript(actions, new File(VarsMethods.DEFAULT_DIR + System.getProperty("file.separator") + path));
+        File subscriptFile = new File(DEFAULT_DIR + FSEP + path);
+        if (subscriptFile.exists())
+            loadscript(actions, subscriptFile);
+        else
+            loadscript(actions, new File(DEFAULT_DIR + FSEP + "dependencies" + FSEP + path));
         ActionExecutor executor = new ActionExecutor(actions);
 
         VarsMethods.currentSubscript = path;

@@ -15,6 +15,12 @@ public class ScriptFactoryScript extends ScriptDescription {
         this.dependencies = dependencies;
     }
 
+    public ScriptFactoryScript(String scriptName, String author, String category, double version, String description, String code, String[] dependencies) {
+        super(scriptName, author, category, version, description, new String[]{"Any"});
+        this.code = code;
+        this.dependencies = dependencies;
+    }
+
     public static ScriptFactoryScript[] getDescriptions() {
         return new ScriptFactoryScript[]{
                 new Cowkiller(),

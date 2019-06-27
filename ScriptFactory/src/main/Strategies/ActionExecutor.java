@@ -47,7 +47,7 @@ public class ActionExecutor {
         {
             ifStack.pop();
             return;
-        } else if (line instanceof If && ifStack.peek().equals("False")) {
+        } else if ((line instanceof If || line instanceof IfNot) && ifStack.peek().equals("False")) {
             ifStack.push("False");
             return;
         }

@@ -134,7 +134,7 @@ public class GUI extends JFrame {
                 tabsInFront --;
             }
 
-            prepend = i + ": " + (i < 10 ? "  " : "");
+            prepend = (i < 10 ? "  " : "") + i + ": ";
             for (int j = 0; j < tabsInFront; j++)
             {
                 prepend = prepend + "    ";

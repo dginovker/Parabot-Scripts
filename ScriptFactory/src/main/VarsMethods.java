@@ -23,6 +23,7 @@ public class VarsMethods {
 
     public final static String DEFAULT_DIR = System.getProperty("user.home") + System.getProperty("file.separator") + "Parabot" + System.getProperty("file.separator") + "Script Factory";
     public final static String CACHED_LOC = DEFAULT_DIR + System.getProperty("file.separator") + "ScriptFactory cache.txt";
+    public final static String FSEP = System.getProperty("file.separator");
     public final static int MAX_PARAMS = 3;
 
     public static void log(String str)

@@ -1,6 +1,5 @@
 package main.AdvancedGui.ScriptFactorySDN;
 
-import main.VarsMethods;
 import org.parabot.environment.scripts.Category;
 
 import javax.swing.*;
@@ -16,7 +15,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.HashMap;
 
-import static main.VarsMethods.log;
+import static main.VarsMethods.*;
 
 /**
  * Script Factory SDN GUI, shows all scripts
@@ -50,18 +49,18 @@ public class ScriptFactorySDNGui extends JFrame {
     private void downloadScript(ScriptFactoryScript desc) {
         log("Downloading script " + desc.scriptName + "...");
         createScriptFile(desc);
+        log("Downloading dependencies...");
         for (String i : desc.dependencies)
         {
-            log("Requires: " + i);
             downloadScript(ScriptFactoryScript.getScriptByName(i));
         }
     }
 
     private void createScriptFile(ScriptFactoryScript desc) {
-        File f = new File(VarsMethods.DEFAULT_DIR + System.getProperty("file.separator") + desc.scriptName);
+        String filePath = DEFAULT_DIR + FSEP + (desc.category.equals("Dependency") ? "dependencies" + FSEP : "") + desc.scriptName;
         PrintWriter writer = null;
         try {
-            writer = new PrintWriter(f);
+            writer = new PrintWriter(new File(filePath));
             writer.write(desc.code);
             writer.close();
         } catch (FileNotFoundException ignored) {
@@ -76,7 +75,11 @@ public class ScriptFactorySDNGui extends JFrame {
         }
         for (final ScriptFactoryScript scriptDesc : descs) {
             if (categories.get(scriptDesc.category) == null) {
-                DefaultMutableTreeNode cat = new DefaultMutableTreeNode(Category.valueOf(scriptDesc.category.toUpperCase()));
+                DefaultMutableTreeNode cat = null;
+                if (scriptDesc.category.equals("Dependency"))
+                    cat = new DefaultMutableTreeNode("Dependencies");
+                else
+                    cat = new DefaultMutableTreeNode(Category.valueOf(scriptDesc.category.toUpperCase()));
                 cat.add(new DefaultMutableTreeNode(scriptDesc.scriptName));
                 root.add(cat);
                 categories.put(scriptDesc.category, cat);
@@ -177,7 +180,7 @@ public class ScriptFactorySDNGui extends JFrame {
                 24);
         cmdHome.addActionListener(e -> {
             try {
-                Desktop.getDesktop().open(new File(VarsMethods.DEFAULT_DIR));
+                Desktop.getDesktop().open(new File(DEFAULT_DIR));
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
