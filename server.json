@@ -1,0 +1,11 @@
+{
+      "name": "2006rebotted",
+      "author": "Before",
+      "version": 1.0,
+      "client-class": "Game",
+      "locations":{
+          "provider": "http://v3.bdn.parabot.org/api/bot/download/default-provider",
+          "server": "Parabot/client.jar",
+          "hooks": "https://pastebin.com/raw/i0HYvYR5"
+    }
+}
