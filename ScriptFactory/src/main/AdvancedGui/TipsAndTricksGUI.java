@@ -28,7 +28,8 @@ class TipsAndTricksGUI extends JFrame
                 "\tShift Tab brings you to the previous field",
                 "\tYou can hit Enter when highlighting over a button to click it",
                 "\tYou can hit Escape to close sub-interfaces quickly",
-                "Share your scripts! It helps everyone learn faster :)"
+                "Share your scripts! It helps everyone learn faster :)",
+                "Interact-with-entity will only look for entities that are not in combat",
         };
 
         textAreaTips.setEditable(false);

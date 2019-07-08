@@ -127,7 +127,7 @@ public class ActionHandler {
     private void interactWithEntity(int[] id, String option)
     {
         SceneObject candidateObject = SceneObjects.getClosest(id);
-        Npc candidateNpc = Npcs.getClosest(id);
+        Npc candidateNpc = Npcs.getClosest(o -> !o.isInCombat() && Arrays.stream(id).anyMatch(i -> i == o.getDef().getId()));
         debugString  = "id: " + Arrays.toString(id);
         tryToInteract(candidateObject, candidateNpc, option);
     }
