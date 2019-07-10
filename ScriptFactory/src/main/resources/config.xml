@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<config>
+    <jars basedir="${project.basedir}/target/">
+        <jar in="${project.build.finalName}.jar" out="/home/ci/jars/${project.build.finalName}.jar"/>
+    </jars>
+
+    <classpath basedir="/home/ci/allatori/libs">
+        <jar name="./*.jar"/>
+    </classpath>
+
+    <!-- String encryption -->
+    <property name="string-encryption" value="enable"/>
+    <property name="string-encryption-type" value="fast"/>
+    <property name="string-encryption-version" value="v4"/>
+
+    <!-- Control flow obfuscation -->
+    <property name="control-flow-obfuscation" value="enable"/>
+    <property name="extensive-flow-obfuscation" value="normal"/>
+
+    <!-- Renaming -->
+    <property name="default-package" value=""/>
+    <property name="force-default-package" value="disable"/>
+
+    <property name="classes-naming" value="unique"/>
+    <property name="methods-naming" value="iii"/>
+    <property name="fields-naming" value="iii"/>
+    <property name="local-variables-naming" value="abc"/>
+
+    <!-- Other -->
+    <property name="line-numbers" value="keep"/>
+    <property name="generics" value="keep"/>
+    <property name="member-reorder" value="enable"/>
+    <property name="finalize" value="disable"/>
+    <property name="synthetize-methods" value="private"/>
+    <property name="synthetize-fields" value="private"/>
+    <property name="remove-toString" value="disable"/>
+</config>
