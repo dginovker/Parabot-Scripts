@@ -3,9 +3,9 @@ package scriptfactory.NewGuis;
 
 
 import scriptfactory.Actions.Action;
+import scriptfactory.Consumer;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 /**
  * Created by SRH on 1/9/2018.

@@ -33,7 +33,7 @@ public class Core extends Script implements Paintable {
         File directory = new File(VarsMethods.DEFAULT_DIR + VarsMethods.FSEP + "dependencies");
         if (!directory.exists())
             directory.mkdirs();
-
+        
         gui = new GUI(actions);
 
         while (gui.isShowing())

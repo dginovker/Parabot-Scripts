@@ -1,5 +1,6 @@
 package scriptfactory.Actions;
 
+import org.parabot.environment.api.utils.Filter;
 import org.parabot.environment.api.utils.Time;
 import org.parabot.environment.input.Keyboard;
 import org.parabot.environment.input.Mouse;
@@ -97,9 +98,14 @@ public class ActionHandler {
         Time.sleep(a.getParam(2));
     }
 
-    public void handleGroundItemInteract(Action a) {
+    public void handleGroundItemInteract(final Action a) {
         try {
-            GroundItem item = GroundItems.getNearest(o -> o.getId() == a.getParam(0))[0];
+            GroundItem item = GroundItems.getNearest(new Filter<GroundItem>() {
+                @Override
+                public boolean accept(GroundItem o) {
+                    return o.getId() == a.getParam(0);
+                }
+            })[0];
             if (item == null)
             {
                 log("Could not find item with id" + a.getParam(0));
@@ -121,20 +127,40 @@ public class ActionHandler {
         Bank.depositAllExcept(a.getParamArray());
     }
 
-    private void interactWithEntity(int[] id, String option)
+    private void interactWithEntity(final int[] id, String option)
     {
         SceneObject candidateObject = SceneObjects.getClosest(id);
-        Npc candidateNpc = Npcs.getClosest(o -> !o.isInCombat() && Arrays.stream(id).anyMatch(i -> i == o.getDef().getId()));
+        Npc candidateNpc = Npcs.getClosest(new Filter<Npc>() {
+            @Override
+            public boolean accept(Npc o) {
+                for (int i1 : id) {
+                    if (o.getDef().getId() == i1) {
+                        return !o.isInCombat();
+                    }
+                }
+                return false;
+            }
+        });
         debugString  = "id: " + Arrays.toString(id);
         tryToInteract(candidateObject, candidateNpc, option);
     }
 
-    private void interactWithEntityByTile(Tile tile, String option) {
-        SceneObject[] sos = SceneObjects.getNearest(o -> o.getLocation().equals(tile));
+    private void interactWithEntityByTile(final Tile tile, String option) {
+        SceneObject[] sos = SceneObjects.getNearest(new Filter<SceneObject>() {
+            @Override
+            public boolean accept(SceneObject o) {
+                return o.getLocation().equals(tile);
+            }
+        });
         SceneObject candidateObject = null;
         if (sos.length > 0)
             candidateObject = sos[0];
-        Npc[] npca = Npcs.getNearest(o -> o.getLocation().equals(tile));
+        Npc[] npca = Npcs.getNearest(new Filter<Npc>() {
+            @Override
+            public boolean accept(Npc o) {
+                return o.getLocation().equals(tile);
+            }
+        });
         Npc candidateNpc = null;
         if (npca.length > 0)
             candidateNpc = npca[0];

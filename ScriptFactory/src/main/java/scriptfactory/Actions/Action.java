@@ -50,7 +50,12 @@ public class Action {
 
     public int[] getParamArray()
     {
-        return params.stream().mapToInt(Integer::parseInt).toArray();
+        int[] array = new int[params.size()];
+        for (int i = 0; i < params.size(); i++) {
+            array[i] = Integer.parseInt(params.get(i));
+        }
+        return array;
+        //return params.stream().mapToInt(Integer::parseInt).toArray();
     }
 
     public Action(String action, ArrayList<JTextArea> inputs) {

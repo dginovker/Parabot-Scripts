@@ -1,5 +1,6 @@
 package scriptfactory.GUI.MainPanels;
 
+import scriptfactory.Consumer;
 import scriptfactory.GUI.EnterJButton;
 import scriptfactory.AdvancedGui.AdvancedOptionsGUI;
 import scriptfactory.NewGuis.ActionGuiInfo;
@@ -10,7 +11,8 @@ import javax.swing.*;
 import javax.swing.text.Style;
 import javax.swing.text.StyleConstants;
 import java.awt.*;
-import java.util.function.Consumer;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * Created by SRH on 1/10/2018.
@@ -65,26 +67,41 @@ public class ActionPanel extends JPanel {
     }
 
     private void initButtons() {
-        actionButton.addActionListener(o -> {
-            newAction.setVisible(true);
+        actionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                newAction.setVisible(true);
+            }
         });
 
-        startIfButton.addActionListener(o -> {
-            newCondition.setVisible(true);
+        startIfButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                newCondition.setVisible(true);
+            }
         });
 
-        endIfButton.addActionListener(o -> {
-            endIf.accept(true);
+        endIfButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                endIf.accept(true);
+            }
         });
 
-        removeButton.addActionListener(o -> {
-            String path = JOptionPane.showInputDialog("Enter the line# you wish to delete:");
+        removeButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                String path = JOptionPane.showInputDialog("Enter the line# you wish to delete:");
 
-            removeAction.accept(VarsMethods.parsePint(path));
+                removeAction.accept(VarsMethods.parsePint(path));
+            }
         });
 
-        advancedButton.addActionListener(o -> {
-            advancedOptions.setVisible(true);
+        advancedButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                advancedOptions.setVisible(true);
+            }
         });
     }
 }

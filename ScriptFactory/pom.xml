@@ -2,19 +2,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.before.script.factory</groupId>
+    <groupId>src</groupId>
     <artifactId>script-factory</artifactId>
     <version>1.5</version>
 
     <properties>
-        <jdk.version>1.8</jdk.version>
+        <jdk.version>1.7</jdk.version>
     </properties>
 
     <repositories>
         <repository>
-            <id>git-parabot</id>
-            <name>Parabot's Git based repo</name>
-            <url>https://github.com/parabot/Maven-Repository/raw/master/</url>
+            <id>parabot-maven</id>
+            <name>Parabot its Maven Repository</name>
+            <url>http://maven.parabot.org/</url>
         </repository>
     </repositories>
 
@@ -22,17 +22,17 @@
         <dependency>
             <groupId>org.parabot</groupId>
             <artifactId>client</artifactId>
-            <version>2.8.1</version>
+            <version>2.7</version>
         </dependency>
         <dependency>
             <groupId>org.parabot</groupId>
             <artifactId>317-api-minified</artifactId>
-            <version>1.201</version>
+            <version>1.21.3</version>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>98</finalName>
+        <finalName>1000202</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
@@ -56,8 +56,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>2.3.2</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>1.7</source>
+                    <target>1.7</target>
                 </configuration>
             </plugin>
             <plugin>

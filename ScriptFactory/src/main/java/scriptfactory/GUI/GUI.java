@@ -4,6 +4,7 @@ import scriptfactory.Actions.Logic.If;
 import scriptfactory.Actions.Logic.Endif;
 import scriptfactory.Actions.Action;
 import scriptfactory.Actions.Logic.IfNot;
+import scriptfactory.Consumer;
 import scriptfactory.GUI.MainPanels.ActionPanel;
 import scriptfactory.AdvancedGui.AdvancedOptionsGUI;
 import scriptfactory.NewGuis.ActionGuiInfo;
@@ -14,11 +15,13 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import javax.swing.text.BadLocationException;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 import static scriptfactory.VarsMethods.log;
+
 
 /**
  * Created by Cyn on 1/9/2018.
@@ -41,12 +44,12 @@ public class GUI extends JFrame {
     private AdvancedOptionsGUI advancedOptions;
     private ArrayList<Action> actions;
 
-    public GUI(ArrayList<Action> actions)
+    public GUI(final ArrayList<Action> actions)
     {
         this.actions = actions;
 
         //These are like little functions we pass around
-        Consumer<Integer> updateTextfield = (Integer i) -> {
+        /*Consumer<Integer> updateTextfield = (Integer i) -> {
             updateActionList();
         };
         Consumer<Integer> removeAction = (Integer toRemove) -> {
@@ -58,6 +61,28 @@ public class GUI extends JFrame {
         Consumer<Boolean> endIf = (Boolean remove) -> {
             actions.add(new Endif());
             updateTextfield.accept(1);
+        };*/
+        final Consumer<Integer> updateTextfield = new Consumer<Integer>() {
+            @Override
+            public void accept(Integer i) {
+                GUI.this.updateActionList();
+            }
+        };
+        Consumer<Integer> removeAction = new Consumer<Integer>() {
+            @Override
+            public void accept(Integer toRemove) {
+                log("Trying to remove " + toRemove);
+                int pint = toRemove;
+                actions.remove(pint);
+                GUI.this.updateActionList();
+            }
+        };
+        Consumer<Boolean> endIf = new Consumer<Boolean>() {
+            @Override
+            public void accept(Boolean remove) {
+                actions.add(new Endif());
+                updateTextfield.accept(1);
+            }
         };
 
         newAction = new ActionGuiInfo(actions, updateTextfield);
@@ -82,34 +107,45 @@ public class GUI extends JFrame {
     }
 
     private void addActionListeners() {
-        startButton.addActionListener(o -> {
-            this.setVisible(false);
-            log("Executing the following script:");
-            for (Action a : actions)
-            {
-                log(a.toString());
+        startButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                GUI.this.setVisible(false);
+                log("Executing the following script:");
+                for (Action a : actions) {
+                    log(a.toString());
+                }
+                VarsMethods.tickSpeed = VarsMethods.parsePint(tickSpeedField.getText());
+                selectedFile = new File(VarsMethods.CACHED_LOC);
+                GUI.this.saveContents();
+                scriptStarted = true;
             }
-            VarsMethods.tickSpeed = VarsMethods.parsePint(tickSpeedField.getText());
-            selectedFile = new File(VarsMethods.CACHED_LOC);
-            saveContents();
-            scriptStarted = true;
         });
 
-        saveButton.addActionListener(o -> {
-            if (updateFile())
-                saveContents();
+        saveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                if (GUI.this.updateFile())
+                    GUI.this.saveContents();
+            }
         });
 
-        loadButton.addActionListener(o -> {
-            if (updateFile())
-                loadContents();
+        loadButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                if (GUI.this.updateFile())
+                    GUI.this.loadContents();
+            }
         });
 
-        addSleepButton.addActionListener(o -> {
-            ArrayList<JTextArea> sleepAmountFieldAsAL = new ArrayList<>();
-            sleepAmountFieldAsAL.add(sleepAmountField);
-            actions.add(new Action("Sleep", sleepAmountFieldAsAL));
-            updateActionList();
+        addSleepButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                ArrayList<JTextArea> sleepAmountFieldAsAL = new ArrayList<>();
+                sleepAmountFieldAsAL.add(sleepAmountField);
+                actions.add(new Action("Sleep", sleepAmountFieldAsAL));
+                GUI.this.updateActionList();
+            }
         });
     }
 

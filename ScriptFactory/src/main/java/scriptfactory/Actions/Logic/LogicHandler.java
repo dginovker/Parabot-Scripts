@@ -1,5 +1,7 @@
 package scriptfactory.Actions.Logic;
 
+import org.parabot.environment.api.utils.Filter;
+import org.rev317.min.api.wrappers.GroundItem;
 import scriptfactory.Actions.Action;
 import org.rev317.min.api.methods.*;
 
@@ -9,7 +11,7 @@ import static scriptfactory.VarsMethods.log;
 import static scriptfactory.VarsMethods.toPintArray;
 
 public class LogicHandler {
-    public boolean determineIf(Action a) {
+    public boolean determineIf(final Action a) {
         switch (a.getMethod().replaceAll("-", " "))
         {
             case "Item is in Inventory":
@@ -17,7 +19,12 @@ public class LogicHandler {
             case "Inventory slots used":
                 return Inventory.getCount() >= a.getParam(0);
             case "Item is on Ground":
-                return GroundItems.getGroundItems(o-> o.getId() == a.getParam(0)).length > 0;
+                return GroundItems.getGroundItems(new Filter<GroundItem>() {
+                    @Override
+                    public boolean accept(GroundItem o) {
+                        return o.getId() == a.getParam(0);
+                    }
+                }).length > 0;
             case "Entity is around":
                 ArrayList<Integer> ids = new ArrayList<>();
                 for (int i = 0; i < a.getParamCount(); i++)

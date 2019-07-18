@@ -9,6 +9,8 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -169,20 +171,26 @@ public class ScriptFactorySDNGui extends JFrame {
 
         JButton cmdStart = new JButton("Download");
         cmdStart.setBounds(WIDTH - 156 - 4, HEIGHT - 24 - 4, 156, 24);
-        cmdStart.addActionListener(e -> {
-            String s = getScriptName(tree.getSelectionPath().toString());
-            downloadScript(format.get(s));
-            JOptionPane.showMessageDialog(null, "Script downloaded successfully. You can now run it by clicking \"Load\" in the main menu.");
+        cmdStart.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String s = ScriptFactorySDNGui.this.getScriptName(tree.getSelectionPath().toString());
+                ScriptFactorySDNGui.this.downloadScript(format.get(s));
+                JOptionPane.showMessageDialog(null, "Script downloaded successfully. You can now run it by clicking \"Load\" in the main menu.");
+            }
         });
 
         JButton cmdHome = new JButton("Open home");
         cmdHome.setBounds(WIDTH - (96 * 2 + 60) - 4 - 32, HEIGHT - 24 - 4, 96 + 32,
                 24);
-        cmdHome.addActionListener(e -> {
-            try {
-                Desktop.getDesktop().open(new File(DEFAULT_DIR));
-            } catch (Exception ex) {
-                ex.printStackTrace();
+        cmdHome.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    Desktop.getDesktop().open(new File(DEFAULT_DIR));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         });
 

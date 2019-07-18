@@ -1,9 +1,9 @@
 package scriptfactory.NewGuis;
 
 import scriptfactory.Actions.Action;
+import scriptfactory.Consumer;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 public class UncommonActionGuiInfo extends NewStatementGUI {
     public UncommonActionGuiInfo(ArrayList<Action> actionList, Consumer<Integer> updateTextField)

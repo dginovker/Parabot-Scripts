@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="allatori">
+    <target name="allatori">
+        <taskdef name="allatori" classname="com.allatori.ant.ObfuscatorTask" classpath="${user.home}/allatori/allatori.jar"/>
+        <allatori config="src/main/resources/config.xml"/>
+        <echo message="Obfuscating script"/>
+    </target>
+</project>

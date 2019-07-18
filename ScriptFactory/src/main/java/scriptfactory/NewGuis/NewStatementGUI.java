@@ -3,15 +3,16 @@ package scriptfactory.NewGuis;
 import scriptfactory.Actions.Action;
 import scriptfactory.Actions.Logic.If;
 import scriptfactory.Actions.Logic.IfNot;
+import scriptfactory.Consumer;
 import scriptfactory.GUI.EnterJButton;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 import static scriptfactory.VarsMethods.MAX_PARAMS;
 
@@ -37,7 +38,7 @@ public class NewStatementGUI extends JFrame {
      * @param actionTypes: List of possible actions the user can select
      * @param descStrings: Descriptions to display for the actions
      */
-    void initGui(String title, ArrayList<Action> actionList, Consumer<Integer> updateTextfield, String[] actionTypes, Descriptions[] descStrings) {
+    void initGui(String title, final ArrayList<Action> actionList, final Consumer<Integer> updateTextfield, String[] actionTypes, Descriptions[] descStrings) {
         setTitle(title);
         setLayout(new BorderLayout());
 
@@ -59,20 +60,26 @@ public class NewStatementGUI extends JFrame {
 
         addEscapeHotkey(this);
 
-        add.addActionListener(o -> {
-            if (this.getTitle().contains("action"))
-                actionList.add(new Action(selectedAction, inputs));
-            else
-                actionList.add(new If(selectedAction, inputs));
-            updateTextfield.accept(5);
-            this.setVisible(false);
-            clearInputs();
+        add.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                if (NewStatementGUI.this.getTitle().contains("action"))
+                    actionList.add(new Action(selectedAction, inputs));
+                else
+                    actionList.add(new If(selectedAction, inputs));
+                updateTextfield.accept(5);
+                NewStatementGUI.this.setVisible(false);
+                NewStatementGUI.this.clearInputs();
+            }
         });
-        addInverse.addActionListener(o -> {
-            actionList.add(new IfNot(selectedAction, inputs));
-            updateTextfield.accept(5);
-            this.setVisible(false);
-            clearInputs();
+        addInverse.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                actionList.add(new IfNot(selectedAction, inputs));
+                updateTextfield.accept(5);
+                NewStatementGUI.this.setVisible(false);
+                NewStatementGUI.this.clearInputs();
+            }
         });
     }
 
@@ -82,15 +89,18 @@ public class NewStatementGUI extends JFrame {
      * @param actionTypes: scriptfactory.Actions user can select
      * @param descs: Field descriptions for that action
      */
-    private JComboBox actionTypeCombo(String[] actionTypes, Descriptions[] descs) {
-        JComboBox actionType = new JComboBox(actionTypes);
+    private JComboBox actionTypeCombo(String[] actionTypes, final Descriptions[] descs) {
+        final JComboBox actionType = new JComboBox(actionTypes);
         selectedAction = actionTypes[0]; //prevents null
         setupInputFields(descs[0]);
 
-        actionType.addActionListener(o -> {
-            selectedAction = actionType.getSelectedItem().toString();
+        actionType.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                selectedAction = actionType.getSelectedItem().toString();
 
-            setupInputFields(descs[actionType.getSelectedIndex()]);
+                NewStatementGUI.this.setupInputFields(descs[actionType.getSelectedIndex()]);
+            }
         });
 
         return actionType;
@@ -145,7 +155,7 @@ public class NewStatementGUI extends JFrame {
      * Currently supports Tab, Shift Tab
      * @param textArea current TextArea to operate on
      */
-    private void setHKNavigation(JTextArea textArea) {
+    private void setHKNavigation(final JTextArea textArea) {
         textArea.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent keyEvent) {
@@ -160,8 +170,13 @@ public class NewStatementGUI extends JFrame {
         });
     }
 
-    public static void addEscapeHotkey(JFrame temp) {
-        ActionListener escListener = e -> temp.setVisible(false);
+    public static void addEscapeHotkey(final JFrame temp) {
+        ActionListener escListener = new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                temp.setVisible(false);
+            }
+        };
         temp.getRootPane().registerKeyboardAction(escListener,
                 KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0),
                 JComponent.WHEN_IN_FOCUSED_WINDOW);

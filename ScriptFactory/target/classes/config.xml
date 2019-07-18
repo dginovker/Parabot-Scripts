@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <config>
-    <jars basedir="/home/dr_bracket/Projects/parabot/ScriptFactory/target/">
-        <jar in="98.jar" out="/home/ci/jars/98.jar"/>
+    <jars basedir="/home/dr_bracket/Projects/PBScripts/ScriptFactory/target/">
+        <jar in="1000191.jar" out="/home/ci/jars/1000191.jar"/>
     </jars>
 
     <classpath basedir="/home/ci/allatori/libs">

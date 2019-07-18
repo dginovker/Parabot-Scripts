@@ -2,15 +2,17 @@ package scriptfactory.AdvancedGui;
 
 import scriptfactory.Actions.Action;
 import scriptfactory.AdvancedGui.ScriptFactorySDN.ScriptFactorySDNGui;
+import scriptfactory.Consumer;
 import scriptfactory.GUI.EnterJButton;
 import scriptfactory.NewGuis.UncommonActionGuiInfo;
 import scriptfactory.VarsMethods;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 
 import static scriptfactory.NewGuis.NewStatementGUI.addEscapeHotkey;
 import static scriptfactory.VarsMethods.log;
@@ -71,8 +73,8 @@ public class AdvancedOptionsGUI extends JFrame {
     }
 
     private void generateMoveLineFrame() {
-        JTextField lineToMove = new JTextField(6);
-        JTextField lineToInsertAbove = new JTextField(6);
+        final JTextField lineToMove = new JTextField(6);
+        final JTextField lineToInsertAbove = new JTextField(6);
         EnterJButton submitMove = new EnterJButton("Submit");
 
         moveLineFrame.setLayout(new GridLayout(5, 1, 5, 15));
@@ -87,49 +89,64 @@ public class AdvancedOptionsGUI extends JFrame {
 
         moveLineFrame.pack();
 
-        submitMove.addActionListener(b ->
-        {
-            int lineToMoveAsPint = VarsMethods.parsePint(lineToMove.getText());
-            int lineToPlaceAboveAsPint = VarsMethods.parsePint(lineToInsertAbove.getText());
+        submitMove.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent b) {
+                int lineToMoveAsPint = VarsMethods.parsePint(lineToMove.getText());
+                int lineToPlaceAboveAsPint = VarsMethods.parsePint(lineToInsertAbove.getText());
 
-            Action removed = actions.remove(lineToMoveAsPint);
-            if (lineToPlaceAboveAsPint <= lineToMoveAsPint)
-                actions.add(lineToPlaceAboveAsPint, removed);
-            else
-                if (lineToPlaceAboveAsPint > actions.size())
+                Action removed = actions.remove(lineToMoveAsPint);
+                if (lineToPlaceAboveAsPint <= lineToMoveAsPint)
+                    actions.add(lineToPlaceAboveAsPint, removed);
+                else if (lineToPlaceAboveAsPint > actions.size())
                     actions.add(removed);
                 else
                     actions.add(lineToPlaceAboveAsPint - 1, removed);
-            updateTextfield.accept(5);
-            moveLineFrame.setVisible(false);
-            log("Successfully moved line " + lineToMove.getText() + ".");
+                updateTextfield.accept(5);
+                moveLineFrame.setVisible(false);
+                log("Successfully moved line " + lineToMove.getText() + ".");
+            }
         });
 
     }
 
     private void initButtons()
     {
-        tipsAndTricksButton.addActionListener(o -> {
-            tipsFrame.setVisible(true);
-            this.setVisible(false);
+        tipsAndTricksButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                tipsFrame.setVisible(true);
+                AdvancedOptionsGUI.this.setVisible(false);
+            }
         });
-        moveLineButton.addActionListener(o -> {
-            moveLineFrame.setVisible(true);
-            this.setVisible(false);
+        moveLineButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                moveLineFrame.setVisible(true);
+                AdvancedOptionsGUI.this.setVisible(false);
+            }
         });
-        recoverPreviousScript.addActionListener(o ->
-        {
-            VarsMethods.loadscript(actions, new File(VarsMethods.CACHED_LOC));
-            updateTextfield.accept(5);
-            this.setVisible(false);
+        recoverPreviousScript.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                VarsMethods.loadscript(actions, new File(VarsMethods.CACHED_LOC));
+                updateTextfield.accept(5);
+                AdvancedOptionsGUI.this.setVisible(false);
+            }
         });
-        uncommonActionButton.addActionListener(o -> {
-            uncommonActionGui.setVisible(true);
-            this.setVisible(false);
+        uncommonActionButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                uncommonActionGui.setVisible(true);
+                AdvancedOptionsGUI.this.setVisible(false);
+            }
         });
-        premadeScriptsButton.addActionListener(o -> {
-            sdnGui.setVisible(true);
-            this.setVisible(false);
+        premadeScriptsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent o) {
+                sdnGui.setVisible(true);
+                AdvancedOptionsGUI.this.setVisible(false);
+            }
         });
     }
 

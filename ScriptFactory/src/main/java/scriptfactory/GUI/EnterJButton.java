@@ -8,7 +8,7 @@ public class EnterJButton extends JButton {
     public EnterJButton(String text)
     {
         super(text);
-        EnterJButton me = this;
+        final EnterJButton me = this;
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent keyEvent) {
